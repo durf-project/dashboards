@@ -11,7 +11,7 @@
 import marimo
 
 __generated_with = "0.20.4"
-app = marimo.App(width="full", app_title="Full Text Capture")
+app = marimo.App(width="full", app_title="3. Full Text Capture")
 
 
 @app.cell
@@ -26,9 +26,7 @@ def imports():
 @app.cell
 def intro(mo):
     mo.md("""
-    # Full Text Capture
-
-    **DURF theme 3.**
+    # 3. Full Text Capture
 
     ## Goal
 
@@ -50,7 +48,7 @@ def intro(mo):
     **Status: placeholder.** The cells below produce an empty table with the
     columns this dashboard needs -- there is no harvesting or reporting
     pipeline from participating institutions yet. Once one exists, replace
-    `full-text-capture_placeholder_data` with a real query and the table/chart below
+    `theme03_full_text_capture_placeholder_data` with a real query and the table/chart below
     will pick it up unchanged. See `AGENTS.md` for the convention this
     notebook follows.
     """)
@@ -58,10 +56,10 @@ def intro(mo):
 
 
 @app.cell
-def full_text_capture_placeholder_data(pd):
+def theme03_full_text_capture_placeholder_data(pd):
     # TODO: replace with a real query once institutions report this data.
     # Columns match "Datapoints needed from participating institutions" above.
-    full_text_capture_placeholder_data = pd.DataFrame(
+    theme03_full_text_capture_placeholder_data = pd.DataFrame(
         {
             "repo": pd.array([], dtype="string"),
             "total_records": pd.array([], dtype="Int64"),
@@ -69,19 +67,19 @@ def full_text_capture_placeholder_data(pd):
             "snapshot_date": pd.array([], dtype="string")
         }
     )
-    return (full_text_capture_placeholder_data,)
+    return (theme03_full_text_capture_placeholder_data,)
 
 
 @app.cell
-def full_text_capture_table(full_text_capture_placeholder_data, mo):
-    mo.ui.table(full_text_capture_placeholder_data)
+def theme03_full_text_capture_table(theme03_full_text_capture_placeholder_data, mo):
+    mo.ui.table(theme03_full_text_capture_placeholder_data)
     return
 
 
 @app.cell
-def full_text_capture_chart(alt, full_text_capture_placeholder_data, mo):
-    full_text_capture_chart = (
-        alt.Chart(full_text_capture_placeholder_data)
+def theme03_full_text_capture_chart(alt, theme03_full_text_capture_placeholder_data, mo):
+    theme03_full_text_capture_chart = (
+        alt.Chart(theme03_full_text_capture_placeholder_data)
         .mark_bar()
         .encode(
             x=alt.X("repo:N", title=None),
@@ -89,7 +87,7 @@ def full_text_capture_chart(alt, full_text_capture_placeholder_data, mo):
         )
         .properties(title="Records with a locally-hosted full text, by repo (placeholder -- no data yet)")
     )
-    mo.ui.altair_chart(full_text_capture_chart)
+    mo.ui.altair_chart(theme03_full_text_capture_chart)
     return
 
 

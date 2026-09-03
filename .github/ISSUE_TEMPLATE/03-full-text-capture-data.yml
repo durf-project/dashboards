@@ -1,0 +1,47 @@
+name: "Theme 3 — Full Text Capture: data submission"
+description: Report your repository/CRIS's full-text coverage for the Full Text Capture dashboard.
+title: "[Full Text Capture] <repository/CRIS name>"
+labels: ["theme-3-full-text-capture", "data-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This dashboard tracks "Digital sovereignty health": the ratio of
+        metadata records that link to a full-text PDF hosted on your own
+        institutional domain (rather than only a publisher's), per repo,
+        over time. See
+        [the live 03-full-text-capture dashboard](https://durf-project.github.io/dashboards/03-full-text-capture.html)
+        for the full goal and context.
+
+        Fill in what you know; leave the rest blank. One issue per repository
+        — if your repository already has an open submission, comment on it
+        instead of opening a new one.
+  - type: input
+    id: repo
+    attributes:
+      label: Repository / CRIS name
+      placeholder: e.g. TU Delft Repository
+    validations:
+      required: true
+  - type: input
+    id: total_records
+    attributes:
+      label: Total metadata records
+      placeholder: e.g. 45000
+    validations:
+      required: false
+  - type: input
+    id: records_with_local_pdf
+    attributes:
+      label: Records with a full-text PDF link hosted on your own institutional domain
+      placeholder: e.g. 18000
+    validations:
+      required: false
+  - type: input
+    id: snapshot_date
+    attributes:
+      label: Snapshot date
+      description: When these figures were measured
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true

@@ -1,0 +1,13 @@
+{
+  "title": "3. Full Text Capture",
+  "description": "Comprehensive full-text availability in Dutch repository/CRIS systems, primarily for preservation, and secondarily for text-mining, AI usage and Taverne-mechanisms.",
+  "colour": "#177ABF",
+  "image": null,
+  "authors": [
+    {
+      "name": "DURF project",
+      "github": "https://github.com/durf-project"
+    }
+  ],
+  "format": "app"
+}

@@ -1,0 +1,66 @@
+name: "Theme 2 — Metadata Quality: data submission"
+description: Report your repository/CRIS's metadata compliance and PID coverage for the Metadata Quality dashboard.
+title: "[Metadata Quality] <repository/CRIS name>"
+labels: ["theme-2-metadata-quality", "data-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This dashboard tracks two health signals per repo, over time:
+        (1) validation results against the oai_cerif_openaire_NL /
+        oai_dc_openaire_NL application profiles ("Compliancy health"), and
+        (2) presence of ROR, ORCID and DOI identifiers in records
+        ("PID health"). See
+        [the live 02-metadata-quality dashboard](https://durf-project.github.io/dashboards/02-metadata-quality.html)
+        for the full goal and context.
+
+        Fill in what you know; leave the rest blank. One issue per repository
+        — if your repository already has an open submission, comment on it
+        instead of opening a new one.
+  - type: input
+    id: repo
+    attributes:
+      label: Repository / CRIS name
+      placeholder: e.g. TU Delft Repository
+    validations:
+      required: true
+  - type: input
+    id: compliance_pct
+    attributes:
+      label: Share of records passing OAI application-profile validation
+      description: Percentage, e.g. "72"
+      placeholder: "0-100"
+    validations:
+      required: false
+  - type: input
+    id: ror_pct
+    attributes:
+      label: Share of records with a ROR-identified institution
+      description: Percentage, e.g. "85"
+      placeholder: "0-100"
+    validations:
+      required: false
+  - type: input
+    id: orcid_pct
+    attributes:
+      label: Share of records with an ORCID for at least one author
+      description: Percentage, e.g. "40"
+      placeholder: "0-100"
+    validations:
+      required: false
+  - type: input
+    id: doi_pct
+    attributes:
+      label: Share of records with a DOI
+      description: Percentage, e.g. "60"
+      placeholder: "0-100"
+    validations:
+      required: false
+  - type: input
+    id: snapshot_date
+    attributes:
+      label: Snapshot date
+      description: When these figures were measured
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true

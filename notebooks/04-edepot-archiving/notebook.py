@@ -11,7 +11,7 @@
 import marimo
 
 __generated_with = "0.20.4"
-app = marimo.App(width="full", app_title="KB National Library e-Depot Archiving")
+app = marimo.App(width="full", app_title="4. KB National Library e-Depot Archiving")
 
 
 @app.cell
@@ -26,9 +26,7 @@ def imports():
 @app.cell
 def intro(mo):
     mo.md("""
-    # KB National Library e-Depot Archiving
-
-    **DURF theme 4.**
+    # 4. KB National Library e-Depot Archiving
 
     ## Goal
 
@@ -51,7 +49,7 @@ def intro(mo):
     **Status: placeholder.** The cells below produce an empty table with the
     columns this dashboard needs -- there is no harvesting or reporting
     pipeline from participating institutions yet. Once one exists, replace
-    `edepot-archiving_placeholder_data` with a real query and the table/chart below
+    `theme04_edepot_archiving_placeholder_data` with a real query and the table/chart below
     will pick it up unchanged. See `AGENTS.md` for the convention this
     notebook follows.
     """)
@@ -59,10 +57,10 @@ def intro(mo):
 
 
 @app.cell
-def edepot_archiving_placeholder_data(pd):
+def theme04_edepot_archiving_placeholder_data(pd):
     # TODO: replace with a real query once institutions report this data.
     # Columns match "Datapoints needed from participating institutions" above.
-    edepot_archiving_placeholder_data = pd.DataFrame(
+    theme04_edepot_archiving_placeholder_data = pd.DataFrame(
         {
             "repo": pd.array([], dtype="string"),
             "pdfs_in_repo": pd.array([], dtype="Int64"),
@@ -71,19 +69,19 @@ def edepot_archiving_placeholder_data(pd):
             "snapshot_date": pd.array([], dtype="string")
         }
     )
-    return (edepot_archiving_placeholder_data,)
+    return (theme04_edepot_archiving_placeholder_data,)
 
 
 @app.cell
-def edepot_archiving_table(edepot_archiving_placeholder_data, mo):
-    mo.ui.table(edepot_archiving_placeholder_data)
+def theme04_edepot_archiving_table(theme04_edepot_archiving_placeholder_data, mo):
+    mo.ui.table(theme04_edepot_archiving_placeholder_data)
     return
 
 
 @app.cell
-def edepot_archiving_chart(alt, edepot_archiving_placeholder_data, mo):
-    edepot_archiving_chart = (
-        alt.Chart(edepot_archiving_placeholder_data)
+def theme04_edepot_archiving_chart(alt, theme04_edepot_archiving_placeholder_data, mo):
+    theme04_edepot_archiving_chart = (
+        alt.Chart(theme04_edepot_archiving_placeholder_data)
         .mark_bar()
         .encode(
             x=alt.X("repo:N", title=None),
@@ -91,7 +89,7 @@ def edepot_archiving_chart(alt, edepot_archiving_placeholder_data, mo):
         )
         .properties(title="PDFs archived in the e-Depot, by repo (placeholder -- no data yet)")
     )
-    mo.ui.altair_chart(edepot_archiving_chart)
+    mo.ui.altair_chart(theme04_edepot_archiving_chart)
     return
 
 

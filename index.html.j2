@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DURF Dashboards | Progress monitoring for the Dutch Repository Federation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* SURF Design System tokens, matching durf-project/durf-gantt */
+    :root {
+      --sds-black: #050E1D;
+      --sds-white: #FFFFFF;
+      --sds-gray-100: #F4F6F8;
+      --sds-gray-200: #EAECF0;
+      --sds-gray-300: #B2B6BE;
+      --sds-gray-400: #8C969F;
+      --sds-gray-500: #5E6873;
+      --sds-blue-400: #0077C8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--sds-white);
+      color: var(--sds-black);
+      font-family: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+      padding: 2rem 1.25rem 3rem;
+    }
+    .shell { max-width: 72rem; margin: 0 auto; }
+
+    header { margin-bottom: 2.5rem; }
+    .eyebrow {
+      font-weight: 700; font-size: .8125rem; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--sds-blue-400); margin: 0 0 .5rem;
+    }
+    h1 {
+      font-family: Nunito, "Source Sans 3", sans-serif; letter-spacing: -.01em;
+      font-size: 2rem; font-weight: 800; margin: 0 0 .5rem;
+    }
+    .intro { max-width: 46rem; color: var(--sds-gray-500); font-size: 1rem; line-height: 1.5; margin: 0; }
+
+    main { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1.25rem; }
+
+    .card {
+      border: .0625rem solid var(--sds-gray-300);
+      border-radius: .375rem;
+      background: var(--sds-white);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card__bar { height: .375rem; background: var(--card-colour, var(--sds-gray-300)); }
+    .card__body { padding: 1rem 1.25rem 1.25rem; display: flex; flex-direction: column; flex: 1; }
+    .card__title {
+      font-family: Nunito, "Source Sans 3", sans-serif; font-weight: 700; font-size: 1.0625rem;
+      margin: 0 0 .5rem; color: var(--sds-black);
+    }
+    .card__desc { color: var(--sds-gray-500); font-size: .875rem; line-height: 1.45; flex: 1; margin: 0 0 1rem; }
+    .card__image { display: block; width: 100%; height: auto; border-bottom: .0625rem solid var(--sds-gray-200); }
+
+    /* Neutral, always-legible button -- the coloured top bar already ties
+       each card to its theme, so button text/border stay a fixed shade
+       rather than the theme hue (several DURF theme colours, e.g. the
+       theme 2 yellow, don't clear 4.5:1 contrast on white as text). */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: .0625rem solid var(--sds-gray-400);
+      color: var(--sds-gray-500);
+      background: var(--sds-white);
+      border-radius: .25rem;
+      padding: .4rem .9rem;
+      font-size: .8125rem; font-weight: 700;
+      text-decoration: none;
+      align-self: flex-start;
+      transition: background-color .15s, color .15s, border-color .15s;
+    }
+    .btn:hover { background: var(--sds-black); border-color: var(--sds-black); color: var(--sds-white); }
+
+    footer {
+      margin-top: 3rem; padding-top: 1.5rem;
+      border-top: .0625rem solid var(--sds-gray-200);
+      color: var(--sds-gray-500); font-size: .8125rem; line-height: 1.6;
+    }
+    footer a { color: var(--sds-blue-400); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+
+    <header>
+      <p class="eyebrow">Dutch Repository Federation</p>
+      <h1>DURF Dashboards</h1>
+      <p class="intro">Progress monitoring for the six DURF project themes, tracked against the <a href="https://github.com/durf-project/durf-gantt" style="color:var(--sds-blue-400)">project roadmap</a>.</p>
+    </header>
+
+    <main>
+      {% for notebook in notebooks %}
+      <div class="card" style="--card-colour: {{ notebook.colour | default('#B2B6BE') }};">
+        <div class="card__bar"></div>
+        {% if notebook.image %}
+        <a href="{{ notebook.html_path }}">
+          <img class="card__image" src="{{ notebook.image }}" alt="{{ notebook.title }} screenshot">
+        </a>
+        {% endif %}
+        <div class="card__body">
+          <p class="card__title">{{ notebook.title }}</p>
+          {% if notebook.description %}
+          <p class="card__desc">{{ notebook.description }}</p>
+          {% endif %}
+          <a href="{{ notebook.html_path }}" class="btn">Open dashboard</a>
+        </div>
+      </div>
+      {% endfor %}
+    </main>
+
+    <footer>
+      <p>
+        Tracking progress on the
+        <a href="https://github.com/durf-project/durf-gantt" target="_blank">DURF project roadmap</a>.
+        For feedback, <a href="https://github.com/durf-project/dashboards/issues" target="_blank">raise an issue</a>.
+        Source under <a href="https://github.com/durf-project/dashboards" target="_blank">durf-project/dashboards</a>,
+        licensed under the <a href="https://github.com/durf-project/dashboards/blob/HEAD/LICENSE" target="_blank">EUPL v1.2</a>.
+      </p>
+      <p>Built with <a href="https://marimo.io" target="_blank">marimo</a>.</p>
+    </footer>
+  </div>
+</body>
+</html>

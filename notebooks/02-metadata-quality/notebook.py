@@ -11,7 +11,7 @@
 import marimo
 
 __generated_with = "0.20.4"
-app = marimo.App(width="full", app_title="Metadata Quality Improvement")
+app = marimo.App(width="full", app_title="2. Metadata Quality Improvement")
 
 
 @app.cell
@@ -26,9 +26,7 @@ def imports():
 @app.cell
 def intro(mo):
     mo.md("""
-    # Metadata Quality Improvement
-
-    **DURF theme 2.**
+    # 2. Metadata Quality Improvement
 
     ## Goal
 
@@ -51,7 +49,7 @@ def intro(mo):
     **Status: placeholder.** The cells below produce an empty table with the
     columns this dashboard needs -- there is no harvesting or reporting
     pipeline from participating institutions yet. Once one exists, replace
-    `metadata-quality_placeholder_data` with a real query and the table/chart below
+    `theme02_metadata_quality_placeholder_data` with a real query and the table/chart below
     will pick it up unchanged. See `AGENTS.md` for the convention this
     notebook follows.
     """)
@@ -59,10 +57,10 @@ def intro(mo):
 
 
 @app.cell
-def metadata_quality_placeholder_data(pd):
+def theme02_metadata_quality_placeholder_data(pd):
     # TODO: replace with a real query once institutions report this data.
     # Columns match "Datapoints needed from participating institutions" above.
-    metadata_quality_placeholder_data = pd.DataFrame(
+    theme02_metadata_quality_placeholder_data = pd.DataFrame(
         {
             "repo": pd.array([], dtype="string"),
             "compliance_pct": pd.array([], dtype="Float64"),
@@ -72,19 +70,19 @@ def metadata_quality_placeholder_data(pd):
             "snapshot_date": pd.array([], dtype="string")
         }
     )
-    return (metadata_quality_placeholder_data,)
+    return (theme02_metadata_quality_placeholder_data,)
 
 
 @app.cell
-def metadata_quality_table(metadata_quality_placeholder_data, mo):
-    mo.ui.table(metadata_quality_placeholder_data)
+def theme02_metadata_quality_table(theme02_metadata_quality_placeholder_data, mo):
+    mo.ui.table(theme02_metadata_quality_placeholder_data)
     return
 
 
 @app.cell
-def metadata_quality_chart(alt, metadata_quality_placeholder_data, mo):
-    metadata_quality_chart = (
-        alt.Chart(metadata_quality_placeholder_data)
+def theme02_metadata_quality_chart(alt, theme02_metadata_quality_placeholder_data, mo):
+    theme02_metadata_quality_chart = (
+        alt.Chart(theme02_metadata_quality_placeholder_data)
         .mark_bar()
         .encode(
             x=alt.X("repo:N", title=None),
@@ -92,7 +90,7 @@ def metadata_quality_chart(alt, metadata_quality_placeholder_data, mo):
         )
         .properties(title="OAI application-profile compliance by repo (placeholder -- no data yet)")
     )
-    mo.ui.altair_chart(metadata_quality_chart)
+    mo.ui.altair_chart(theme02_metadata_quality_chart)
     return
 
 

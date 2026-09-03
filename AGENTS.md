@@ -41,18 +41,29 @@ Start every new notebook with `./scripts/new-notebook.sh <slug>` — it copies
 `notebooks/_template/` and substitutes the title. Don't hand-roll a notebook
 directory from scratch.
 
-The six slugs already in `notebooks/` map to the six DURF themes:
+The six slugs already in `notebooks/` map to the six DURF themes. Each slug
+is prefixed with its zero-padded theme number (`01-`…`06-`) so the
+directories, the exported `.html` filenames, and the index page all sort in
+project order instead of alphabetically:
 
 | Slug | Theme # | Theme |
 | --- | --- | --- |
-| `governance` | 1 | Governance of the Federation and Netherlands Research Portal |
-| `metadata-quality` | 2 | Metadata Quality Improvement |
-| `full-text-capture` | 3 | Full Text Capture |
-| `edepot-archiving` | 4 | KB National Library e-Depot Archiving |
-| `distribution-discovery` | 5 | Metadata Distribution & Discovery Optimization |
-| `nl-research-portal` | 6 | NL Research Portal Update |
+| `01-governance` | 1 | Governance of the Federation and Netherlands Research Portal |
+| `02-metadata-quality` | 2 | Metadata Quality Improvement |
+| `03-full-text-capture` | 3 | Full Text Capture |
+| `04-edepot-archiving` | 4 | KB National Library e-Depot Archiving |
+| `05-distribution-discovery` | 5 | Metadata Distribution & Discovery Optimization |
+| `06-nl-research-portal` | 6 | NL Research Portal Update |
 
 Don't rename these slugs — other docs and the Gantt link to them by name.
+The same numbering also appears in each notebook's displayed title (e.g.
+`app_title="2. Metadata Quality Improvement"` and its `# 2. ...` heading) and
+in `metadata.json`'s `title` field, so the number stays visible even
+somewhere that only shows the title text (a browser tab, the index card),
+not just the directory listing. Because cell/variable names inside
+`notebook.py` can't start with a digit, they use a `themeNN_` prefix instead
+(e.g. `theme02_metadata_quality_placeholder_data`), not the bare slug — keep
+that prefix if you ever rename a theme's short name.
 
 ## Running a notebook preview
 
@@ -120,6 +131,27 @@ so the chart and table cells below it render without error today and only
 need the query swapped out once real data exists. Don't leave a placeholder
 notebook that fails `marimo check` or `uv run` — "not yet filled in" means
 the data source is missing, not that the notebook is broken.
+
+## Data submission: GitHub Issue Forms, transcribed by hand
+
+Each theme has a matching Issue Form in `.github/ISSUE_TEMPLATE/`
+(`01-governance-data.yml` … `06-nl-research-portal-data.yml`), one field per
+datapoint listed in that notebook's "Datapoints needed from participating
+institutions" section. Field `id`s are chosen to match the placeholder
+DataFrame's column names exactly (e.g. `02-metadata-quality-data.yml`'s
+`compliance_pct` field ↔ `theme02_metadata_quality_placeholder_data`'s
+`compliance_pct` column) — that's deliberate, so turning a submitted issue
+into a data row is a direct copy, not a mapping exercise.
+
+This is intentionally manual, not automated: an institution opens an issue
+via the form, a maintainer reviews it and adds the values as a row in the
+notebook's placeholder-data cell via a PR. If you're asked to do that
+transcription, read the issue, add one row to the `pd.DataFrame(...)` in the
+matching `notebooks/NN-<slug>/notebook.py`, and re-run `marimo check` /
+`uv run` on it before opening the PR — same bar as any other change to that
+cell. Don't build an auto-ingest Action for this unless asked; the point of
+starting manual is to learn what the real data looks like before automating
+around it.
 
 ## Skills live in `.claude/skills/`, and only there
 

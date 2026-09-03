@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Which theme is my data for?
+    url: https://durf-project.github.io/dashboards/
+    about: Not sure which dashboard your institution's data belongs to? Check the live dashboards first.

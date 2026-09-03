@@ -1,0 +1,64 @@
+name: "Theme 6 — NL Research Portal: data submission"
+description: Report your institution's Netherlands Research Portal adoption status.
+title: "[NL Research Portal] <institution name>"
+labels: ["theme-6-nl-research-portal", "data-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This dashboard tracks portal adoption and release cadence: SURFconext
+        single sign-on enablement per institution, the portal release version
+        your institution is integrated with, and stakeholder needs-assessment
+        feedback scores. See
+        [the live 06-nl-research-portal dashboard](https://durf-project.github.io/dashboards/06-nl-research-portal.html)
+        for the full goal and context.
+
+        Fill in what you know; leave the rest blank. One issue per institution
+        — if your institution already has an open submission, comment on it
+        instead of opening a new one.
+  - type: input
+    id: institution
+    attributes:
+      label: Institution name
+      placeholder: e.g. TU Delft
+    validations:
+      required: true
+  - type: dropdown
+    id: surfconext_sso_enabled
+    attributes:
+      label: SURFconext SSO enabled?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: false
+  - type: input
+    id: surfconext_sso_enabled_date
+    attributes:
+      label: SSO enablement date (if enabled)
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: false
+  - type: input
+    id: portal_release_version
+    attributes:
+      label: Portal release version your institution is integrated with
+      placeholder: e.g. v1.3
+    validations:
+      required: false
+  - type: input
+    id: needs_assessment_score
+    attributes:
+      label: Customer value / needs-assessment score
+      description: From your most recent survey round, if available
+      placeholder: e.g. 7.5
+    validations:
+      required: false
+  - type: input
+    id: snapshot_date
+    attributes:
+      label: Snapshot date
+      description: When these figures were measured
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true
