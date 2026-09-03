@@ -10,7 +10,7 @@ body:
         the Google Scholar inclusion guidelines, per repo, over time — plus
         the DOI-minting rate for grey literature that has a locally attached
         PDF but no DOI. See
-        [`notebooks/05-distribution-discovery/`](https://github.com/durf-project/dashboards/tree/main/notebooks/05-distribution-discovery)
+        [the live 05-distribution-discovery dashboard](https://durf-project.github.io/dashboards/05-distribution-discovery.html)
         for the full goal and context.
 
         Fill in what you know; leave the rest blank. One issue per repository
