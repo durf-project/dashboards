@@ -51,13 +51,35 @@ uvx marimo edit --sandbox --watch notebooks/governance/notebook.py
 ```
 
 Swap in any of the six slugs above. `--sandbox` is required — it's what makes
-`uv` install the notebook's declared dependencies (`marimo`, `duckdb`,
-`altair`, `pandas`, `pyarrow`) before running it.
+`uv` install the notebook's declared dependencies before running it.
 
 To start a new dashboard from the same template these six were built from:
 
 ```bash
 ./scripts/new-notebook.sh my-new-dashboard
+```
+
+## Live site (GitHub Pages)
+
+Every push to `main` runs `.github/workflows/deploy.yml`, which exports each
+notebook to HTML/WebAssembly and publishes them as a static site — no server,
+runs entirely in the visitor's browser via [Pyodide](https://pyodide.org).
+This follows marimo's own
+[WebAssembly + GitHub Pages template](https://github.com/marimo-team/marimo-gh-pages-template),
+adapted for this repo's per-notebook `metadata.json` layout (see
+`.github/scripts/build.py`).
+
+**One-time setup, before the first deploy will work:** in this repo's GitHub
+Settings → Pages, set **Source** to **GitHub Actions**. After that, the site
+publishes automatically on every push to `main` (or via **Actions → Deploy to
+GitHub Pages → Run workflow** for a manual run) at
+`https://durf-project.github.io/dashboards/`.
+
+To build and preview the site locally before pushing:
+
+```bash
+uv run .github/scripts/build.py
+python3 -m http.server -d _site
 ```
 
 ## Skills, vendored once

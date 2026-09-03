@@ -1,10 +1,12 @@
 {
   "title": "KB National Library e-Depot Archiving",
-  "image": "public/screenshot.png",
+  "description": "Comprehensive preservation achieved of Dutch scientific output in the KB e-Depot.",
+  "image": null,
   "authors": [
     {
       "name": "DURF project",
-      "github": "durf-project"
+      "github": "https://github.com/durf-project"
     }
-  ]
+  ],
+  "format": "app"
 }

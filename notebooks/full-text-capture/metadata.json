@@ -1,10 +1,12 @@
 {
   "title": "Full Text Capture",
-  "image": "public/screenshot.png",
+  "description": "Comprehensive full-text availability in Dutch repository/CRIS systems, primarily for preservation, and secondarily for text-mining, AI usage and Taverne-mechanisms.",
+  "image": null,
   "authors": [
     {
       "name": "DURF project",
-      "github": "durf-project"
+      "github": "https://github.com/durf-project"
     }
-  ]
+  ],
+  "format": "app"
 }

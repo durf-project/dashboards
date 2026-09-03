@@ -1,10 +1,12 @@
 {
   "title": "NL Research Portal Update",
-  "image": "public/screenshot.png",
+  "description": "Deliver a fully-functional, user-centered Netherlands Research Portal that serves as the primary discovery point for Dutch research outputs.",
+  "image": null,
   "authors": [
     {
       "name": "DURF project",
-      "github": "durf-project"
+      "github": "https://github.com/durf-project"
     }
-  ]
+  ],
+  "format": "app"
 }

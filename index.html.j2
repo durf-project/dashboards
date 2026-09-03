@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DURF Dashboards | Progress monitoring for the Dutch Repository Federation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans text-gray-800 bg-white p-5">
+  <div class="max-w-4xl mx-auto">
+
+    <header class="bg-gray-100 p-6 text-center rounded-lg mb-6">
+      <h1 class="text-2xl font-bold mb-2">DURF Dashboards</h1>
+      <p class="text-sm">Progress monitoring for the six themes of the Dutch Repository Federation (DURF) project</p>
+    </header>
+
+    <main>
+      {% if notebooks %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for notebook in notebooks %}
+        <div class="bg-gray-50 border border-gray-200 rounded-lg overflow-hidden flex flex-col">
+          <div class="bg-gray-100 p-3 font-semibold">{{ notebook.title }}</div>
+          {% if notebook.image %}
+          <a href="{{ notebook.html_path }}">
+            <img src="{{ notebook.image }}" alt="{{ notebook.title }} screenshot">
+          </a>
+          {% endif %}
+          <div class="p-4 flex-1">
+            {% if notebook.description %}
+            <p class="text-sm text-gray-600 mb-3">{{ notebook.description }}</p>
+            {% endif %}
+            <a href="{{ notebook.html_path }}" class="inline-block bg-gray-800 hover:bg-amber-500 text-white py-1 px-3 rounded transition-colors text-sm">Open dashboard</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </main>
+
+    <footer class="mt-10 pt-6 border-t border-gray-200 text-center text-sm text-gray-600">
+      <p class="mb-2">
+        Tracking progress on the
+        <a href="https://github.com/durf-project/durf-gantt" target="_blank" class="text-blue-500 hover:underline">DURF project roadmap</a>.
+        For feedback, <a href="https://github.com/durf-project/dashboards/issues" target="_blank" class="text-blue-500 hover:underline">raise an issue</a>.
+        Source under <a href="https://github.com/durf-project/dashboards" target="_blank" class="text-blue-500 hover:underline">durf-project/dashboards</a>,
+        licensed under the <a href="https://github.com/durf-project/dashboards/blob/main/LICENSE" target="_blank" class="text-blue-500 hover:underline">EUPL v1.2</a>.
+      </p>
+      <p>Built with <a href="https://marimo.io" target="_blank" class="text-blue-500 hover:underline">marimo</a>.</p>
+    </footer>
+  </div>
+</body>
+</html>

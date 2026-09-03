@@ -1,10 +1,12 @@
 {
   "title": "Governance of the Federation and NL Research Portal",
-  "image": "public/screenshot.png",
+  "description": "A sustainable governance framework established for the Dutch federated research information ecosystem, including parties maintaining Repository/CRIS systems, the KB e-Depot and the OpenAIRE Graph.",
+  "image": null,
   "authors": [
     {
       "name": "DURF project",
-      "github": "durf-project"
+      "github": "https://github.com/durf-project"
     }
-  ]
+  ],
+  "format": "app"
 }

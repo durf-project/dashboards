@@ -1,10 +1,12 @@
 {
   "title": "Metadata Quality Improvement",
-  "image": "public/screenshot.png",
+  "description": "Repository/CRIS systems have adopted the updated metadata- and exchange-standards for high-quality research metadata that comply with international guidelines and meet national requirements.",
+  "image": null,
   "authors": [
     {
       "name": "DURF project",
-      "github": "durf-project"
+      "github": "https://github.com/durf-project"
     }
-  ]
+  ],
+  "format": "app"
 }
