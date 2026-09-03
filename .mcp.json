@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "ori-ducklake": {
+      "command": "bash",
+      "args": [
+        "-lc",
+        "command -v uvx >/dev/null 2>&1 || curl -LsSf https://astral.sh/uv/install.sh | sh; export PATH=\"$HOME/.local/bin:$PATH\"; exec uvx --from git+https://github.com/surf-ori/agentic-tools#subdirectory=mcp-servers/ori-ducklake-mcp ori-ducklake-mcp"
+      ],
+      "env": {
+        "DUCKLAKE_URL": "https://objectstore.surf.nl/cea01a7216d64348b7e51e5f3fc1901d:sprouts/catalog.ducklake"
+      }
+    }
+  }
+}

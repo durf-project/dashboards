@@ -1,0 +1,11 @@
+{
+  "title": "{{TITLE}}",
+  "image": "public/screenshot.png",
+  "authors": [
+    {
+      "name": "REQUIRED -- your name",
+      "github": "REQUIRED -- your GitHub handle",
+      "orcid": "optional -- https://orcid.org/xxxx-xxxx-xxxx-xxxx"
+    }
+  ]
+}

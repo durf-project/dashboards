@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "skills": {
+    "anywidget-generator": {
+      "source": "marimo-team/skills",
+      "sourceType": "github",
+      "skillPath": "skills/anywidget/SKILL.md",
+      "computedHash": "93a512dc9870809902459881640b041afe5fe460774e9b49a212d8d799922ab5"
+    },
+    "marimo-notebook": {
+      "source": "marimo-team/skills",
+      "sourceType": "github",
+      "skillPath": "skills/marimo-notebook/SKILL.md",
+      "computedHash": "d843af038a49245369d9a91b8dda531a0d58882bc06623604b673cb144588edd"
+    },
+    "oai-pmh": {
+      "source": "surf-ori/agentic-tools",
+      "sourceType": "github",
+      "skillPath": "skills/oai-pmh/SKILL.md",
+      "computedHash": "016bce91bfde96579ec237c71bc7819cda93da74883d72b53fd50245c185944c"
+    },
+    "ori-ducklake": {
+      "source": "surf-ori/agentic-tools",
+      "sourceType": "github",
+      "skillPath": "skills/ori-ducklake/SKILL.md",
+      "computedHash": "be8fa54f120377c074f68fba5f932d1f56298fe9f96d09c2e186c23863ba2487"
+    },
+    "polars": {
+      "source": "davila7/claude-code-templates",
+      "sourceType": "github",
+      "skillPath": "cli-tool/components/skills/scientific/polars/SKILL.md",
+      "computedHash": "b703c1b4711369853ee437f32202e6d42c9b8d752c3e0b25bf033a34b9c437e7"
+    },
+    "urn-nbn": {
+      "source": "surf-ori/agentic-tools",
+      "sourceType": "github",
+      "skillPath": "skills/urn-nbn/SKILL.md",
+      "computedHash": "cfba3e0d42fed0b9ed6fd61c943282b54a3e8aedf89f7cb36336e6f3306f2b4e"
+    },
+    "wasm-compatibility": {
+      "source": "marimo-team/skills",
+      "sourceType": "github",
+      "skillPath": "skills/wasm-compatibility/SKILL.md",
+      "computedHash": "8e195f9fa3248782c59fa834fef9a00cb1eba6cec7e3700ecfc3957d12147bbf"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+# Credentials — never commit these
+.env
+*.key
+.opencode/auth.json
+.claude/settings.local.json
+
+# Marimo / Python
+__marimo__/
+.venv/
+__pycache__/
+*.pyc
+
+# Site build output
+_site/
+
+# uv lockfile (workshop scripts install deps per-notebook via PEP 723; no repo-wide lock needed)
+uv.lock
+
+# OS cruft
+.DS_Store
+
+# Local machine state
+.ori-agent
+.ori-preflight
