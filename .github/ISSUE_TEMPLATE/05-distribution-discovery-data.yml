@@ -1,0 +1,55 @@
+name: "Theme 5 — Distribution & Discovery: data submission"
+description: Report your repository/CRIS's discoverability status for the Distribution & Discovery dashboard.
+title: "[Distribution & Discovery] <repository/CRIS name>"
+labels: ["theme-5-distribution-discovery", "data-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This dashboard tracks "Discoverability health": implementation of
+        the Google Scholar inclusion guidelines, per repo, over time — plus
+        the DOI-minting rate for grey literature that has a locally attached
+        PDF but no DOI. See
+        [`notebooks/05-distribution-discovery/`](https://github.com/durf-project/dashboards/tree/main/notebooks/05-distribution-discovery)
+        for the full goal and context.
+
+        Fill in what you know; leave the rest blank. One issue per repository
+        — if your repository already has an open submission, comment on it
+        instead of opening a new one.
+  - type: input
+    id: repo
+    attributes:
+      label: Repository / CRIS name
+      placeholder: e.g. TU Delft Repository
+    validations:
+      required: true
+  - type: input
+    id: scholar_guideline_compliance_pct
+    attributes:
+      label: Google Scholar inclusion-guideline compliance
+      description: Percentage of guideline checklist items met, e.g. "80"
+      placeholder: "0-100"
+    validations:
+      required: false
+  - type: input
+    id: grey_lit_without_doi
+    attributes:
+      label: Grey-literature records with a local PDF but no DOI
+      placeholder: e.g. 500
+    validations:
+      required: false
+  - type: input
+    id: grey_lit_doi_minted
+    attributes:
+      label: Of those, records that have since had a DOI minted
+      placeholder: e.g. 120
+    validations:
+      required: false
+  - type: input
+    id: snapshot_date
+    attributes:
+      label: Snapshot date
+      description: When these figures were measured
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true

@@ -1,0 +1,65 @@
+name: "Theme 1 — Governance: data submission"
+description: Report your institution's federation/governance status for the Governance dashboard.
+title: "[Governance] <institution name>"
+labels: ["theme-1-governance", "data-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This dashboard tracks federation membership and agreement status
+        across participating institutions — NaMeCo consortium membership,
+        signed Federation Rule Book agreements, governance framework review
+        cadence, and symposium attendance. See
+        [`notebooks/01-governance/`](https://github.com/durf-project/dashboards/tree/main/notebooks/01-governance)
+        for the full goal and context.
+
+        Fill in what you know; leave the rest blank. One issue per institution
+        — if your institution already has an open submission, comment on it
+        instead of opening a new one.
+  - type: input
+    id: institution
+    attributes:
+      label: Institution name
+      placeholder: e.g. TU Delft
+    validations:
+      required: true
+  - type: dropdown
+    id: nameco_status
+    attributes:
+      label: NaMeCo membership status
+      options:
+        - Member
+        - Pending
+        - Not joined
+    validations:
+      required: true
+  - type: dropdown
+    id: rule_book_signed
+    attributes:
+      label: Federation Rule Book agreement signed?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: false
+  - type: input
+    id: rule_book_signed_date
+    attributes:
+      label: Signature date (if signed)
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: false
+  - type: input
+    id: symposium_attendance
+    attributes:
+      label: National Symposium / General Assembly attendance
+      description: 'Number of attendees per year, e.g. "2026: 2"'
+    validations:
+      required: false
+  - type: input
+    id: last_governance_review
+    attributes:
+      label: Date of the most recent governance framework review affecting your institution
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: false

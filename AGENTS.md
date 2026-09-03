@@ -132,6 +132,27 @@ need the query swapped out once real data exists. Don't leave a placeholder
 notebook that fails `marimo check` or `uv run` — "not yet filled in" means
 the data source is missing, not that the notebook is broken.
 
+## Data submission: GitHub Issue Forms, transcribed by hand
+
+Each theme has a matching Issue Form in `.github/ISSUE_TEMPLATE/`
+(`01-governance-data.yml` … `06-nl-research-portal-data.yml`), one field per
+datapoint listed in that notebook's "Datapoints needed from participating
+institutions" section. Field `id`s are chosen to match the placeholder
+DataFrame's column names exactly (e.g. `02-metadata-quality-data.yml`'s
+`compliance_pct` field ↔ `theme02_metadata_quality_placeholder_data`'s
+`compliance_pct` column) — that's deliberate, so turning a submitted issue
+into a data row is a direct copy, not a mapping exercise.
+
+This is intentionally manual, not automated: an institution opens an issue
+via the form, a maintainer reviews it and adds the values as a row in the
+notebook's placeholder-data cell via a PR. If you're asked to do that
+transcription, read the issue, add one row to the `pd.DataFrame(...)` in the
+matching `notebooks/NN-<slug>/notebook.py`, and re-run `marimo check` /
+`uv run` on it before opening the PR — same bar as any other change to that
+cell. Don't build an auto-ingest Action for this unless asked; the point of
+starting manual is to learn what the real data looks like before automating
+around it.
+
 ## Skills live in `.claude/skills/`, and only there
 
 Same rationale as the crash-course repo this was seeded from: Claude Code

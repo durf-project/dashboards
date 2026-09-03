@@ -1,0 +1,55 @@
+name: "Theme 4 — e-Depot Archiving: data submission"
+description: Report your repository/CRIS's KB e-Depot backup status for the e-Depot Archiving dashboard.
+title: "[e-Depot Archiving] <repository/CRIS name>"
+labels: ["theme-4-edepot-archiving", "data-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This dashboard tracks "Backup health": the ratio of PDFs archived in
+        the KB e-Depot versus PDFs present in the source repository, per
+        repo, over time — plus whether the URN:NBN resolver is functioning
+        for your institution's identifiers. See
+        [`notebooks/04-edepot-archiving/`](https://github.com/durf-project/dashboards/tree/main/notebooks/04-edepot-archiving)
+        for the full goal and context.
+
+        Fill in what you know; leave the rest blank. One issue per repository
+        — if your repository already has an open submission, comment on it
+        instead of opening a new one.
+  - type: input
+    id: repo
+    attributes:
+      label: Repository / CRIS name
+      placeholder: e.g. TU Delft Repository
+    validations:
+      required: true
+  - type: input
+    id: pdfs_in_repo
+    attributes:
+      label: PDFs present in the source repository
+      placeholder: e.g. 30000
+    validations:
+      required: false
+  - type: input
+    id: pdfs_in_edepot
+    attributes:
+      label: PDFs confirmed archived in the KB e-Depot
+      placeholder: e.g. 22000
+    validations:
+      required: false
+  - type: input
+    id: urn_nbn_resolution_pct
+    attributes:
+      label: URN:NBN resolution success rate for your institution's identifiers
+      description: Percentage, e.g. "95"
+      placeholder: "0-100"
+    validations:
+      required: false
+  - type: input
+    id: snapshot_date
+    attributes:
+      label: Snapshot date
+      description: When these figures were measured
+      placeholder: "YYYY-MM-DD"
+    validations:
+      required: true

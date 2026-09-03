@@ -27,6 +27,21 @@ one in is a matter of pointing that query at a real data source once the
 corresponding harvesting or reporting pipeline exists — the goal/monitor/
 datapoints narrative shouldn't need to change.
 
+## Submitting data (institutions)
+
+Rather than build a harvesting pipeline before any real data exists, the
+first cut is deliberately manual: each theme has a
+[GitHub Issue Form](https://github.com/durf-project/dashboards/issues/new/choose)
+with one field per datapoint that theme's dashboard needs. Open one, fill in
+what you know for your institution or repository, and submit — no account
+setup beyond a free GitHub login, no code.
+
+Submissions are triaged by hand for now: a maintainer transcribes accepted
+issues into the matching notebook's placeholder data as a pull request, which
+is easy to review and keeps a clear paper trail (issue → PR → dashboard).
+Automating that transcription — or the harvesting itself — is future work,
+once it's clear the manual version is worth the automation.
+
 ## The six dashboards
 
 | Theme | Notebook | Goal |
