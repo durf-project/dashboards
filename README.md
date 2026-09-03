@@ -31,15 +31,18 @@ datapoints narrative shouldn't need to change.
 
 | Theme | Notebook | Goal |
 | --- | --- | --- |
-| 1. Governance of the Federation and NL Research Portal | [`notebooks/governance/`](notebooks/governance/notebook.py) | A sustainable governance framework for the Dutch federated research information ecosystem. |
-| 2. Metadata Quality Improvement | [`notebooks/metadata-quality/`](notebooks/metadata-quality/notebook.py) | Repository/CRIS systems adopt updated metadata and exchange standards for high-quality, internationally compliant research metadata. |
-| 3. Full Text Capture | [`notebooks/full-text-capture/`](notebooks/full-text-capture/notebook.py) | Comprehensive full-text availability in Dutch repository/CRIS systems, for preservation, text-mining, AI use and Taverne. |
-| 4. KB National Library e-Depot Archiving | [`notebooks/edepot-archiving/`](notebooks/edepot-archiving/notebook.py) | Comprehensive preservation of Dutch scientific output in the KB e-Depot. |
-| 5. Metadata Distribution & Discovery Optimization | [`notebooks/distribution-discovery/`](notebooks/distribution-discovery/notebook.py) | Increase the visibility of Dutch research content in major international indexes. |
-| 6. NL Research Portal Update | [`notebooks/nl-research-portal/`](notebooks/nl-research-portal/notebook.py) | A fully-functional, user-centered Netherlands Research Portal as the primary discovery point for Dutch research outputs. |
+| 1. Governance of the Federation and NL Research Portal | [`notebooks/01-governance/`](notebooks/01-governance/notebook.py) | A sustainable governance framework for the Dutch federated research information ecosystem. |
+| 2. Metadata Quality Improvement | [`notebooks/02-metadata-quality/`](notebooks/02-metadata-quality/notebook.py) | Repository/CRIS systems adopt updated metadata and exchange standards for high-quality, internationally compliant research metadata. |
+| 3. Full Text Capture | [`notebooks/03-full-text-capture/`](notebooks/03-full-text-capture/notebook.py) | Comprehensive full-text availability in Dutch repository/CRIS systems, for preservation, text-mining, AI use and Taverne. |
+| 4. KB National Library e-Depot Archiving | [`notebooks/04-edepot-archiving/`](notebooks/04-edepot-archiving/notebook.py) | Comprehensive preservation of Dutch scientific output in the KB e-Depot. |
+| 5. Metadata Distribution & Discovery Optimization | [`notebooks/05-distribution-discovery/`](notebooks/05-distribution-discovery/notebook.py) | Increase the visibility of Dutch research content in major international indexes. |
+| 6. NL Research Portal Update | [`notebooks/06-nl-research-portal/`](notebooks/06-nl-research-portal/notebook.py) | A fully-functional, user-centered Netherlands Research Portal as the primary discovery point for Dutch research outputs. |
 
-Goal wording is quoted from `durf-gantt`'s `data/csv/themes.csv`; treat that
-file as the source of truth if a goal changes.
+Notebook directories carry the theme number so they sort in project order
+everywhere — filesystem, exported `.html` filenames, and the index page —
+not alphabetically. Goal wording is quoted from `durf-gantt`'s
+`data/csv/themes.csv`; treat that file as the source of truth if a goal
+changes.
 
 ## Running a dashboard
 
@@ -47,10 +50,10 @@ Each notebook is self-contained (a [PEP 723](https://peps.python.org/pep-0723/)
 header declares its own dependencies) and runs via [`uv`](https://docs.astral.sh/uv/):
 
 ```bash
-uvx marimo edit --sandbox --watch notebooks/governance/notebook.py
+uvx marimo edit --sandbox --watch notebooks/01-governance/notebook.py
 ```
 
-Swap in any of the six slugs above. `--sandbox` is required — it's what makes
+Swap in any of the six paths above. `--sandbox` is required — it's what makes
 `uv` install the notebook's declared dependencies before running it.
 
 To start a new dashboard from the same template these six were built from:

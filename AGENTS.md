@@ -41,18 +41,29 @@ Start every new notebook with `./scripts/new-notebook.sh <slug>` — it copies
 `notebooks/_template/` and substitutes the title. Don't hand-roll a notebook
 directory from scratch.
 
-The six slugs already in `notebooks/` map to the six DURF themes:
+The six slugs already in `notebooks/` map to the six DURF themes. Each slug
+is prefixed with its zero-padded theme number (`01-`…`06-`) so the
+directories, the exported `.html` filenames, and the index page all sort in
+project order instead of alphabetically:
 
 | Slug | Theme # | Theme |
 | --- | --- | --- |
-| `governance` | 1 | Governance of the Federation and Netherlands Research Portal |
-| `metadata-quality` | 2 | Metadata Quality Improvement |
-| `full-text-capture` | 3 | Full Text Capture |
-| `edepot-archiving` | 4 | KB National Library e-Depot Archiving |
-| `distribution-discovery` | 5 | Metadata Distribution & Discovery Optimization |
-| `nl-research-portal` | 6 | NL Research Portal Update |
+| `01-governance` | 1 | Governance of the Federation and Netherlands Research Portal |
+| `02-metadata-quality` | 2 | Metadata Quality Improvement |
+| `03-full-text-capture` | 3 | Full Text Capture |
+| `04-edepot-archiving` | 4 | KB National Library e-Depot Archiving |
+| `05-distribution-discovery` | 5 | Metadata Distribution & Discovery Optimization |
+| `06-nl-research-portal` | 6 | NL Research Portal Update |
 
 Don't rename these slugs — other docs and the Gantt link to them by name.
+The same numbering also appears in each notebook's displayed title (e.g.
+`app_title="2. Metadata Quality Improvement"` and its `# 2. ...` heading) and
+in `metadata.json`'s `title` field, so the number stays visible even
+somewhere that only shows the title text (a browser tab, the index card),
+not just the directory listing. Because cell/variable names inside
+`notebook.py` can't start with a digit, they use a `themeNN_` prefix instead
+(e.g. `theme02_metadata_quality_placeholder_data`), not the bare slug — keep
+that prefix if you ever rename a theme's short name.
 
 ## Running a notebook preview
 

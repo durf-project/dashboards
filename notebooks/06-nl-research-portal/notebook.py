@@ -11,7 +11,7 @@
 import marimo
 
 __generated_with = "0.20.4"
-app = marimo.App(width="full", app_title="NL Research Portal Update")
+app = marimo.App(width="full", app_title="6. NL Research Portal Update")
 
 
 @app.cell
@@ -26,9 +26,7 @@ def imports():
 @app.cell
 def intro(mo):
     mo.md("""
-    # NL Research Portal Update
-
-    **DURF theme 6.**
+    # 6. NL Research Portal Update
 
     ## Goal
 
@@ -51,7 +49,7 @@ def intro(mo):
     **Status: placeholder.** The cells below produce an empty table with the
     columns this dashboard needs -- there is no harvesting or reporting
     pipeline from participating institutions yet. Once one exists, replace
-    `nl-research-portal_placeholder_data` with a real query and the table/chart below
+    `theme06_nl_research_portal_placeholder_data` with a real query and the table/chart below
     will pick it up unchanged. See `AGENTS.md` for the convention this
     notebook follows.
     """)
@@ -59,10 +57,10 @@ def intro(mo):
 
 
 @app.cell
-def nl_research_portal_placeholder_data(pd):
+def theme06_nl_research_portal_placeholder_data(pd):
     # TODO: replace with a real query once institutions report this data.
     # Columns match "Datapoints needed from participating institutions" above.
-    nl_research_portal_placeholder_data = pd.DataFrame(
+    theme06_nl_research_portal_placeholder_data = pd.DataFrame(
         {
             "institution": pd.array([], dtype="string"),
             "surfconext_sso_enabled": pd.array([], dtype="boolean"),
@@ -71,19 +69,19 @@ def nl_research_portal_placeholder_data(pd):
             "snapshot_date": pd.array([], dtype="string")
         }
     )
-    return (nl_research_portal_placeholder_data,)
+    return (theme06_nl_research_portal_placeholder_data,)
 
 
 @app.cell
-def nl_research_portal_table(nl_research_portal_placeholder_data, mo):
-    mo.ui.table(nl_research_portal_placeholder_data)
+def theme06_nl_research_portal_table(theme06_nl_research_portal_placeholder_data, mo):
+    mo.ui.table(theme06_nl_research_portal_placeholder_data)
     return
 
 
 @app.cell
-def nl_research_portal_chart(alt, nl_research_portal_placeholder_data, mo):
-    nl_research_portal_chart = (
-        alt.Chart(nl_research_portal_placeholder_data)
+def theme06_nl_research_portal_chart(alt, theme06_nl_research_portal_placeholder_data, mo):
+    theme06_nl_research_portal_chart = (
+        alt.Chart(theme06_nl_research_portal_placeholder_data)
         .mark_bar()
         .encode(
             x=alt.X("institution:N", title=None),
@@ -91,7 +89,7 @@ def nl_research_portal_chart(alt, nl_research_portal_placeholder_data, mo):
         )
         .properties(title="Needs-assessment score by institution (placeholder -- no data yet)")
     )
-    mo.ui.altair_chart(nl_research_portal_chart)
+    mo.ui.altair_chart(theme06_nl_research_portal_chart)
     return
 
 

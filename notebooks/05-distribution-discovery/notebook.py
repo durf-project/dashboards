@@ -11,7 +11,7 @@
 import marimo
 
 __generated_with = "0.20.4"
-app = marimo.App(width="full", app_title="Metadata Distribution & Discovery Optimization")
+app = marimo.App(width="full", app_title="5. Metadata Distribution & Discovery Optimization")
 
 
 @app.cell
@@ -26,9 +26,7 @@ def imports():
 @app.cell
 def intro(mo):
     mo.md("""
-    # Metadata Distribution & Discovery Optimization
-
-    **DURF theme 5.**
+    # 5. Metadata Distribution & Discovery Optimization
 
     ## Goal
 
@@ -51,7 +49,7 @@ def intro(mo):
     **Status: placeholder.** The cells below produce an empty table with the
     columns this dashboard needs -- there is no harvesting or reporting
     pipeline from participating institutions yet. Once one exists, replace
-    `distribution-discovery_placeholder_data` with a real query and the table/chart below
+    `theme05_distribution_discovery_placeholder_data` with a real query and the table/chart below
     will pick it up unchanged. See `AGENTS.md` for the convention this
     notebook follows.
     """)
@@ -59,10 +57,10 @@ def intro(mo):
 
 
 @app.cell
-def distribution_discovery_placeholder_data(pd):
+def theme05_distribution_discovery_placeholder_data(pd):
     # TODO: replace with a real query once institutions report this data.
     # Columns match "Datapoints needed from participating institutions" above.
-    distribution_discovery_placeholder_data = pd.DataFrame(
+    theme05_distribution_discovery_placeholder_data = pd.DataFrame(
         {
             "repo": pd.array([], dtype="string"),
             "scholar_guideline_compliance_pct": pd.array([], dtype="Float64"),
@@ -71,19 +69,19 @@ def distribution_discovery_placeholder_data(pd):
             "snapshot_date": pd.array([], dtype="string")
         }
     )
-    return (distribution_discovery_placeholder_data,)
+    return (theme05_distribution_discovery_placeholder_data,)
 
 
 @app.cell
-def distribution_discovery_table(distribution_discovery_placeholder_data, mo):
-    mo.ui.table(distribution_discovery_placeholder_data)
+def theme05_distribution_discovery_table(theme05_distribution_discovery_placeholder_data, mo):
+    mo.ui.table(theme05_distribution_discovery_placeholder_data)
     return
 
 
 @app.cell
-def distribution_discovery_chart(alt, distribution_discovery_placeholder_data, mo):
-    distribution_discovery_chart = (
-        alt.Chart(distribution_discovery_placeholder_data)
+def theme05_distribution_discovery_chart(alt, theme05_distribution_discovery_placeholder_data, mo):
+    theme05_distribution_discovery_chart = (
+        alt.Chart(theme05_distribution_discovery_placeholder_data)
         .mark_bar()
         .encode(
             x=alt.X("repo:N", title=None),
@@ -91,7 +89,7 @@ def distribution_discovery_chart(alt, distribution_discovery_placeholder_data, m
         )
         .properties(title="Google Scholar guideline compliance, by repo (placeholder -- no data yet)")
     )
-    mo.ui.altair_chart(distribution_discovery_chart)
+    mo.ui.altair_chart(theme05_distribution_discovery_chart)
     return
 
 

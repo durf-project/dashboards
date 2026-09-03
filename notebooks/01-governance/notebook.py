@@ -11,7 +11,7 @@
 import marimo
 
 __generated_with = "0.20.4"
-app = marimo.App(width="full", app_title="Governance of the Federation and NL Research Portal")
+app = marimo.App(width="full", app_title="1. Governance of the Federation and NL Research Portal")
 
 
 @app.cell
@@ -26,9 +26,7 @@ def imports():
 @app.cell
 def intro(mo):
     mo.md("""
-    # Governance of the Federation and NL Research Portal
-
-    **DURF theme 1.**
+    # 1. Governance of the Federation and NL Research Portal
 
     ## Goal
 
@@ -50,7 +48,7 @@ def intro(mo):
     **Status: placeholder.** The cells below produce an empty table with the
     columns this dashboard needs -- there is no harvesting or reporting
     pipeline from participating institutions yet. Once one exists, replace
-    `governance_placeholder_data` with a real query and the table/chart below
+    `theme01_governance_placeholder_data` with a real query and the table/chart below
     will pick it up unchanged. See `AGENTS.md` for the convention this
     notebook follows.
     """)
@@ -58,10 +56,10 @@ def intro(mo):
 
 
 @app.cell
-def governance_placeholder_data(pd):
+def theme01_governance_placeholder_data(pd):
     # TODO: replace with a real query once institutions report this data.
     # Columns match "Datapoints needed from participating institutions" above.
-    governance_placeholder_data = pd.DataFrame(
+    theme01_governance_placeholder_data = pd.DataFrame(
         {
             "institution": pd.array([], dtype="string"),
             "nameco_status": pd.array([], dtype="string"),
@@ -70,19 +68,19 @@ def governance_placeholder_data(pd):
             "last_governance_review": pd.array([], dtype="string")
         }
     )
-    return (governance_placeholder_data,)
+    return (theme01_governance_placeholder_data,)
 
 
 @app.cell
-def governance_table(governance_placeholder_data, mo):
-    mo.ui.table(governance_placeholder_data)
+def theme01_governance_table(theme01_governance_placeholder_data, mo):
+    mo.ui.table(theme01_governance_placeholder_data)
     return
 
 
 @app.cell
-def governance_chart(alt, governance_placeholder_data, mo):
-    governance_chart = (
-        alt.Chart(governance_placeholder_data)
+def theme01_governance_chart(alt, theme01_governance_placeholder_data, mo):
+    theme01_governance_chart = (
+        alt.Chart(theme01_governance_placeholder_data)
         .mark_bar()
         .encode(
             x=alt.X("institution:N", title=None),
@@ -90,7 +88,7 @@ def governance_chart(alt, governance_placeholder_data, mo):
         )
         .properties(title="Symposium attendance by institution (placeholder -- no data yet)")
     )
-    mo.ui.altair_chart(governance_chart)
+    mo.ui.altair_chart(theme01_governance_chart)
     return
 
 
