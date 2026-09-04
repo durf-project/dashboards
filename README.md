@@ -11,36 +11,32 @@ This repo is the operational companion to that roadmap: where the Gantt
 chart shows what's planned, these dashboards are meant to show what's
 actually happening.
 
-## Status: placeholders
+## Status: live, usually sparse
 
-**None of the six dashboards has real data wired in yet.** Each one states,
-in its own intro section:
-
-1. the theme's **goal**,
-2. what this dashboard is meant to **monitor**, and
-3. the concrete **datapoints needed from participating institutions** to do
-   that monitoring.
-
-...and then a clearly-marked placeholder query that returns an empty/sample
-table with the right shape, so the notebook runs end-to-end today. Filling
-one in is a matter of pointing that query at a real data source once the
-corresponding harvesting or reporting pipeline exists — the goal/monitor/
-datapoints narrative shouldn't need to change.
+Each dashboard's intro section states the theme's **goal**, what it's meant
+to **monitor**, and the concrete **datapoints needed from participating
+institutions**. Below that, the table and chart read that theme's
+`data.csv` straight from GitHub on every page load — so a dashboard with no
+submissions yet just renders an empty table, not an error, and a new
+submission needs no site rebuild to appear, only a page reload (GitHub's
+raw-file cache can lag a few minutes).
 
 ## Submitting data (institutions)
 
-Rather than build a harvesting pipeline before any real data exists, the
-first cut is deliberately manual: each theme has a
+Each theme has a
 [GitHub Issue Form](https://github.com/durf-project/dashboards/issues/new/choose)
 with one field per datapoint that theme's dashboard needs. Open one, fill in
 what you know for your institution or repository, and submit — no account
 setup beyond a free GitHub login, no code.
 
-Submissions are triaged by hand for now: a maintainer transcribes accepted
-issues into the matching notebook's placeholder data as a pull request, which
-is easy to review and keeps a clear paper trail (issue → PR → dashboard).
-Automating that transcription — or the harvesting itself — is future work,
-once it's clear the manual version is worth the automation.
+From there it's fully automatic: `.github/workflows/ingest-submission.yml`
+parses the issue, appends one row to the matching `notebooks/<slug>/data.csv`
+(recording the submitter's GitHub username, the issue number, and a
+timestamp alongside the data), commits it to `main`, and closes the issue —
+no manual transcription step. Every row keeps its `submitted_by`; sort or
+filter on it in the dashboard's table to spot bad or malicious entries. To
+correct a mistake, edit the CSV directly and open a PR — see `AGENTS.md` for
+the full pipeline and how to add validation later if spam becomes a problem.
 
 ## The six dashboards
 

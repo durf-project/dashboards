@@ -16,11 +16,80 @@ body:
         Fill in what you know; leave the rest blank. One issue per institution
         — if your institution already has an open submission, comment on it
         instead of opening a new one.
-  - type: input
+  - type: dropdown
     id: institution
     attributes:
       label: Institution name
-      placeholder: e.g. TU Delft
+      description: >-
+        Pick from SURF's member institutions (from
+        surf-ori/nl-research-organisations), grouped and alphabetized:
+        universities, then medical centers, then institutes, then
+        universities of applied sciences, then other. Choose "Other / not
+        listed here" and name yours in a comment on this issue if it's
+        missing.
+      options:
+        - "Delft University of Technology"
+        - "Erasmus University Rotterdam"
+        - "Leiden University"
+        - "Maastricht University"
+        - "Open University of the Netherlands"
+        - "Radboud University Nijmegen"
+        - "University of Amsterdam"
+        - "University of Groningen"
+        - "University of Twente"
+        - "Vrije Universiteit Amsterdam"
+        - "Wageningen University & Research"
+        - "Amsterdam University Medical Centers"
+        - "Erasmus MC"
+        - "Leiden University Medical Center"
+        - "Maastricht University Medical Centre"
+        - "Radboud University Medical Center"
+        - "University Medical Center Groningen"
+        - "Dutch Research Council"
+        - "National Institute for Public Health and the Environment"
+        - "Naturalis Biodiversity Center"
+        - "Netherlands Comprehensive Cancer Organisation"
+        - "Netherlands Environmental Assessment Agency"
+        - "Netherlands eScience Center"
+        - "Royal Netherlands Academy of Arts and Sciences"
+        - "Royal Netherlands Meteorological Institute"
+        - "ZonMw, The Dutch Organisation for knowledge and innovation in health, healthcare and well-being"
+        - "Aeres University of Applied Sciences"
+        - "Amsterdam University of Applied Sciences"
+        - "Amsterdam University of the Arts"
+        - "ArtEZ University of the Arts"
+        - "Avans University of Applied Sciences"
+        - "Codarts Rotterdam"
+        - "Design Academy Eindhoven"
+        - "Fontys University of Applied Sciences"
+        - "Gerrit Rietveld Academy"
+        - "HAN University of Applied Sciences"
+        - "Hanze University of Applied Sciences"
+        - "Hogeschool de Kempel"
+        - "Hogeschool iPabo"
+        - "Inholland University of Applied Sciences"
+        - "Iselinge Hogeschool"
+        - "Katholieke Pabo Zwolle"
+        - "Marnix Academie"
+        - "NHL Stenden University of Applied Sciences"
+        - "Rotterdam University of Applied Sciences"
+        - "The Hague University of Applied Sciences"
+        - "University of Applied Sciences Utrecht"
+        - "University of the Arts Utrecht"
+        - "Van Hall Larenstein University of Applied Sciences"
+        - "Viaa Christian University of Applied Sciences"
+        - "Windesheim University of Applied Sciences"
+        - "Zuyd University of Applied Sciences"
+        - "Alfa College"
+        - "Curio"
+        - "Koning Willem I College"
+        - "Nationaal Archief of the Netherlands"
+        - "National Library of the Netherlands"
+        - "Netherlands Organisation for Applied Scientific Research"
+        - "Politieacademie"
+        - "SURF"
+        - "Scalda"
+        - "Other / not listed here"
     validations:
       required: true
   - type: dropdown
@@ -53,7 +122,8 @@ body:
     id: symposium_attendance
     attributes:
       label: National Symposium / General Assembly attendance
-      description: 'Number of attendees per year, e.g. "2026: 2"'
+      description: Number of attendees at the most recent event
+      placeholder: e.g. 2
     validations:
       required: false
   - type: input

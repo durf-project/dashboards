@@ -45,47 +45,74 @@ def intro(mo):
 
     ---
 
-    **Status: placeholder.** The cells below produce an empty table with the
-    columns this dashboard needs -- there is no harvesting or reporting
-    pipeline from participating institutions yet. Once one exists, replace
-    `theme03_full_text_capture_placeholder_data` with a real query and the table/chart below
-    will pick it up unchanged. See `AGENTS.md` for the convention this
-    notebook follows.
+    **Status: live, usually sparse.** The table and chart below read
+    `data.csv` straight from GitHub on every page load -- a new submission
+    needs no site rebuild, just a page reload (GitHub's raw-file cache can
+    lag a few minutes behind). Data arrives through the
+    [03-full-text-capture Issue Form](https://github.com/durf-project/dashboards/issues/new?template=03-full-text-capture-data.yml),
+    auto-ingested by `.github/workflows/ingest-submission.yml` -- no manual
+    transcription step. `submitted_by` on each row is the submitter's GitHub
+    username; sort or filter that column in the table to spot bad entries.
+    Select rows in the table to filter the chart to just those. See
+    `AGENTS.md` for the full pipeline.
     """)
     return
 
 
 @app.cell
-def theme03_full_text_capture_placeholder_data(pd):
-    # TODO: replace with a real query once institutions report this data.
-    # Columns match "Datapoints needed from participating institutions" above.
-    theme03_full_text_capture_placeholder_data = pd.DataFrame(
+def theme03_full_text_capture_data(pd):
+    # Fetched fresh on every load from the data.csv that
+    # .github/scripts/ingest_issue.py appends to -- see the intro above.
+    # No validation happened on the way in, so coerce numeric columns with
+    # errors="coerce" (bad values become NaN) rather than trust the input.
+    _url = (
+        "https://raw.githubusercontent.com/durf-project/dashboards/main/"
+        "notebooks/03-full-text-capture/data.csv"
+    )
+    _empty = pd.DataFrame(
         {
             "repo": pd.array([], dtype="string"),
             "total_records": pd.array([], dtype="Int64"),
             "records_with_local_pdf": pd.array([], dtype="Int64"),
-            "snapshot_date": pd.array([], dtype="string")
+            "snapshot_date": pd.array([], dtype="string"),
+            "submitted_by": pd.array([], dtype="string"),
+            "submitted_via_issue": pd.array([], dtype="Int64"),
+            "submitted_at": pd.array([], dtype="string")
         }
     )
-    return (theme03_full_text_capture_placeholder_data,)
+    try:
+        theme03_full_text_capture_data = pd.read_csv(_url, dtype="string")
+    except Exception:
+        theme03_full_text_capture_data = _empty
+    else:
+        for _col, _dtype in {"total_records": "Int64", "records_with_local_pdf": "Int64", "submitted_via_issue": "Int64"}.items():
+            theme03_full_text_capture_data[_col] = pd.to_numeric(
+                theme03_full_text_capture_data[_col], errors="coerce"
+            ).astype(_dtype)
+        theme03_full_text_capture_data = theme03_full_text_capture_data.reindex(columns=_empty.columns)
+    return (theme03_full_text_capture_data,)
 
 
 @app.cell
-def theme03_full_text_capture_table(theme03_full_text_capture_placeholder_data, mo):
-    mo.ui.table(theme03_full_text_capture_placeholder_data)
-    return
+def theme03_full_text_capture_table(theme03_full_text_capture_data, mo):
+    theme03_full_text_capture_table = mo.ui.table(theme03_full_text_capture_data, label="Submitted data")
+    theme03_full_text_capture_table
+    return (theme03_full_text_capture_table,)
 
 
 @app.cell
-def theme03_full_text_capture_chart(alt, theme03_full_text_capture_placeholder_data, mo):
+def theme03_full_text_capture_chart(alt, theme03_full_text_capture_data, theme03_full_text_capture_table, mo):
+    _shown = (
+        theme03_full_text_capture_table.value if len(theme03_full_text_capture_table.value) else theme03_full_text_capture_data
+    )
     theme03_full_text_capture_chart = (
-        alt.Chart(theme03_full_text_capture_placeholder_data)
+        alt.Chart(_shown)
         .mark_bar()
         .encode(
             x=alt.X("repo:N", title=None),
             y=alt.Y("records_with_local_pdf:Q"),
         )
-        .properties(title="Records with a locally-hosted full text, by repo (placeholder -- no data yet)")
+        .properties(title="Records with a locally-hosted full text, by repo")
     )
     mo.ui.altair_chart(theme03_full_text_capture_chart)
     return
@@ -94,12 +121,12 @@ def theme03_full_text_capture_chart(alt, theme03_full_text_capture_placeholder_d
 @app.cell
 def outro(mo):
     mo.md("""
-    ## Next step
+    ## Add or correct data
 
-    Wire up the real data source for this theme (see `AGENTS.md` ->
-    "Data access" for what's already available versus what has to come
-    from participating institutions), then swap it into the placeholder
-    query cell above.
+    Submit new data via the
+    [03-full-text-capture Issue Form](https://github.com/durf-project/dashboards/issues/new?template=03-full-text-capture-data.yml).
+    To fix a mistake in an existing row, edit `notebooks/03-full-text-capture/data.csv`
+    directly and open a PR -- see `AGENTS.md`.
     """)
     return
 
