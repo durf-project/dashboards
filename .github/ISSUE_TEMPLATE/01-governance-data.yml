@@ -53,7 +53,8 @@ body:
     id: symposium_attendance
     attributes:
       label: National Symposium / General Assembly attendance
-      description: 'Number of attendees per year, e.g. "2026: 2"'
+      description: Number of attendees at the most recent event
+      placeholder: e.g. 2
     validations:
       required: false
   - type: input

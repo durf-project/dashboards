@@ -1,0 +1,61 @@
+# Fully automates turning a data-submission Issue Form into a row in the
+# matching theme's data.csv -- see AGENTS.md "Data submission" for the
+# full pipeline this is one half of (the notebook side does the other half:
+# fetching data.csv live on each page load).
+name: Ingest data-submission issue
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  ingest:
+    if: contains(github.event.issue.labels.*.name, 'data-submission')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Ingest submission
+        id: ingest
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_LABELS_JSON: ${{ toJson(github.event.issue.labels.*.name) }}
+        run: python3 .github/scripts/ingest_issue.py
+
+      - name: Commit and push
+        if: steps.ingest.outputs.slug != ''
+        run: |
+          git config user.name "durf-dashboards-bot"
+          git config user.email "actions@github.com"
+          git add notebooks/*/data.csv
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "Ingest submission from issue #${{ github.event.issue.number }} (@${{ github.event.issue.user.login }})"
+            git push origin HEAD:main
+          fi
+
+      - name: Comment and close issue
+        if: steps.ingest.outputs.slug != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --repo "${{ github.repository }}" \
+            --body "Added to the [${{ steps.ingest.outputs.slug }} dashboard](https://durf-project.github.io/dashboards/${{ steps.ingest.outputs.slug }}.html) ✅ (as \`@${{ github.event.issue.user.login }}\`, for filtering later if needed)."
+          gh issue close "${{ github.event.issue.number }}" --repo "${{ github.repository }}" --reason completed
+
+      - name: Flag unrecognized theme
+        if: steps.ingest.outputs.slug == ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --repo "${{ github.repository }}" \
+            --body "Couldn't tell which dashboard this is for (no matching theme label). A maintainer will need to add this one by hand."

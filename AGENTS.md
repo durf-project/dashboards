@@ -6,12 +6,12 @@ Read this before doing anything else in this repo.
 
 Six [Marimo](https://marimo.io) notebooks, one per DURF theme, each tracking
 whether that theme's goal is being met across participating institutions.
-Every notebook currently under `notebooks/` is a **placeholder**: it states
-the goal, what to monitor, and what datapoints are needed, but has no real
-data wired in yet, because the harvesting/reporting pipeline from
-participating institutions doesn't exist yet. Filling one in means replacing
-its placeholder query with a real one once that data is available — the
-narrative markdown at the top of the notebook should not need to change.
+Every notebook states the goal, what it monitors, and what datapoints are
+needed, then reads that theme's `data.csv` live from GitHub on every page
+load — so a dashboard with zero submissions yet just renders an empty table,
+not an error. New data arrives fully automatically: an institution submits
+a GitHub Issue Form, `.github/workflows/ingest-submission.yml` appends it to
+the CSV, and the next page load picks it up — see "Data submission" below.
 
 This repo was seeded from
 [`surf-ori/ori-ai-crashcourse`](https://github.com/surf-ori/ori-ai-crashcourse),
@@ -34,6 +34,7 @@ scope changes there, update the matching notebook's intro cell to match.
 notebooks/<slug>/
 ├── notebook.py       # PEP 723 header, marimo.App(width="full", ...)
 ├── metadata.json      # title, image, authors[]
+├── data.csv           # submitted data; appended to by the ingest workflow
 └── public/            # screenshots, static assets referenced by metadata.json
 ```
 
@@ -62,8 +63,8 @@ in `metadata.json`'s `title` field, so the number stays visible even
 somewhere that only shows the title text (a browser tab, the index card),
 not just the directory listing. Because cell/variable names inside
 `notebook.py` can't start with a digit, they use a `themeNN_` prefix instead
-(e.g. `theme02_metadata_quality_placeholder_data`), not the bare slug — keep
-that prefix if you ever rename a theme's short name.
+(e.g. `theme02_metadata_quality_data`), not the bare slug — keep that prefix
+if you ever rename a theme's short name.
 
 ## Running a notebook preview
 
@@ -114,7 +115,7 @@ runtime `AttributeError`. Only `uv run` actually imports the notebook's cells.
 `.claude/skills/marimo-notebook/` has the full reference (SQL cells, reactivity,
 state, WASM export, deployment).
 
-## A placeholder notebook is not an empty one
+## A notebook with zero rows is not a broken one
 
 Every notebook here should already have, in its intro `mo.md()` cell:
 
@@ -125,33 +126,76 @@ Every notebook here should already have, in its intro `mo.md()` cell:
 3. **Datapoints needed from participating institutions** — a concrete list:
    per-institution counts, ratios, or status fields, not "relevant data".
 
-Below that, a clearly marked placeholder query cell (commented `# TODO:` or
-similar) that returns an empty/sample structure with the right columns,
-so the chart and table cells below it render without error today and only
-need the query swapped out once real data exists. Don't leave a placeholder
-notebook that fails `marimo check` or `uv run` — "not yet filled in" means
-the data source is missing, not that the notebook is broken.
+Below that, the data cell fetches that theme's `notebooks/<slug>/data.csv`
+straight from `raw.githubusercontent.com` on every load, wrapped in a
+`try/except` that falls back to an empty DataFrame with the right columns on
+any failure (network error, 404, malformed CSV) — so a theme with no
+submissions yet renders an empty table, not a crash. Numeric columns are
+coerced with `pd.to_numeric(..., errors="coerce")` after fetch, since
+`ingest_issue.py` writes whatever the submitter typed without validating it;
+a bad value becomes `NaN` in that row, not a broken notebook. Don't leave a
+notebook that fails `marimo check` or `uv run` — "no data yet" means the CSV
+is empty, not that the fetch/coercion logic is broken.
 
-## Data submission: GitHub Issue Forms, transcribed by hand
+The table below the data cell (`mo.ui.table(..., label="Submitted data")`)
+doubles as the moderation view: it includes `submitted_by` (the submitter's
+GitHub username), `submitted_via_issue`, and `submitted_at` for every row,
+sortable and filterable right there — that's how a maintainer spots a bad or
+malicious entry. The chart cell reads the table's current *selection*
+(`table.value`, falling back to the full dataset when nothing is selected)
+rather than the raw data directly, which is what makes selecting rows in the
+table filter the chart — keep that wiring if you touch either cell.
+
+## Data submission: GitHub Issue Forms, auto-ingested
 
 Each theme has a matching Issue Form in `.github/ISSUE_TEMPLATE/`
 (`01-governance-data.yml` … `06-nl-research-portal-data.yml`), one field per
 datapoint listed in that notebook's "Datapoints needed from participating
-institutions" section. Field `id`s are chosen to match the placeholder
-DataFrame's column names exactly (e.g. `02-metadata-quality-data.yml`'s
-`compliance_pct` field ↔ `theme02_metadata_quality_placeholder_data`'s
-`compliance_pct` column) — that's deliberate, so turning a submitted issue
-into a data row is a direct copy, not a mapping exercise.
+institutions" section. Field `id`s match the corresponding `data.csv`
+column names exactly (e.g. `02-metadata-quality-data.yml`'s `compliance_pct`
+field ↔ `notebooks/02-metadata-quality/data.csv`'s `compliance_pct` column).
 
-This is intentionally manual, not automated: an institution opens an issue
-via the form, a maintainer reviews it and adds the values as a row in the
-notebook's placeholder-data cell via a PR. If you're asked to do that
-transcription, read the issue, add one row to the `pd.DataFrame(...)` in the
-matching `notebooks/NN-<slug>/notebook.py`, and re-run `marimo check` /
-`uv run` on it before opening the PR — same bar as any other change to that
-cell. Don't build an auto-ingest Action for this unless asked; the point of
-starting manual is to learn what the real data looks like before automating
-around it.
+This is fully automated, on purpose (no manual curation step):
+`.github/workflows/ingest-submission.yml` fires on every opened issue
+carrying the `data-submission` label, runs `.github/scripts/ingest_issue.py`
+to parse the issue-form body (GitHub renders each field as a `### <label>`
+heading followed by the response) back into columns via the exact label
+text, appends one row — plus `submitted_by`, `submitted_via_issue`, and a
+UTC `submitted_at` timestamp — to the matching `data.csv`, commits and
+pushes straight to `main`, then comments on and closes the issue. No PR, no
+review gate, by design.
+
+If you touch either half of this pipeline, keep both in sync:
+
+- **The label→column mapping** lives in two places that must agree:
+  `ingest_issue.py`'s `THEME_FIELDS` (label text → column id) and each
+  notebook's data cell (the column list and which ones get numeric
+  coercion). Adding a form field means adding it to both, plus regenerating
+  `data.csv`'s header (see the generator note below) unless you edit it by
+  hand.
+- **Test the parser, not just the notebook.** `ingest_issue.py` has no test
+  suite; when you change it, run it locally against a fabricated issue body
+  (set `ISSUE_BODY`, `ISSUE_NUMBER`, `ISSUE_AUTHOR`, `ISSUE_LABELS_JSON`,
+  `GITHUB_OUTPUT` as env vars, per the workflow) before trusting it against
+  a real issue.
+- **This workflow only ever runs the copy of itself on `main`** — GitHub
+  evaluates `issues`-triggered workflows from the repository's default
+  branch, not from a PR branch, so you cannot test a change to
+  `ingest-submission.yml` or `ingest_issue.py` by opening a PR alone. Get it
+  right locally first, merge, then open a real test issue to confirm.
+- **No spam/validation gate exists yet.** A bad submission lands in the
+  chart automatically; the only defense today is that every row carries
+  `submitted_by` for a maintainer to spot and, if needed, delete by hand
+  (edit the CSV, open a PR). If that becomes a real problem, the next step
+  is adding a review gate (route the commit through a PR instead of pushing
+  straight to `main`) or basic shape validation in `ingest_issue.py` — don't
+  build either speculatively before it's actually needed.
+
+There's no `notebooks/<slug>/notebook.py` generator script checked into this
+repo (the six were built with one, then hand-maintained) — when adding a
+form field to an existing theme, edit the notebook's data cell, the Issue
+Form YAML, and `ingest_issue.py`'s `THEME_FIELDS` together, and add the new
+column to `data.csv`'s existing header by hand (don't touch existing rows).
 
 ## Skills live in `.claude/skills/`, and only there
 

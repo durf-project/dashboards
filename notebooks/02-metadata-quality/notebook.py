@@ -46,49 +46,76 @@ def intro(mo):
 
     ---
 
-    **Status: placeholder.** The cells below produce an empty table with the
-    columns this dashboard needs -- there is no harvesting or reporting
-    pipeline from participating institutions yet. Once one exists, replace
-    `theme02_metadata_quality_placeholder_data` with a real query and the table/chart below
-    will pick it up unchanged. See `AGENTS.md` for the convention this
-    notebook follows.
+    **Status: live, usually sparse.** The table and chart below read
+    `data.csv` straight from GitHub on every page load -- a new submission
+    needs no site rebuild, just a page reload (GitHub's raw-file cache can
+    lag a few minutes behind). Data arrives through the
+    [02-metadata-quality Issue Form](https://github.com/durf-project/dashboards/issues/new?template=02-metadata-quality-data.yml),
+    auto-ingested by `.github/workflows/ingest-submission.yml` -- no manual
+    transcription step. `submitted_by` on each row is the submitter's GitHub
+    username; sort or filter that column in the table to spot bad entries.
+    Select rows in the table to filter the chart to just those. See
+    `AGENTS.md` for the full pipeline.
     """)
     return
 
 
 @app.cell
-def theme02_metadata_quality_placeholder_data(pd):
-    # TODO: replace with a real query once institutions report this data.
-    # Columns match "Datapoints needed from participating institutions" above.
-    theme02_metadata_quality_placeholder_data = pd.DataFrame(
+def theme02_metadata_quality_data(pd):
+    # Fetched fresh on every load from the data.csv that
+    # .github/scripts/ingest_issue.py appends to -- see the intro above.
+    # No validation happened on the way in, so coerce numeric columns with
+    # errors="coerce" (bad values become NaN) rather than trust the input.
+    _url = (
+        "https://raw.githubusercontent.com/durf-project/dashboards/main/"
+        "notebooks/02-metadata-quality/data.csv"
+    )
+    _empty = pd.DataFrame(
         {
             "repo": pd.array([], dtype="string"),
             "compliance_pct": pd.array([], dtype="Float64"),
             "ror_pct": pd.array([], dtype="Float64"),
             "orcid_pct": pd.array([], dtype="Float64"),
             "doi_pct": pd.array([], dtype="Float64"),
-            "snapshot_date": pd.array([], dtype="string")
+            "snapshot_date": pd.array([], dtype="string"),
+            "submitted_by": pd.array([], dtype="string"),
+            "submitted_via_issue": pd.array([], dtype="Int64"),
+            "submitted_at": pd.array([], dtype="string")
         }
     )
-    return (theme02_metadata_quality_placeholder_data,)
+    try:
+        theme02_metadata_quality_data = pd.read_csv(_url, dtype="string")
+    except Exception:
+        theme02_metadata_quality_data = _empty
+    else:
+        for _col, _dtype in {"compliance_pct": "Float64", "ror_pct": "Float64", "orcid_pct": "Float64", "doi_pct": "Float64", "submitted_via_issue": "Int64"}.items():
+            theme02_metadata_quality_data[_col] = pd.to_numeric(
+                theme02_metadata_quality_data[_col], errors="coerce"
+            ).astype(_dtype)
+        theme02_metadata_quality_data = theme02_metadata_quality_data.reindex(columns=_empty.columns)
+    return (theme02_metadata_quality_data,)
 
 
 @app.cell
-def theme02_metadata_quality_table(theme02_metadata_quality_placeholder_data, mo):
-    mo.ui.table(theme02_metadata_quality_placeholder_data)
-    return
+def theme02_metadata_quality_table(theme02_metadata_quality_data, mo):
+    theme02_metadata_quality_table = mo.ui.table(theme02_metadata_quality_data, label="Submitted data")
+    theme02_metadata_quality_table
+    return (theme02_metadata_quality_table,)
 
 
 @app.cell
-def theme02_metadata_quality_chart(alt, theme02_metadata_quality_placeholder_data, mo):
+def theme02_metadata_quality_chart(alt, theme02_metadata_quality_data, theme02_metadata_quality_table, mo):
+    _shown = (
+        theme02_metadata_quality_table.value if len(theme02_metadata_quality_table.value) else theme02_metadata_quality_data
+    )
     theme02_metadata_quality_chart = (
-        alt.Chart(theme02_metadata_quality_placeholder_data)
+        alt.Chart(_shown)
         .mark_bar()
         .encode(
             x=alt.X("repo:N", title=None),
             y=alt.Y("compliance_pct:Q"),
         )
-        .properties(title="OAI application-profile compliance by repo (placeholder -- no data yet)")
+        .properties(title="OAI application-profile compliance by repo")
     )
     mo.ui.altair_chart(theme02_metadata_quality_chart)
     return
@@ -97,12 +124,12 @@ def theme02_metadata_quality_chart(alt, theme02_metadata_quality_placeholder_dat
 @app.cell
 def outro(mo):
     mo.md("""
-    ## Next step
+    ## Add or correct data
 
-    Wire up the real data source for this theme (see `AGENTS.md` ->
-    "Data access" for what's already available versus what has to come
-    from participating institutions), then swap it into the placeholder
-    query cell above.
+    Submit new data via the
+    [02-metadata-quality Issue Form](https://github.com/durf-project/dashboards/issues/new?template=02-metadata-quality-data.yml).
+    To fix a mistake in an existing row, edit `notebooks/02-metadata-quality/data.csv`
+    directly and open a PR -- see `AGENTS.md`.
     """)
     return
 
