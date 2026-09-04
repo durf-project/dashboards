@@ -16,11 +16,77 @@ body:
         Fill in what you know; leave the rest blank. One issue per institution
         — if your institution already has an open submission, comment on it
         instead of opening a new one.
-  - type: input
+  - type: dropdown
     id: institution
     attributes:
       label: Institution name
-      placeholder: e.g. TU Delft
+      description: >-
+        Pick from SURF's member institutions (from
+        surf-ori/nl-research-organisations). Choose "Other / not listed
+        here" and name yours in a comment on this issue if it's missing.
+      options:
+        - "Aeres University of Applied Sciences"
+        - "Alfa College"
+        - "Amsterdam University Medical Centers"
+        - "Amsterdam University of Applied Sciences"
+        - "Amsterdam University of the Arts"
+        - "ArtEZ University of the Arts"
+        - "Avans University of Applied Sciences"
+        - "Codarts Rotterdam"
+        - "Curio"
+        - "Delft University of Technology"
+        - "Design Academy Eindhoven"
+        - "Dutch Research Council"
+        - "Erasmus MC"
+        - "Erasmus University Rotterdam"
+        - "Fontys University of Applied Sciences"
+        - "Gerrit Rietveld Academy"
+        - "HAN University of Applied Sciences"
+        - "Hanze University of Applied Sciences"
+        - "Hogeschool de Kempel"
+        - "Hogeschool iPabo"
+        - "Inholland University of Applied Sciences"
+        - "Iselinge Hogeschool"
+        - "Katholieke Pabo Zwolle"
+        - "Koning Willem I College"
+        - "Leiden University"
+        - "Leiden University Medical Center"
+        - "Maastricht University"
+        - "Maastricht University Medical Centre"
+        - "Marnix Academie"
+        - "NHL Stenden University of Applied Sciences"
+        - "Nationaal Archief of the Netherlands"
+        - "National Institute for Public Health and the Environment"
+        - "National Library of the Netherlands"
+        - "Naturalis Biodiversity Center"
+        - "Netherlands Comprehensive Cancer Organisation"
+        - "Netherlands Environmental Assessment Agency"
+        - "Netherlands Organisation for Applied Scientific Research"
+        - "Netherlands eScience Center"
+        - "Open University of the Netherlands"
+        - "Politieacademie"
+        - "Radboud University Medical Center"
+        - "Radboud University Nijmegen"
+        - "Rotterdam University of Applied Sciences"
+        - "Royal Netherlands Academy of Arts and Sciences"
+        - "Royal Netherlands Meteorological Institute"
+        - "SURF"
+        - "Scalda"
+        - "The Hague University of Applied Sciences"
+        - "University Medical Center Groningen"
+        - "University of Amsterdam"
+        - "University of Applied Sciences Utrecht"
+        - "University of Groningen"
+        - "University of Twente"
+        - "University of the Arts Utrecht"
+        - "Van Hall Larenstein University of Applied Sciences"
+        - "Viaa Christian University of Applied Sciences"
+        - "Vrije Universiteit Amsterdam"
+        - "Wageningen University & Research"
+        - "Windesheim University of Applied Sciences"
+        - "ZonMw, The Dutch Organisation for knowledge and innovation in health, healthcare and well-being"
+        - "Zuyd University of Applied Sciences"
+        - "Other / not listed here"
     validations:
       required: true
   - type: dropdown

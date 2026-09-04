@@ -155,21 +155,28 @@ institutions" section. Field `id`s match the corresponding `data.csv`
 column names exactly (e.g. `02-metadata-quality-data.yml`'s `compliance_pct`
 field ↔ `notebooks/02-metadata-quality/data.csv`'s `compliance_pct` column).
 
-**The `repo` field (themes 2–5) is a closed dropdown, not free text** — 149
-options: the 148 unique `Name` values from
-[`surf-ori/dutch-sources`](https://github.com/surf-ori/dutch-sources)'s
-`data/nl_orgs_openaire_datasources.xlsx` (HTML entities decoded, non-breaking
-spaces and stray whitespace normalized, deduplicated), plus a trailing
-`"Other / not listed here"` fallback for anything missing from that list.
-This is deliberate: it's what stops "TU Delft Repository," "TU Delft," and
-"Delft University of Technology" from being recorded as three different
-repos. `institution` (themes 1 and 6) stays free text on purpose — those
-themes are about the whole institution, a broader and fuzzier unit than a
-specific OpenAIRE-indexed datasource, and that source file doesn't cover it.
-To refresh the list after that source file changes: re-download it, dedupe
-`Name` on the same normalization, keep the `"Other / not listed here"`
-fallback last, and update all four `options:` blocks identically — there's
-no script for this, it was a one-off Python transform run by hand.
+**The `repo` field (themes 2–5) and `institution` field (theme 1) are
+closed dropdowns, not free text** — this is deliberate: it's what stops "TU
+Delft Repository," "TU Delft," and "Delft University of Technology" from
+being recorded as three different things. Each has an `"Other / not listed
+here"` fallback, last in the list, for anything missing from its source:
+
+- `repo` — 149 options: the 148 unique `Name` values from
+  [`surf-ori/dutch-sources`](https://github.com/surf-ori/dutch-sources)'s
+  `data/nl_orgs_openaire_datasources.xlsx` (HTML entities decoded,
+  non-breaking spaces and stray whitespace normalized, deduplicated).
+- `institution` (theme 1 only — **theme 6 still uses free text**, not yet
+  asked for) — 62 options: the 61 organisations with `is_surf_member = True`
+  in
+  [`surf-ori/nl-research-organisations`](https://github.com/surf-ori/nl-research-organisations)'s
+  `data/nl_research_orgs.csv`.
+
+To refresh either list after its source changes: re-download the source,
+rebuild the option list with the same filter/normalization, keep the
+`"Other / not listed here"` fallback last, and update every `options:` block
+that uses that list identically (four files for `repo`, currently one for
+`institution`) — there's no script for this, each was a one-off Python
+transform run by hand.
 
 This is fully automated, on purpose (no manual curation step):
 `.github/workflows/ingest-submission.yml` fires on every opened issue
