@@ -25,6 +25,7 @@ The exported files are placed in --output-dir (default: _site).
 # ///
 
 import json
+import shutil
 import subprocess
 from pathlib import Path
 from typing import List, Union
@@ -61,6 +62,21 @@ def _export_html_wasm(notebook_path: Path, output_dir: Path, format: str) -> boo
         return False
 
 
+def _export_static(notebook_dir: Path, output_dir: Path) -> bool:
+    """Copy a pre-rendered static.html verbatim, instead of exporting notebook.py with marimo."""
+    source_file = notebook_dir / "static.html"
+    output_file = output_dir / Path(notebook_dir.name).with_suffix(".html")
+
+    if not source_file.exists():
+        logger.error(f'format "static" declared for {notebook_dir} but {source_file} is missing')
+        return False
+
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    logger.info(f"Copying {source_file} to {output_file} as static")
+    shutil.copyfile(source_file, output_file)
+    return True
+
+
 def _get_metadata(notebook_dir: Path) -> dict:
     with open(notebook_dir / "metadata.json") as f:
         metadata = json.load(f)
@@ -83,7 +99,11 @@ def _export(folder: Path, output_dir: Path) -> List[dict]:
     notebook_data = []
     for notebook_dir in notebook_dirs:
         metadata = _get_metadata(notebook_dir)
-        if _export_html_wasm(notebook_dir / "notebook.py", output_dir, metadata["format"]):
+        if metadata["format"] == "static":
+            exported = _export_static(notebook_dir, output_dir)
+        else:
+            exported = _export_html_wasm(notebook_dir / "notebook.py", output_dir, metadata["format"])
+        if exported:
             notebook_data.append(metadata)
 
     logger.info(f"Successfully exported {len(notebook_data)} out of {len(notebook_dirs)} notebooks")
