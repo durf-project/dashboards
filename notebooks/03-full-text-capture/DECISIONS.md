@@ -218,10 +218,106 @@ Options if live (or at least "refresh on load") is wanted later:
 5. **Refresh cadence** — no decision made yet on how often this should be
    regenerated once it's not just a PoC. Depends on how DURF wants to use it
    (one-off report vs. living dashboard).
+6. **OA Switchboard business case is a first pass, not a validated figure.** The
+   370k/216k numbers in §9 rest on an approximate publisher-name match and a cost
+   rate sourced from one institution's experience with a different workflow
+   (Taverne retro-opt-out, not publisher-PDF-capture specifically). Treat the
+   dashboard's cost estimates as a starting point for discussion, not a number to
+   put in a funding request without someone sanity-checking the assumptions below.
 
 ---
 
-## 8. Files
+## 9. OA Switchboard automation business case (added 2026-10-01)
+
+Added to investigate whether OA Switchboard could build a PDF-capture service for
+CRIS/repositories, and whether the volume from its partner publishers would justify
+the engineering and legal effort (publisher agreements) versus just leaving that
+slice of the backlog to manual capture.
+
+### What was added
+- **Filter: "Automation exploration routes" → "via OA Switchboard"** — a single
+  on/off toggle (off by default, unlike every other filter which is a multi-select
+  defaulting to "everything selected"). When on, restricts the whole dashboard to
+  publications whose first listed publisher matches an OA Switchboard participant.
+- **New data dimension: `oa_switchboard`** (`"OA Switchboard partner"` /
+  `"Not a partner"`), added to the aggregated fact table alongside the existing six
+  dimensions (now 8 total, `dashboard_data_v4.json`, 100,566 pre-aggregation rows →
+  the same dictionary-encoding approach as before).
+- **KPI: "Est. manual capture cost"** — inserted between "No file" and "Taverne
+  license". Shows hours and an indicative € figure for the currently-filtered
+  "no file" backlog, with a live-editable €/hour input (defaults to €50) so a given
+  institution can plug in its own rate.
+- **Chart: "Estimated manual capture cost per year"** — same cost math, broken out
+  by publication year, so an institution can decide how many years of backlog fit a
+  given budget, filtered the same way as the KPI.
+- Both the KPI and the chart force `file_status = "No file"` internally regardless of
+  what the File status filter is set to (there's no sensible "capture cost" for
+  records that already have a file), while still respecting every other active
+  filter (institution, publication type, year range, open access status, license,
+  publisher, and the new OA Switchboard toggle).
+- Query tooltips updated throughout: the OA Switchboard toggle is now a first-class
+  entry in the dynamic `WHERE`-clause builder (`CLAUSE_BUILDERS.oa_switchboard`), so
+  *every* existing chart's tooltip correctly reflects the toggle when it's on, not
+  just the two new ones.
+
+### Publisher matching logic
+`OASB_PATTERNS` in `app.js` (51 case-insensitive substrings, one per OA Switchboard
+participant — live and "preparing to go live" are **not** distinguished, both count)
+is matched against the same raw `cerif:Publishers` first-name field used elsewhere.
+Source: <https://www.oaswitchboard.org/participants>, checked 2026-10-01. This is
+independent of, and uses a different (coarser) matching strategy than, the existing
+top-35 Publisher-bucket normalization — a publication can be tagged
+"OA Switchboard partner" even if its specific publisher isn't one of the 35 broken
+out individually in the Publisher filter/chart.
+
+### Headline numbers (full dataset, 1995–2025, no other filters applied)
+- 370,199 publications (19.4% of all 1,912,504 in-scope records) matched an OA
+  Switchboard partner.
+- Of those, 216,576 have no file — **~17% of the entire NL "no file" backlog**
+  (1,277,665 records) sits with publishers OA Switchboard already has a
+  relationship with.
+- 11 of the 51 OA Switchboard participants were already in the dashboard's
+  top-35-by-volume Publisher bucket: Wiley, Oxford University Press,
+  Taylor & Francis, IEEE, American Chemical Society, BMJ Publishing Group,
+  Cambridge University Press, Frontiers Media, PLOS, Brill, American Institute of
+  Physics. The other 40 participants (eLife, PNAS, Royal Society of Chemistry,
+  De Gruyter, MDPI, etc.) only show up through the new `oa_switchboard` flag, not
+  as individually-named bars in the Publisher chart.
+
+### Cost assumption — read this before quoting the numbers anywhere
+7 minutes/record, and the resulting €/hr figures, come entirely from one
+institution's account of their 2023 Taverne retro-opt-out project (~450 journal
+articles ≈ 52 hours of OA-team time) — see the pasted Dutch conversation this
+feature was built from. Important caveats carried into the dashboard's own
+tooltips and background panel, but worth restating here:
+- That was a *different workflow* (opt-out notice + manual deposit of
+  already-licensed material) from what's being costed here (sourcing a PDF from a
+  publisher relationship, which is what an OA Switchboard service would actually
+  do). Treat the rate as a rough proxy, not a direct measurement of the thing being
+  proposed.
+- It's evidenced for **journal articles only**. The source conversation explicitly
+  flags that book chapters take "much more effort" per record, with no number
+  given. Applying 7 min/record to non-journal-article types (the dashboard doesn't
+  stop you from doing this) will understate the true cost — use the Publication
+  type filter to scope to journal articles for a defensible number.
+- It's one institution's internal estimate, not a sector benchmark. No attempt was
+  made to find a second data point.
+
+### Still open
+- Should "preparing to go live" OA Switchboard participants (6 of the 51) be
+  excluded or shown separately, rather than merged into the same toggle as the
+  45 already-live ones? Currently merged.
+- The manual-capture rate needs a better source, or at least a second institution's
+  numbers, before this goes into an actual funding ask.
+- No attempt was made to estimate the *automation* side of the cost-benefit (what
+  it would cost OA Switchboard to build and maintain this, or what licensing
+  renegotiation with 51 publishers would take) — only the manual-alternative side is
+  quantified here. The business case needs both sides before it's actually a
+  business case.
+
+---
+
+## 10. Files
 
 - `03-full-text-capture.html` / `durf_fulltext_monitor.html` — the dashboard itself
   (identical content, two filenames for convenience). Self-contained, no external
