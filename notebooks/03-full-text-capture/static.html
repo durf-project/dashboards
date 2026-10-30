@@ -471,8 +471,8 @@
       <div class="canvas-wrap"><canvas id="chart-filestatus-year"></canvas></div>
     </div>
     <div class="panel chart-card">
-      <h2><span class="h2-title">Open access status<span class="info-badge" data-q="oa"></span></span><span class="chart-actions" data-chart="oa"></span></h2>
-      <p class="desc">Distribution of publication-level access rights</p>
+      <h2><span class="h2-title">File status per open access status<span class="info-badge" data-q="filestatus-oa"></span></span><span class="chart-actions" data-chart="filestatus-oa"></span></h2>
+      <p class="desc">Open / embargoed / no file per open access status</p>
       <div class="canvas-wrap"><canvas id="chart-oa"></canvas></div>
     </div>
     <div class="panel chart-card">
@@ -480,12 +480,12 @@
       <p class="desc">First license of the first file per publication (Taverne highlighted separately)</p>
       <div class="canvas-wrap"><canvas id="chart-license"></canvas></div>
     </div>
-    <div class="panel chart-card expanded">
+    <div class="panel chart-card">
       <h2><span class="h2-title">File status per publication type<span class="info-badge" data-q="filestatus-type"></span></span><span class="chart-actions" data-chart="filestatus-type"></span></h2>
       <p class="desc">Open / embargoed / no file per publication type</p>
       <div class="canvas-wrap"><canvas id="chart-filestatus-type"></canvas></div>
     </div>
-    <div class="panel chart-card expanded">
+    <div class="panel chart-card">
       <h2><span class="h2-title">Publishers: percentage with file<span class="info-badge" data-q="publisher"></span></span><span class="chart-actions" data-chart="publisher"></span></h2>
       <p class="desc">Normalized publisher names (variants merged), broken down by file status like the institution chart above. Only publishers with at least 100 publications in the current selection. "No publisher" and "Other publisher" (long tail, not normalized) are excluded here. Sorted by share with an open file, low to high &mdash; candidates for further investigation appear at the top.</p>
       <div class="canvas-wrap" id="publisher-canvas-wrap" style="height:520px"><canvas id="chart-publisher"></canvas></div>
@@ -528,6 +528,7 @@
       filestatusInst: 'relative',
       filestatusYear: 'relative',
       filestatusType: 'relative',
+      filestatusOA: 'relative',
       publisher: 'relative'
     }
   };
@@ -778,14 +779,6 @@
         'FROM cris.publications\n' + w +
         'GROUP BY 1, 2\n' + 'ORDER BY 1, 2;';
     },
-    'oa': function(st){
-      var w = whereBlock(activeClauses(st));
-      return 'SELECT\n' +
-        '  ' + OA_CASE.split('\n').join('\n  ') + ' AS oa_status,\n' +
-        '  COUNT(*) AS n\n' +
-        'FROM cris.publications\n' + w +
-        'GROUP BY 1\n' + 'ORDER BY n DESC;';
-    },
     'license': function(st){
       var extra = activeClauses(st);
       var clauses = ['"cerif:FileLocations" IS NOT NULL'].concat(extra);
@@ -809,6 +802,15 @@
       var w = whereBlock(activeClauses(st));
       return 'SELECT\n' +
         '  "pubt:Type"."#text" AS pubtype,\n' +
+        '  ' + FS_CASE.split('\n').join('\n  ') + ' AS file_status,\n' +
+        '  COUNT(*) AS n\n' +
+        'FROM cris.publications\n' + w +
+        'GROUP BY 1, 2\n' + 'ORDER BY 1, 2;';
+    },
+    'filestatus-oa': function(st){
+      var w = whereBlock(activeClauses(st));
+      return 'SELECT\n' +
+        '  ' + OA_CASE.split('\n').join('\n  ') + ' AS oa_status,\n' +
         '  ' + FS_CASE.split('\n').join('\n  ') + ' AS file_status,\n' +
         '  COUNT(*) AS n\n' +
         'FROM cris.publications\n' + w +
@@ -1152,6 +1154,16 @@
 
   function baseGridOptions(){
     return {
+      // Without this, Chart.js's default maintainAspectRatio:true derives the
+      // canvas's actual rendered height from its WIDTH (aspectRatio, default
+      // 2:1) and ignores the .canvas-wrap height set in CSS/JS entirely -- so
+      // a chart in a narrower half-width column renders shorter than one at
+      // full width, silently autoSkipping axis labels (and, for a long list
+      // of categories, whole rows of bars) to fit. false makes Chart.js fill
+      // the container's actual height instead, which is what every one of
+      // these charts' heights (280px, the dynamic per-row tall charts, the
+      // dynamic publisher height) assumes.
+      maintainAspectRatio: false,
       scales: {
         x: { grid: { color: COLORS.grid }, ticks: { color: COLORS.muted, font:{size:11} } },
         y: { grid: { color: COLORS.grid }, ticks: { color: COLORS.muted, font:{size:11} }, beginAtZero: true }
@@ -1198,6 +1210,7 @@
         })
       },
       options: {
+        maintainAspectRatio: false,
         indexAxis: opts.horizontal ? 'y' : 'x',
         scales: opts.horizontal
           ? { x: isAbs ? countAxis : pctAxis, y: catAxis }
@@ -1331,34 +1344,17 @@
       })
     });
 
-    // --- chart 4: open access status (horizontal bar, like File status per institution) ---
-    var byOA = sumBy(rs, function(r){ return dims.oa_status[r[3]]; });
-    var oaEntries = Array.from(byOA.entries()).sort(function(a,b){return b[1]-a[1];});
-    var OA_COLORS = { 'Open access': COLORS.good, 'Metadata only': COLORS.muted, 'Embargoed': COLORS.warn, 'Restricted': COLORS.bad, 'Unknown': COLORS.muted };
-    upsertChart('chart-oa', {
-      type: 'bar',
-      data: {
-        labels: oaEntries.map(function(d){return d[0];}),
-        datasets: [{
-          data: oaEntries.map(function(d){ return pct(d[1], total); }),
-          backgroundColor: oaEntries.map(function(d){ return OA_COLORS[d[0]] || COLORS.accent; }),
-          borderRadius: 4
-        }]
-      },
-      options: Object.assign(baseGridOptions(), {
-        indexAxis: 'y',
-        plugins: {
-          legend: { display:false },
-          tooltip: { callbacks: { label: function(ctx){
-            var d = oaEntries[ctx.dataIndex];
-            return d[0] + ': ' + pct(d[1], total).toFixed(1) + '% (' + fmt(d[1]) + ' of ' + fmt(total) + ' total)';
-          } } }
-        },
-        scales: {
-          x: { min:0, max:100, grid:{color:COLORS.grid}, ticks:{color:COLORS.muted, callback:function(v){return v+'%';}} },
-          y: { grid:{display:false}, ticks:{color:COLORS.muted, font:{size:11}} }
-        }
-      })
+    // --- chart 4: file status per open access status ---
+    var oaTotals = {}; dims.oa_status.forEach(function(o){ oaTotals[o]=0; });
+    var oaMatrix = {}; FS_ORDER.forEach(function(fs){ oaMatrix[fs] = {}; dims.oa_status.forEach(function(o){ oaMatrix[fs][o]=0; }); });
+    rs.forEach(function(r){
+      var o = dims.oa_status[r[3]], fs = dims.file_status[r[4]];
+      if (oaMatrix[fs] && oaMatrix[fs][o] !== undefined) { oaMatrix[fs][o] += r[8]; oaTotals[o] += r[8]; }
+    });
+    var oaList = dims.oa_status.slice().sort(function(a,b){ return oaTotals[b] - oaTotals[a]; });
+    renderFileStatusChart({
+      canvasId: 'chart-oa', labels: oaList, categories: oaList,
+      matrix: oaMatrix, totals: oaTotals, modeKey: 'filestatusOA', horizontal: true
     });
 
     // --- chart 5: license bar ---
@@ -1519,6 +1515,7 @@
     'filestatus-inst': 'filestatusInst',
     'filestatus-year': 'filestatusYear',
     'filestatus-type': 'filestatusType',
+    'filestatus-oa': 'filestatusOA',
     'publisher': 'publisher'
   };
   function initChartActions(){
