@@ -4,24 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DURF Full Text Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
 <style>
   :root {
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    --bg: #f5f6f8;
-    --panel: #ffffff;
-    --panel-border: #e3e5ea;
-    --text: #1c1f26;
-    --text-muted: #6b7280;
-    --accent: #2f6fed;
-    --accent-soft: #e8f0ff;
+    /* SURF Design System tokens, matching durf-project/dashboards; --accent is
+       this theme's own card colour (notebooks/03-full-text-capture/metadata.json)
+       rather than the site-wide --sds-blue-400, so the dashboard reads as a
+       continuation of its index-page card. */
+    --sds-black: #050E1D;
+    --sds-white: #FFFFFF;
+    --sds-gray-100: #F4F6F8;
+    --sds-gray-200: #EAECF0;
+    --sds-gray-300: #B2B6BE;
+    --sds-gray-400: #8C969F;
+    --sds-gray-500: #5E6873;
+    --theme-blue: #177ABF;
+    --bg: var(--sds-gray-100);
+    --panel: var(--sds-white);
+    --panel-border: var(--sds-gray-200);
+    --text: var(--sds-black);
+    --text-muted: var(--sds-gray-500);
+    --accent: var(--theme-blue);
+    --accent-soft: #e2eff7;
     --good: #1f9d55;
     --warn: #d97706;
     --bad: #d1495b;
-    --grid: #eef0f3;
-    --shadow: 0 1px 2px rgba(16,24,40,0.04), 0 1px 3px rgba(16,24,40,0.06);
+    --grid: var(--sds-gray-200);
+    --shadow: 0 1px 2px rgba(5,14,29,0.04), 0 1px 3px rgba(5,14,29,0.06);
+    --back-bar-h: 38px;
   }
   html { scroll-padding-top: env(safe-area-inset-top, 0px); }
   @media (prefers-color-scheme: dark) {
@@ -31,8 +47,8 @@
       --panel-border: #2c303a;
       --text: #e7e9ee;
       --text-muted: #9aa1ad;
-      --accent: #5b8bf7;
-      --accent-soft: #223050;
+      --accent: #4fa8e0;
+      --accent-soft: #1c2f3c;
       --good: #3ec46d;
       --warn: #f0a742;
       --bad: #ef6572;
@@ -46,8 +62,8 @@
     --panel-border: #2c303a;
     --text: #e7e9ee;
     --text-muted: #9aa1ad;
-    --accent: #5b8bf7;
-    --accent-soft: #223050;
+    --accent: #4fa8e0;
+    --accent-soft: #1c2f3c;
     --good: #3ec46d;
     --warn: #f0a742;
     --bad: #ef6572;
@@ -59,12 +75,27 @@
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
+
+  /* back bar -- matches the pattern in surf-ori/spii-1b-principles-alignment-tool */
+  .back-bar {
+    height: var(--back-bar-h);
+    box-sizing: border-box;
+    display: flex; align-items: center;
+    padding: 0 20px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--panel-border);
+    background: var(--panel);
+  }
+  .back-bar a { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); text-decoration: none; font-weight: 600; }
+  .back-bar a:hover { color: var(--accent); }
+  .back-bar svg { flex-shrink: 0; }
+
   .wrap { max-width: 1320px; margin: 0 auto; padding: 20px 20px 56px; }
   header.top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
-  header.top h1 { font-size: 20px; margin: 0; font-weight: 650; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  header.top h1 { font-family: "Nunito", "Source Sans 3", sans-serif; font-size: 20px; margin: 0; font-weight: 800; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .poc-chip {
     display: inline-flex; align-items: center; font-size: 10.5px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.04em; color: var(--warn);
@@ -96,9 +127,12 @@
   .accordion { margin-bottom: 18px; padding: 0; overflow: hidden; }
   .accordion summary {
     list-style: none; cursor: pointer; user-select: none;
-    padding: 14px 18px; font-size: 14px; font-weight: 650; color: var(--text);
+    font-family: "Nunito", "Source Sans 3", sans-serif;
+    padding: 14px 18px; font-size: 14px; font-weight: 700; color: var(--text);
     display: flex; align-items: center; gap: 8px;
   }
+  .exploratory-body { display: flex; flex-direction: column; gap: 18px; }
+  .exploratory-body .filter-group { max-width: 480px; }
   .accordion summary::-webkit-details-marker { display: none; }
   .accordion summary::before {
     content: '\25B8'; display: inline-block; color: var(--text-muted);
@@ -193,7 +227,7 @@
   .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 18px; }
   .kpi { padding: 16px 18px; }
   .kpi .label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
-  .kpi .value { font-size: 26px; font-weight: 700; margin-top: 6px; letter-spacing: -0.01em; }
+  .kpi .value { font-family: "Nunito", "Source Sans 3", sans-serif; font-size: 26px; font-weight: 800; margin-top: 6px; letter-spacing: -0.01em; }
   .kpi .sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
   .cost-sub { display: flex; align-items: center; flex-wrap: wrap; gap: 2px; }
   .rate-input {
@@ -205,12 +239,30 @@
   .kpi.warn .value { color: var(--warn); }
   .kpi.bad .value { color: var(--bad); }
 
-  /* chart grid */
+  /* chart grid -- two columns on desktop, one below 860px; a chart-card can be
+     expanded to span both columns, either by default (.expanded in the markup,
+     for charts that need the width, e.g. many category labels) or via its
+     expand/shrink button (.chart-actions, wired up by initChartActions()). */
   .charts-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px; margin-bottom: 16px;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px;
   }
-  .chart-card { padding: 16px 18px 10px; }
-  .chart-card h2 { font-size: 14px; margin: 0 0 2px; font-weight: 650; display: flex; align-items: center; gap: 6px; }
+  @media (max-width: 860px) {
+    .charts-grid { grid-template-columns: 1fr; }
+  }
+  .chart-card.expanded { grid-column: 1 / -1; }
+  .chart-card { padding: 16px 18px 10px; min-width: 0; }
+  .chart-card h2 { font-family: "Nunito", "Source Sans 3", sans-serif; font-size: 14px; margin: 0 0 2px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .chart-card h2 .h2-title { display: flex; align-items: center; gap: 6px; min-width: 0; }
+  .chart-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .chart-actions button {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; padding: 0; border-radius: 6px;
+    border: 1px solid var(--panel-border); background: var(--bg); color: var(--text-muted);
+    cursor: pointer; font-size: 11px; font-weight: 700; line-height: 1;
+  }
+  .chart-actions button:hover { border-color: var(--accent); color: var(--accent); }
+  .chart-actions button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .chart-actions button svg { width: 13px; height: 13px; }
   .kpi .label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; display:flex; align-items:center; gap:5px; }
 
   /* info badge + tooltip */
@@ -247,8 +299,11 @@
   .tooltip-box .tt-link:hover { text-decoration: underline; }
   .chart-card .desc { font-size: 12px; color: var(--text-muted); margin: 0 0 10px; }
   .chart-card .canvas-wrap { position: relative; height: 280px; }
-  .chart-card.wide { grid-column: 1 / -1; }
-  .chart-card.wide .canvas-wrap { height: 320px; }
+  .chart-card.expanded .canvas-wrap { height: 320px; }
+  /* institution charts set their own height in JS (one row per institution,
+     like the publisher chart already did), so they're tall enough to fit
+     every institution name without scrolling. */
+  .chart-card.tall .canvas-wrap { height: 360px; }
 
   .empty-note { text-align:center; color: var(--text-muted); font-size: 13px; padding: 40px 0; }
 
@@ -259,6 +314,12 @@
 </style>
 </head>
 <body>
+<div class="back-bar">
+  <a href="https://durf-project.github.io/dashboards/">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back to DURF dashboards
+  </a>
+</div>
 <div class="wrap">
   <header class="top">
     <div>
@@ -361,6 +422,19 @@
           <select id="yr-to"></select>
         </div>
       </div>
+    </div>
+    <div class="filters-footer">
+      <span class="hint">Tip: double-click a chip to select <em>only</em> that value.</span>
+      <button class="btn" id="btn-reset">Reset filters</button>
+    </div>
+  </div>
+
+  <details class="panel accordion" id="exploratory-accordion">
+    <summary>Exploratory analysis
+      <span class="accordion-hint hint-closed">(click to expand)</span>
+      <span class="accordion-hint hint-open">(click to collapse)</span>
+    </summary>
+    <div class="accordion-body exploratory-body">
       <div class="filter-group">
         <h3>Automation exploration routes<span class="info-badge" data-q="filter-oasb"></span></h3>
         <label class="toggle-row">
@@ -369,64 +443,51 @@
         </label>
         <p class="filter-note">Off by default. When on, restricts everything to publications from <a href="https://www.oaswitchboard.org/participants" target="_blank" rel="noopener">OA Switchboard</a> partner publishers (live + preparing to go live, checked 1 Oct 2026) &mdash; the publishers OA Switchboard could plausibly negotiate automated PDF capture with.</p>
       </div>
+      <div id="exploratory-kpi"></div>
+      <div class="panel chart-card expanded">
+        <h2><span class="h2-title">Estimated manual capture cost per year<span class="info-badge" data-q="capture-cost-year"></span></span></h2>
+        <p class="desc">Hours to manually source and deposit a file for every currently-filtered "no file" record, by publication year, at the per-record time and hourly rate set in the KPI above. Use the filters &mdash; institution, publication type, year range, and the "via OA Switchboard" toggle &mdash; to scope the backlog to whatever a business case needs to compare.</p>
+        <div class="canvas-wrap"><canvas id="chart-capture-cost"></canvas></div>
+      </div>
     </div>
-    <div class="filters-footer">
-      <span class="hint">Tip: double-click a chip to select <em>only</em> that value.</span>
-      <button class="btn" id="btn-reset">Reset filters</button>
-    </div>
-  </div>
+  </details>
 
   <div class="kpis" id="kpis"></div>
 
   <div class="charts-grid">
-    <div class="panel chart-card">
-      <h2>Publications per institution<span class="info-badge" data-q="institution"></span></h2>
+    <div class="panel chart-card tall">
+      <h2><span class="h2-title">Publications per institution<span class="info-badge" data-q="institution"></span></span><span class="chart-actions" data-chart="institution"></span></h2>
       <p class="desc">Number of publications within the current filter selection</p>
-      <div class="canvas-wrap"><canvas id="chart-institution"></canvas></div>
+      <div class="canvas-wrap" id="institution-canvas-wrap"><canvas id="chart-institution"></canvas></div>
+    </div>
+    <div class="panel chart-card tall">
+      <h2><span class="h2-title">File status per institution<span class="info-badge" data-q="filestatus-inst"></span></span><span class="chart-actions" data-chart="filestatus-inst"></span></h2>
+      <p class="desc">Open file, embargoed file, or no file</p>
+      <div class="canvas-wrap" id="filestatus-inst-canvas-wrap"><canvas id="chart-filestatus-inst"></canvas></div>
     </div>
     <div class="panel chart-card">
-      <h2>File status per institution<span class="info-badge" data-q="filestatus-inst"></span></h2>
-      <p class="desc">Open file, embargoed file, or no file (share %)</p>
-      <div class="canvas-wrap"><canvas id="chart-filestatus-inst"></canvas></div>
-    </div>
-    <div class="panel chart-card">
-      <h2>Trend: share with open file per year<span class="info-badge" data-q="trend"></span></h2>
-      <p class="desc">Percentage of publications with an openly accessible file, per year</p>
-      <div class="canvas-wrap"><canvas id="chart-trend"></canvas></div>
-    </div>
-    <div class="panel chart-card">
-      <h2>File status per year<span class="info-badge" data-q="filestatus-year"></span></h2>
-      <p class="desc">Open / embargoed / no file per year (share %) &mdash; to track progress on the backlog</p>
+      <h2><span class="h2-title">File status per year<span class="info-badge" data-q="filestatus-year"></span></span><span class="chart-actions" data-chart="filestatus-year"></span></h2>
+      <p class="desc">Open / embargoed / no file per year &mdash; to track progress on the backlog</p>
       <div class="canvas-wrap"><canvas id="chart-filestatus-year"></canvas></div>
     </div>
-    <div class="panel chart-card wide">
-      <h2>Estimated manual capture cost per year<span class="info-badge" data-q="capture-cost-year"></span></h2>
-      <p class="desc">Hours to manually source and deposit a file for every currently-filtered "no file" record, by publication year, at 7 minutes/record (indicative &euro; shown on hover, using the rate set in the KPI above). Use the filters &mdash; institution, publication type, year range, and the "via OA Switchboard" toggle &mdash; to scope the backlog to whatever a business case needs to compare.</p>
-      <div class="canvas-wrap"><canvas id="chart-capture-cost"></canvas></div>
-    </div>
     <div class="panel chart-card">
-      <h2>Open access status<span class="info-badge" data-q="oa"></span></h2>
+      <h2><span class="h2-title">Open access status<span class="info-badge" data-q="oa"></span></span><span class="chart-actions" data-chart="oa"></span></h2>
       <p class="desc">Distribution of publication-level access rights</p>
       <div class="canvas-wrap"><canvas id="chart-oa"></canvas></div>
     </div>
     <div class="panel chart-card">
-      <h2>License of the file<span class="info-badge" data-q="license"></span></h2>
+      <h2><span class="h2-title">License of the file<span class="info-badge" data-q="license"></span></span><span class="chart-actions" data-chart="license"></span></h2>
       <p class="desc">First license of the first file per publication (Taverne highlighted separately)</p>
       <div class="canvas-wrap"><canvas id="chart-license"></canvas></div>
     </div>
-    <div class="panel chart-card wide">
-      <h2>Publication type: total vs. with file<span class="info-badge" data-q="pubtype"></span></h2>
-      <p class="desc">Number of publications per type (total and with file), sorted by total count</p>
-      <div class="canvas-wrap"><canvas id="chart-pubtype"></canvas></div>
-    </div>
-    <div class="panel chart-card wide">
-      <h2>File status per publication type<span class="info-badge" data-q="filestatus-type"></span></h2>
-      <p class="desc">Open / embargoed / no file per publication type (share %)</p>
+    <div class="panel chart-card expanded">
+      <h2><span class="h2-title">File status per publication type<span class="info-badge" data-q="filestatus-type"></span></span><span class="chart-actions" data-chart="filestatus-type"></span></h2>
+      <p class="desc">Open / embargoed / no file per publication type</p>
       <div class="canvas-wrap"><canvas id="chart-filestatus-type"></canvas></div>
     </div>
-    <div class="panel chart-card wide">
-      <h2>Publishers: percentage with file<span class="info-badge" data-q="publisher"></span></h2>
-      <p class="desc">Normalized publisher names (variants merged), sorted from low to high. Only publishers with at least 100 publications in the current selection. "No publisher" and "Other publisher" (long tail, not normalized) are excluded here. Red = low coverage, green = high coverage &mdash; candidates for further investigation appear at the top.</p>
+    <div class="panel chart-card expanded">
+      <h2><span class="h2-title">Publishers: percentage with file<span class="info-badge" data-q="publisher"></span></span><span class="chart-actions" data-chart="publisher"></span></h2>
+      <p class="desc">Normalized publisher names (variants merged), broken down by file status like the institution chart above. Only publishers with at least 100 publications in the current selection. "No publisher" and "Other publisher" (long tail, not normalized) are excluded here. Sorted by share with an open file, low to high &mdash; candidates for further investigation appear at the top.</p>
       <div class="canvas-wrap" id="publisher-canvas-wrap" style="height:520px"><canvas id="chart-publisher"></canvas></div>
     </div>
   </div>
@@ -458,8 +519,17 @@
     publisher: new Set(dims.publisher),
     oaSwitchboardOnly: false,
     hourlyRate: 50,
+    minutesPerRecord: 7,
     yrFrom: minYear,
-    yrTo: maxYear
+    yrTo: maxYear,
+    // 'relative' (% of each bar) or 'absolute' (raw counts) -- toggled per chart
+    // via the %/# button in that chart's header, see initChartActions().
+    chartMode: {
+      filestatusInst: 'relative',
+      filestatusYear: 'relative',
+      filestatusType: 'relative',
+      publisher: 'relative'
+    }
   };
 
   var COLORS = {
@@ -771,13 +841,14 @@
     'kpi-capture-cost': function(st){
       var extra = activeClauses(st, ['file_status']);
       var clauses = [clauseNoFile()].concat(extra);
-      return '-- Assumption: 7 minutes of staff time per record to manually source and deposit a file,\n' +
+      return '-- Assumption: ' + st.minutesPerRecord + ' minutes of staff time per record to manually source and deposit a file,\n' +
         '-- based on one institution\'s 2023 Taverne retro-opt-out experience (~450 journal\n' +
         '-- articles \u2248 52 hours). Not validated for other publication types (e.g. book\n' +
-        '-- chapters are reported to take noticeably longer per record).\n' +
+        '-- chapters are reported to take noticeably longer per record). Both the minutes\n' +
+        '-- and the hourly rate are adjustable in the KPI card itself.\n' +
         'SELECT\n' +
         '  COUNT(*) AS n_no_file_records,\n' +
-        '  ROUND(COUNT(*) * 7.0 / 60, 1) AS estimated_hours\n' +
+        '  ROUND(COUNT(*) * ' + st.minutesPerRecord + '.0 / 60, 1) AS estimated_hours\n' +
         'FROM cris.publications\n' +
         'WHERE ' + clauses.join('\n  AND ') + ';';
     },
@@ -785,11 +856,11 @@
     'capture-cost-year': function(st){
       var extra = activeClauses(st, ['file_status']);
       var clauses = [clauseNoFile()].concat(extra);
-      return '-- Same 7-minutes-per-record assumption as the KPI above, broken out by year.\n' +
+      return '-- Same ' + st.minutesPerRecord + '-minutes-per-record assumption as the KPI above, broken out by year.\n' +
         'SELECT\n' +
         '  TRY_CAST(LEFT("cerif:PublicationDate", 4) AS INTEGER) AS yr,\n' +
         '  COUNT(*) AS n_no_file_records,\n' +
-        '  ROUND(COUNT(*) * 7.0 / 60, 1) AS estimated_hours\n' +
+        '  ROUND(COUNT(*) * ' + st.minutesPerRecord + '.0 / 60, 1) AS estimated_hours\n' +
         'FROM cris.publications\n' +
         'WHERE ' + clauses.join('\n  AND ') + '\n' +
         'GROUP BY 1\n' + 'ORDER BY 1;';
@@ -1091,6 +1162,63 @@
     };
   }
 
+  // ---- shared "file status per X" stacked-bar builder, used by the institution,
+  // year, publication-type and publisher charts -- each toggles independently
+  // between relative (%) and absolute (count) via state.chartMode, and shows
+  // the bar's total in the tooltip either way. ----
+  var FS_ORDER = ['Open file', 'Embargoed file', 'No file'];
+  function fsColorMap(){ return { 'Open file': COLORS.good, 'Embargoed file': COLORS.warn, 'No file': COLORS.bad }; }
+
+  function renderFileStatusChart(opts){
+    // opts: canvasId, labels (display), categories (matrix/total keys), matrix ({fs:{cat:n}}),
+    // totals ({cat:n}), modeKey (into state.chartMode), horizontal (bool), maxRotation (ticks)
+    var mode = state.chartMode[opts.modeKey];
+    var isAbs = mode === 'absolute';
+    var colors = fsColorMap();
+    var matrix = opts.matrix, totals = opts.totals, cats = opts.categories;
+    var pctAxis = { grid:{color:COLORS.grid}, ticks:{color:COLORS.muted, callback:function(v){return v+'%';}}, max:100, stacked:true };
+    var countAxis = { grid:{color:COLORS.grid}, ticks:{color:COLORS.muted}, stacked:true };
+    var catAxis = { grid:{display:false}, ticks:{color:COLORS.muted, font:{size: opts.horizontal?11:10}, maxRotation: opts.horizontal?0:(opts.maxRotation||0)}, stacked:true };
+    upsertChart(opts.canvasId, {
+      type: 'bar',
+      data: {
+        labels: opts.labels,
+        datasets: FS_ORDER.map(function(fs){
+          return {
+            label: fs,
+            data: cats.map(function(c){
+              var n = (matrix[fs] && matrix[fs][c]) || 0;
+              if (isAbs) return n;
+              var t = totals[c] || 0;
+              return t>0 ? (100*n/t) : 0;
+            }),
+            backgroundColor: colors[fs],
+            stack: 's'
+          };
+        })
+      },
+      options: {
+        indexAxis: opts.horizontal ? 'y' : 'x',
+        scales: opts.horizontal
+          ? { x: isAbs ? countAxis : pctAxis, y: catAxis }
+          : { x: catAxis, y: isAbs ? countAxis : pctAxis },
+        plugins: {
+          legend: { labels:{color:COLORS.text, font:{size:11}} },
+          tooltip: { callbacks: { label: function(ctx){
+            var cat = cats[ctx.dataIndex];
+            var fs = ctx.dataset.label;
+            var n = (matrix[fs] && matrix[fs][cat]) || 0;
+            var t = totals[cat] || 0;
+            var p = t>0 ? (100*n/t) : 0;
+            return isAbs
+              ? fs + ': ' + fmt(n) + ' (' + p.toFixed(1) + '% of ' + fmt(t) + ' total)'
+              : fs + ': ' + p.toFixed(1) + '% (' + fmt(n) + ' of ' + fmt(t) + ' total)';
+          } } }
+        }
+      }
+    });
+  }
+
   function render(){
     var rs = filteredRows();
     var total = totalN(rs);
@@ -1109,14 +1237,21 @@
     addKpi(kpis, 'With open file', pct(openBestand,total).toFixed(1)+'%', fmt(openBestand)+' publications', 'good', 'kpi-open');
     addKpi(kpis, 'Embargoed file', pct(embargoedBestand,total).toFixed(1)+'%', fmt(embargoedBestand)+' publications', 'warn', 'kpi-embargoed');
     addKpi(kpis, 'No file', pct(geenBestand,total).toFixed(1)+'%', fmt(geenBestand)+' publications', 'bad', 'kpi-none');
-    addCaptureCostKpi(kpis);
     addKpi(kpis, 'Taverne license', fmt(taverne), (openBestand+embargoedBestand)>0 ? pct(taverne, openBestand+embargoedBestand).toFixed(1)+'% of files' : '', '', 'kpi-taverne');
+
+    // capture-cost KPI lives in the collapsed "Exploratory analysis" accordion
+    var exploratoryKpi = document.getElementById('exploratory-kpi');
+    exploratoryKpi.innerHTML = '';
+    addCaptureCostKpi(exploratoryKpi);
 
     var noData = (total === 0);
 
     // --- chart 1: publications per institution ---
     var byInst = sumBy(rs, function(r){ return dims.institution[r[0]]; });
     var instSorted = Array.from(byInst.entries()).sort(function(a,b){return b[1]-a[1];});
+    var instList = instSorted.map(function(d){return d[0];});
+    var instWrap = document.getElementById('institution-canvas-wrap');
+    if (instWrap) instWrap.style.height = Math.max(360, instList.length*26 + 60) + 'px';
     upsertChart('chart-institution', {
       type: 'bar',
       data: { labels: instSorted.map(function(d){return shortInst(d[0]);}),
@@ -1125,94 +1260,38 @@
         indexAxis: 'y' })
     });
 
-    // --- chart 2: file status per institution (100% stacked) ---
-    var instList = instSorted.map(function(d){return d[0];});
-    var fsOrder = ['Open file','Embargoed file','No file'];
-    var fsColors = { 'Open file': COLORS.good, 'Embargoed file': COLORS.warn, 'No file': COLORS.bad };
+    // --- chart 2: file status per institution ---
     var instTotals = {}; instList.forEach(function(i){ instTotals[i]=0; });
-    var matrix = {}; fsOrder.forEach(function(fs){ matrix[fs] = {}; instList.forEach(function(i){ matrix[fs][i]=0; }); });
+    var instMatrix = {}; FS_ORDER.forEach(function(fs){ instMatrix[fs] = {}; instList.forEach(function(i){ instMatrix[fs][i]=0; }); });
     rs.forEach(function(r){
       var inst = dims.institution[r[0]], fs = dims.file_status[r[4]];
-      if (matrix[fs] && matrix[fs][inst] !== undefined) { matrix[fs][inst] += r[8]; instTotals[inst] += r[8]; }
+      if (instMatrix[fs] && instMatrix[fs][inst] !== undefined) { instMatrix[fs][inst] += r[8]; instTotals[inst] += r[8]; }
     });
-    upsertChart('chart-filestatus-inst', {
-      type: 'bar',
-      data: {
-        labels: instList.map(shortInst),
-        datasets: fsOrder.map(function(fs){
-          return {
-            label: fs,
-            data: instList.map(function(i){ return instTotals[i]>0 ? (100*matrix[fs][i]/instTotals[i]) : 0; }),
-            backgroundColor: fsColors[fs],
-            stack: 's'
-          };
-        })
-      },
-      options: Object.assign(baseGridOptions(), {
-        indexAxis: 'y',
-        scales: {
-          x: { stacked:true, max:100, grid:{color:COLORS.grid}, ticks:{color:COLORS.muted, callback:function(v){return v+'%';}} },
-          y: { stacked:true, grid:{display:false}, ticks:{color:COLORS.muted, font:{size:11}} }
-        }
-      })
+    var fsInstWrap = document.getElementById('filestatus-inst-canvas-wrap');
+    if (fsInstWrap) fsInstWrap.style.height = Math.max(360, instList.length*26 + 60) + 'px';
+    renderFileStatusChart({
+      canvasId: 'chart-filestatus-inst', labels: instList.map(shortInst), categories: instList,
+      matrix: instMatrix, totals: instTotals, modeKey: 'filestatusInst', horizontal: true
     });
 
-    // --- chart 3: trend per year % open file ---
+    // --- chart 3: file status per year ---
     var yrRange = [];
     for (var y=state.yrFrom; y<=state.yrTo; y++) yrRange.push(y);
-    var byYearTotal = {}, byYearOpen = {};
-    yrRange.forEach(function(y){ byYearTotal[y]=0; byYearOpen[y]=0; });
+    var byYearTotal = {};
+    yrRange.forEach(function(y){ byYearTotal[y]=0; });
     rs.forEach(function(r){
       var y = r[2];
       if (byYearTotal[y] === undefined) return;
       byYearTotal[y] += r[8];
-      if (dims.file_status[r[4]] === 'Open file') byYearOpen[y] += r[8];
     });
-    upsertChart('chart-trend', {
-      type: 'line',
-      data: {
-        labels: yrRange,
-        datasets: [{
-          label: '% with open file',
-          data: yrRange.map(function(y){ return byYearTotal[y]>0 ? (100*byYearOpen[y]/byYearTotal[y]) : null; }),
-          borderColor: COLORS.good, backgroundColor: COLORS.good, tension: 0.25, spanGaps: true,
-          pointRadius: 2
-        }]
-      },
-      options: Object.assign(baseGridOptions(), {
-        scales: { x: { grid:{color:COLORS.grid}, ticks:{color:COLORS.muted} },
-          y: { min:0, max:100, grid:{color:COLORS.grid}, ticks:{color:COLORS.muted, callback:function(v){return v+'%';}} } }
-      })
-    });
-
-    // --- chart 3b: file status per year (100% stacked) ---
-    var fsOrderY = ['Open file','Embargoed file','No file'];
-    var fsColorsY = { 'Open file': COLORS.good, 'Embargoed file': COLORS.warn, 'No file': COLORS.bad };
-    var yearMatrix = {}; fsOrderY.forEach(function(fs){ yearMatrix[fs] = {}; yrRange.forEach(function(y){ yearMatrix[fs][y]=0; }); });
+    var yearMatrix = {}; FS_ORDER.forEach(function(fs){ yearMatrix[fs] = {}; yrRange.forEach(function(y){ yearMatrix[fs][y]=0; }); });
     rs.forEach(function(r){
       var y = r[2], fs = dims.file_status[r[4]];
       if (yearMatrix[fs] && yearMatrix[fs][y] !== undefined) { yearMatrix[fs][y] += r[8]; }
     });
-    upsertChart('chart-filestatus-year', {
-      type: 'bar',
-      data: {
-        labels: yrRange,
-        datasets: fsOrderY.map(function(fs){
-          return {
-            label: fs,
-            data: yrRange.map(function(y){ return byYearTotal[y]>0 ? (100*yearMatrix[fs][y]/byYearTotal[y]) : 0; }),
-            backgroundColor: fsColorsY[fs],
-            stack: 's'
-          };
-        })
-      },
-      options: {
-        scales: {
-          x: { stacked:true, grid:{display:false}, ticks:{color:COLORS.muted, font:{size:10}, maxRotation:0} },
-          y: { stacked:true, max:100, grid:{color:COLORS.grid}, ticks:{color:COLORS.muted, callback:function(v){return v+'%';}} }
-        },
-        plugins: { legend: { labels:{color:COLORS.text, font:{size:11}} } }
-      }
+    renderFileStatusChart({
+      canvasId: 'chart-filestatus-year', labels: yrRange, categories: yrRange,
+      matrix: yearMatrix, totals: byYearTotal, modeKey: 'filestatusYear', horizontal: false
     });
 
     // --- chart 3c: estimated manual capture cost per year ---
@@ -1229,7 +1308,7 @@
         labels: yrRange,
         datasets: [{
           label: 'Estimated hours',
-          data: yrRange.map(function(y){ return Math.round(costByYear[y] * 7 / 60); }),
+          data: yrRange.map(function(y){ return Math.round(costByYear[y] * state.minutesPerRecord / 60); }),
           backgroundColor: COLORS.warn,
           borderRadius: 4
         }]
@@ -1240,7 +1319,7 @@
           tooltip: { callbacks: { label: function(ctx){
             var y = yrRange[ctx.dataIndex];
             var n = costByYear[y];
-            var hrs = n * 7 / 60;
+            var hrs = n * state.minutesPerRecord / 60;
             var cost = hrs * state.hourlyRate;
             return fmt(n) + ' no-file records \u2248 ' + fmt(Math.round(hrs)) + ' hrs \u2248 \u20ac' + fmt(Math.round(cost));
           } } }
@@ -1252,14 +1331,34 @@
       })
     });
 
-    // --- chart 4: oa status doughnut ---
+    // --- chart 4: open access status (horizontal bar, like File status per institution) ---
     var byOA = sumBy(rs, function(r){ return dims.oa_status[r[3]]; });
     var oaEntries = Array.from(byOA.entries()).sort(function(a,b){return b[1]-a[1];});
+    var OA_COLORS = { 'Open access': COLORS.good, 'Metadata only': COLORS.muted, 'Embargoed': COLORS.warn, 'Restricted': COLORS.bad, 'Unknown': COLORS.muted };
     upsertChart('chart-oa', {
-      type: 'doughnut',
-      data: { labels: oaEntries.map(function(d){return d[0];}),
-        datasets: [{ data: oaEntries.map(function(d){return d[1];}), backgroundColor: PALETTE }] },
-      options: { plugins: { legend: { position:'bottom', labels:{color:COLORS.text, font:{size:11}, boxWidth:12} } } }
+      type: 'bar',
+      data: {
+        labels: oaEntries.map(function(d){return d[0];}),
+        datasets: [{
+          data: oaEntries.map(function(d){ return pct(d[1], total); }),
+          backgroundColor: oaEntries.map(function(d){ return OA_COLORS[d[0]] || COLORS.accent; }),
+          borderRadius: 4
+        }]
+      },
+      options: Object.assign(baseGridOptions(), {
+        indexAxis: 'y',
+        plugins: {
+          legend: { display:false },
+          tooltip: { callbacks: { label: function(ctx){
+            var d = oaEntries[ctx.dataIndex];
+            return d[0] + ': ' + pct(d[1], total).toFixed(1) + '% (' + fmt(d[1]) + ' of ' + fmt(total) + ' total)';
+          } } }
+        },
+        scales: {
+          x: { min:0, max:100, grid:{color:COLORS.grid}, ticks:{color:COLORS.muted, callback:function(v){return v+'%';}} },
+          y: { grid:{display:false}, ticks:{color:COLORS.muted, font:{size:11}} }
+        }
+      })
     });
 
     // --- chart 5: license bar ---
@@ -1274,116 +1373,46 @@
       options: Object.assign(baseGridOptions(), { plugins:{legend:{display:false}}, indexAxis:'y' })
     });
 
-    // --- chart 6: pubtype bar (total vs with file) ---
+    // --- chart 6: file status per publication type ---
     var byType = sumBy(rs, function(r){ return dims.pubtype[r[1]]; });
-    var byTypeWithFile = new Map();
-    rs.forEach(function(r){
-      if (dims.file_status[r[4]] !== 'No file') {
-        var t = dims.pubtype[r[1]];
-        byTypeWithFile.set(t, (byTypeWithFile.get(t)||0) + r[8]);
-      }
-    });
     var typeEntries = Array.from(byType.entries()).sort(function(a,b){return b[1]-a[1];});
-    upsertChart('chart-pubtype', {
-      type: 'bar',
-      data: {
-        labels: typeEntries.map(function(d){return d[0];}),
-        datasets: [
-          { label: 'Total', data: typeEntries.map(function(d){return d[1];}), backgroundColor: COLORS.accent, borderRadius: 4 },
-          { label: 'With file', data: typeEntries.map(function(d){return byTypeWithFile.get(d[0])||0;}), backgroundColor: COLORS.good, borderRadius: 4 }
-        ]
-      },
-      options: Object.assign(baseGridOptions(), { plugins:{legend:{labels:{color:COLORS.text, font:{size:11}}}} })
-    });
-
-    // --- chart 6b: file status per publication type (100% stacked) ---
     var typeList = typeEntries.map(function(d){return d[0];});
-    var fsOrderT = ['Open file','Embargoed file','No file'];
-    var fsColorsT = { 'Open file': COLORS.good, 'Embargoed file': COLORS.warn, 'No file': COLORS.bad };
     var typeTotals = {}; typeList.forEach(function(t){ typeTotals[t]=0; });
-    var typeMatrix = {}; fsOrderT.forEach(function(fs){ typeMatrix[fs] = {}; typeList.forEach(function(t){ typeMatrix[fs][t]=0; }); });
+    var typeMatrix = {}; FS_ORDER.forEach(function(fs){ typeMatrix[fs] = {}; typeList.forEach(function(t){ typeMatrix[fs][t]=0; }); });
     rs.forEach(function(r){
       var t = dims.pubtype[r[1]], fs = dims.file_status[r[4]];
       if (typeMatrix[fs] && typeMatrix[fs][t] !== undefined) { typeMatrix[fs][t] += r[8]; typeTotals[t] += r[8]; }
     });
-    upsertChart('chart-filestatus-type', {
-      type: 'bar',
-      data: {
-        labels: typeList,
-        datasets: fsOrderT.map(function(fs){
-          return {
-            label: fs,
-            data: typeList.map(function(t){ return typeTotals[t]>0 ? (100*typeMatrix[fs][t]/typeTotals[t]) : 0; }),
-            backgroundColor: fsColorsT[fs],
-            stack: 's'
-          };
-        })
-      },
-      options: {
-        indexAxis: 'y',
-        scales: {
-          x: { stacked:true, max:100, grid:{color:COLORS.grid}, ticks:{color:COLORS.muted, callback:function(v){return v+'%';}} },
-          y: { stacked:true, grid:{display:false}, ticks:{color:COLORS.muted, font:{size:11}} }
-        },
-        plugins: { legend: { labels:{color:COLORS.text, font:{size:11}} } }
-      }
+    renderFileStatusChart({
+      canvasId: 'chart-filestatus-type', labels: typeList, categories: typeList,
+      matrix: typeMatrix, totals: typeTotals, modeKey: 'filestatusType', horizontal: true
     });
 
-    // --- chart 7: publishers, % with file (quality check) ---
-    var pubTotal = {}, pubWithFile = {};
+    // --- chart 7: publishers, file status breakdown (like File status per institution) ---
+    var pubTotals = {};
+    var pubMatrix = {}; FS_ORDER.forEach(function(fs){ pubMatrix[fs] = {}; });
     rs.forEach(function(r){
       var pub = dims.publisher[r[6]];
       if (pub === 'No publisher' || pub === 'Other publisher') return;
-      pubTotal[pub] = (pubTotal[pub]||0) + r[8];
-      if (dims.file_status[r[4]] !== 'No file') pubWithFile[pub] = (pubWithFile[pub]||0) + r[8];
+      var fs = dims.file_status[r[4]];
+      pubTotals[pub] = (pubTotals[pub]||0) + r[8];
+      pubMatrix[fs][pub] = (pubMatrix[fs][pub]||0) + r[8];
     });
-    var pubEntries = Object.keys(pubTotal)
-      .filter(function(p){ return pubTotal[p] >= 100; })
-      .map(function(p){ return { name:p, total:pubTotal[p], withFile:(pubWithFile[p]||0), pct: 100*(pubWithFile[p]||0)/pubTotal[p] }; })
-      .sort(function(a,b){ return a.pct - b.pct; });
+    var pubCats = Object.keys(pubTotals)
+      .filter(function(p){ return pubTotals[p] >= 100; })
+      .sort(function(a,b){
+        var pa = pubTotals[a]>0 ? ((pubMatrix['Open file'][a]||0)/pubTotals[a]) : 0;
+        var pb = pubTotals[b]>0 ? ((pubMatrix['Open file'][b]||0)/pubTotals[b]) : 0;
+        return pa - pb;
+      });
     var pubWrap = document.getElementById('publisher-canvas-wrap');
-    pubWrap.style.height = Math.max(320, pubEntries.length*26 + 60) + 'px';
-    upsertChart('chart-publisher', {
-      type: 'bar',
-      data: {
-        labels: pubEntries.map(function(d){ return d.name; }),
-        datasets: [{
-          data: pubEntries.map(function(d){ return d.pct; }),
-          backgroundColor: pubEntries.map(function(d){ return pctColor(d.pct); }),
-          borderRadius: 4
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        scales: {
-          x: { min:0, max:100, grid:{color:COLORS.grid}, ticks:{color:COLORS.muted, callback:function(v){return v+'%';}} },
-          y: { grid:{display:false}, ticks:{color:COLORS.muted, font:{size:11}} }
-        },
-        plugins: {
-          legend: { display:false },
-          tooltip: { callbacks: { label: function(ctx){
-            var d = pubEntries[ctx.dataIndex];
-            return d.pct.toFixed(1)+'% with file ('+fmt(d.withFile)+' of '+fmt(d.total)+')';
-          } } }
-        }
-      }
+    pubWrap.style.height = Math.max(320, pubCats.length*26 + 60) + 'px';
+    renderFileStatusChart({
+      canvasId: 'chart-publisher', labels: pubCats, categories: pubCats,
+      matrix: pubMatrix, totals: pubTotals, modeKey: 'publisher', horizontal: true
     });
 
     refreshInfoBadges();
-  }
-
-  function pctColor(p){
-    // red (low) -> amber -> green (high)
-    var stops = [ [0, [209,73,91]], [50, [240,167,66]], [100, [62,196,109]] ];
-    for (var i=0;i<stops.length-1;i++){
-      var a = stops[i], b = stops[i+1];
-      if (p >= a[0] && p <= b[0]){
-        var t = (p-a[0])/(b[0]-a[0]);
-        var c = a[1].map(function(v,idx){ return Math.round(v + t*(b[1][idx]-v)); });
-        return 'rgb('+c.join(',')+')';
-      }
-    }
-    return COLORS.accent;
   }
 
   function addKpi(container, label, value, sub, cls, qkey){
@@ -1411,7 +1440,7 @@
   function addCaptureCostKpi(container){
     var noFileRows = filteredNoFileRows();
     var n = totalN(noFileRows);
-    var hours = n * 7 / 60;
+    var hours = n * state.minutesPerRecord / 60;
     var cost = hours * state.hourlyRate;
 
     var div = document.createElement('div');
@@ -1431,7 +1460,23 @@
 
     var subDiv = document.createElement('div');
     subDiv.className = 'sub cost-sub';
-    subDiv.appendChild(document.createTextNode(fmt(n) + ' no-file records \u2248 \u20ac' + fmt(Math.round(cost)) + ' at \u20ac'));
+    subDiv.appendChild(document.createTextNode(fmt(n) + ' no-file records \u2248 \u20ac' + fmt(Math.round(cost)) + ' at '));
+
+    var minutesInput = document.createElement('input');
+    minutesInput.type = 'number';
+    minutesInput.min = '0';
+    minutesInput.step = '1';
+    minutesInput.value = state.minutesPerRecord;
+    minutesInput.className = 'rate-input';
+    minutesInput.title = 'Assumed minutes of staff time per record \u2014 adjust as needed';
+    minutesInput.addEventListener('change', function(){
+      var v = parseFloat(minutesInput.value);
+      state.minutesPerRecord = (isNaN(v) || v < 0) ? 0 : v;
+      render();
+    });
+    subDiv.appendChild(minutesInput);
+    subDiv.appendChild(document.createTextNode(' min/record \u00d7 \u20ac'));
+
     var rateInput = document.createElement('input');
     rateInput.type = 'number';
     rateInput.min = '0';
@@ -1461,6 +1506,62 @@
     'NHTV Breda University of Applied Sciences':'BUas'
   };
   function shortInst(name){ return INST_SHORT[name] || name; }
+
+  // ---- per-chart header controls: a %/# mode toggle (the 4 "file status per X"
+  // charts only) and an expand/shrink-to-one-column button (every chart). Built
+  // once at startup; render() only touches chart data, not these controls, so
+  // expand state and the chosen icon persist across re-renders. ----
+  var MAXIMIZE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>';
+  var MINIMIZE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>';
+  var MODE_TOGGLE_STATE_KEY = {
+    'filestatus-inst': 'filestatusInst',
+    'filestatus-year': 'filestatusYear',
+    'filestatus-type': 'filestatusType',
+    'publisher': 'publisher'
+  };
+  function initChartActions(){
+    document.querySelectorAll('.chart-actions[data-chart]').forEach(function(slot){
+      var key = slot.dataset.chart;
+      var card = slot.closest('.chart-card');
+      var stateKey = MODE_TOGGLE_STATE_KEY[key];
+
+      if (stateKey) {
+        var modeBtn = document.createElement('button');
+        modeBtn.type = 'button';
+        function paintModeBtn(){
+          var isAbs = state.chartMode[stateKey] === 'absolute';
+          modeBtn.textContent = isAbs ? '#' : '%';
+          modeBtn.title = isAbs ? 'Showing absolute counts — click for percentages' : 'Showing percentages — click for absolute counts';
+          modeBtn.setAttribute('aria-pressed', isAbs ? 'true' : 'false');
+        }
+        paintModeBtn();
+        modeBtn.addEventListener('click', function(){
+          state.chartMode[stateKey] = state.chartMode[stateKey] === 'relative' ? 'absolute' : 'relative';
+          paintModeBtn();
+          render();
+        });
+        slot.appendChild(modeBtn);
+      }
+
+      var expandBtn = document.createElement('button');
+      expandBtn.type = 'button';
+      function paintExpandBtn(){
+        var isExpanded = card.classList.contains('expanded');
+        expandBtn.innerHTML = isExpanded ? MINIMIZE_SVG : MAXIMIZE_SVG;
+        expandBtn.title = isExpanded ? 'Shrink to one column' : 'Expand to full width';
+        expandBtn.setAttribute('aria-pressed', isExpanded ? 'true' : 'false');
+      }
+      paintExpandBtn();
+      expandBtn.addEventListener('click', function(){
+        card.classList.toggle('expanded');
+        paintExpandBtn();
+      });
+      slot.appendChild(expandBtn);
+    });
+  }
+  initChartActions();
 
   // initial render, and re-render (for colors) once fonts/CSS settled
   render();
