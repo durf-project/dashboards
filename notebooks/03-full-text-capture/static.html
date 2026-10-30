@@ -256,9 +256,9 @@
   .chart-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .chart-actions button {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px; padding: 0; border-radius: 6px;
+    min-width: 22px; height: 22px; padding: 0 5px; border-radius: 6px;
     border: 1px solid var(--panel-border); background: var(--bg); color: var(--text-muted);
-    cursor: pointer; font-size: 11px; font-weight: 700; line-height: 1;
+    cursor: pointer; font-size: 11px; font-weight: 700; line-height: 1; white-space: nowrap;
   }
   .chart-actions button:hover { border-color: var(--accent); color: var(--accent); }
   .chart-actions button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
@@ -486,8 +486,8 @@
       <div class="canvas-wrap"><canvas id="chart-filestatus-type"></canvas></div>
     </div>
     <div class="panel chart-card">
-      <h2><span class="h2-title">Publishers: percentage with file<span class="info-badge" data-q="publisher"></span></span><span class="chart-actions" data-chart="publisher"></span></h2>
-      <p class="desc">Normalized publisher names (variants merged), broken down by file status like the institution chart above. Only publishers with at least 100 publications in the current selection. "No publisher" and "Other publisher" (long tail, not normalized) are excluded here. Sorted by share with an open file, low to high &mdash; candidates for further investigation appear at the top.</p>
+      <h2><span class="h2-title">File status by Publisher<span class="info-badge" data-q="publisher"></span></span><span class="chart-actions" data-chart="publisher"></span></h2>
+      <p class="desc">Normalized publisher names (variants merged), broken down by file status like the institution chart above. Only publishers with at least 100 publications in the current selection. "No publisher" and "Other publisher" (long tail, not normalized) are excluded here. Sorted by share with no file, high to low by default &mdash; candidates for further investigation appear at the top; use the sort buttons above to change this.</p>
       <div class="canvas-wrap" id="publisher-canvas-wrap" style="height:520px"><canvas id="chart-publisher"></canvas></div>
     </div>
   </div>
@@ -530,6 +530,16 @@
       filestatusType: 'relative',
       filestatusOA: 'relative',
       publisher: 'relative'
+    },
+    // sort key: 'total' (absolute total), 'nofile' (relative no-file share) or
+    // 'alpha' (label); dir: 'asc' or 'desc'. Toggled per chart via the sort
+    // buttons in that chart's header, see initChartActions(). File status per
+    // year keeps its chronological order and isn't sortable.
+    chartSort: {
+      filestatusInst: { key: 'total', dir: 'desc' },
+      filestatusType: { key: 'total', dir: 'desc' },
+      filestatusOA: { key: 'total', dir: 'desc' },
+      publisher: { key: 'nofile', dir: 'desc' }
     }
   };
 
@@ -1181,6 +1191,28 @@
   var FS_ORDER = ['Open file', 'Embargoed file', 'No file'];
   function fsColorMap(){ return { 'Open file': COLORS.good, 'Embargoed file': COLORS.warn, 'No file': COLORS.bad }; }
 
+  // Orders a chart's categories per state.chartSort[sortStateKey]: 'total' (sum
+  // across all three file statuses), 'nofile' (that category's "No file" share)
+  // or 'alpha' (its display label), each ascending or descending.
+  function sortCategories(categories, labels, totals, matrix, sortStateKey){
+    var sort = state.chartSort[sortStateKey];
+    var pairs = categories.map(function(c, i){ return { cat: c, label: labels[i] }; });
+    var valueOf;
+    if (sort.key === 'alpha') {
+      valueOf = function(p){ return String(p.label).toLowerCase(); };
+    } else if (sort.key === 'nofile') {
+      valueOf = function(p){ var t = totals[p.cat] || 0; return t>0 ? ((matrix['No file'][p.cat]||0)/t) : 0; };
+    } else {
+      valueOf = function(p){ return totals[p.cat] || 0; };
+    }
+    pairs.sort(function(a, b){
+      var va = valueOf(a), vb = valueOf(b);
+      var cmp = va < vb ? -1 : (va > vb ? 1 : 0);
+      return sort.dir === 'asc' ? cmp : -cmp;
+    });
+    return { categories: pairs.map(function(p){return p.cat;}), labels: pairs.map(function(p){return p.label;}) };
+  }
+
   function renderFileStatusChart(opts){
     // opts: canvasId, labels (display), categories (matrix/total keys), matrix ({fs:{cat:n}}),
     // totals ({cat:n}), modeKey (into state.chartMode), horizontal (bool), maxRotation (ticks)
@@ -1282,8 +1314,9 @@
     });
     var fsInstWrap = document.getElementById('filestatus-inst-canvas-wrap');
     if (fsInstWrap) fsInstWrap.style.height = Math.max(360, instList.length*26 + 60) + 'px';
+    var instSort = sortCategories(instList, instList.map(shortInst), instTotals, instMatrix, 'filestatusInst');
     renderFileStatusChart({
-      canvasId: 'chart-filestatus-inst', labels: instList.map(shortInst), categories: instList,
+      canvasId: 'chart-filestatus-inst', labels: instSort.labels, categories: instSort.categories,
       matrix: instMatrix, totals: instTotals, modeKey: 'filestatusInst', horizontal: true
     });
 
@@ -1351,9 +1384,9 @@
       var o = dims.oa_status[r[3]], fs = dims.file_status[r[4]];
       if (oaMatrix[fs] && oaMatrix[fs][o] !== undefined) { oaMatrix[fs][o] += r[8]; oaTotals[o] += r[8]; }
     });
-    var oaList = dims.oa_status.slice().sort(function(a,b){ return oaTotals[b] - oaTotals[a]; });
+    var oaSort = sortCategories(dims.oa_status, dims.oa_status, oaTotals, oaMatrix, 'filestatusOA');
     renderFileStatusChart({
-      canvasId: 'chart-oa', labels: oaList, categories: oaList,
+      canvasId: 'chart-oa', labels: oaSort.labels, categories: oaSort.categories,
       matrix: oaMatrix, totals: oaTotals, modeKey: 'filestatusOA', horizontal: true
     });
 
@@ -1370,17 +1403,17 @@
     });
 
     // --- chart 6: file status per publication type ---
-    var byType = sumBy(rs, function(r){ return dims.pubtype[r[1]]; });
-    var typeEntries = Array.from(byType.entries()).sort(function(a,b){return b[1]-a[1];});
-    var typeList = typeEntries.map(function(d){return d[0];});
-    var typeTotals = {}; typeList.forEach(function(t){ typeTotals[t]=0; });
-    var typeMatrix = {}; FS_ORDER.forEach(function(fs){ typeMatrix[fs] = {}; typeList.forEach(function(t){ typeMatrix[fs][t]=0; }); });
+    var typeTotals = {};
+    var typeMatrix = {}; FS_ORDER.forEach(function(fs){ typeMatrix[fs] = {}; });
     rs.forEach(function(r){
       var t = dims.pubtype[r[1]], fs = dims.file_status[r[4]];
-      if (typeMatrix[fs] && typeMatrix[fs][t] !== undefined) { typeMatrix[fs][t] += r[8]; typeTotals[t] += r[8]; }
+      typeTotals[t] = (typeTotals[t]||0) + r[8];
+      typeMatrix[fs][t] = (typeMatrix[fs][t]||0) + r[8];
     });
+    var typeCats = Object.keys(typeTotals);
+    var typeSort = sortCategories(typeCats, typeCats, typeTotals, typeMatrix, 'filestatusType');
     renderFileStatusChart({
-      canvasId: 'chart-filestatus-type', labels: typeList, categories: typeList,
+      canvasId: 'chart-filestatus-type', labels: typeSort.labels, categories: typeSort.categories,
       matrix: typeMatrix, totals: typeTotals, modeKey: 'filestatusType', horizontal: true
     });
 
@@ -1394,17 +1427,12 @@
       pubTotals[pub] = (pubTotals[pub]||0) + r[8];
       pubMatrix[fs][pub] = (pubMatrix[fs][pub]||0) + r[8];
     });
-    var pubCats = Object.keys(pubTotals)
-      .filter(function(p){ return pubTotals[p] >= 100; })
-      .sort(function(a,b){
-        var pa = pubTotals[a]>0 ? ((pubMatrix['Open file'][a]||0)/pubTotals[a]) : 0;
-        var pb = pubTotals[b]>0 ? ((pubMatrix['Open file'][b]||0)/pubTotals[b]) : 0;
-        return pa - pb;
-      });
+    var pubCats = Object.keys(pubTotals).filter(function(p){ return pubTotals[p] >= 100; });
+    var pubSort = sortCategories(pubCats, pubCats, pubTotals, pubMatrix, 'publisher');
     var pubWrap = document.getElementById('publisher-canvas-wrap');
     pubWrap.style.height = Math.max(320, pubCats.length*26 + 60) + 'px';
     renderFileStatusChart({
-      canvasId: 'chart-publisher', labels: pubCats, categories: pubCats,
+      canvasId: 'chart-publisher', labels: pubSort.labels, categories: pubSort.categories,
       matrix: pubMatrix, totals: pubTotals, modeKey: 'publisher', horizontal: true
     });
 
@@ -1518,11 +1546,51 @@
     'filestatus-oa': 'filestatusOA',
     'publisher': 'publisher'
   };
+  // Sort buttons apply to every "file status per X" chart except the year one
+  // (which stays chronological -- reordering it would defeat its purpose).
+  var SORT_STATE_KEY = {
+    'filestatus-inst': 'filestatusInst',
+    'filestatus-type': 'filestatusType',
+    'filestatus-oa': 'filestatusOA',
+    'publisher': 'publisher'
+  };
+  var SORT_DEFS = [
+    { key: 'total', title: 'total', defaultDir: 'desc', label: function(dir){ return 'Σ' + (dir==='asc'?'▲':'▼'); } },
+    { key: 'nofile', title: 'share with no file', defaultDir: 'desc', label: function(dir){ return 'NF' + (dir==='asc'?'▲':'▼'); } },
+    { key: 'alpha', title: 'alphabetically', defaultDir: 'asc', label: function(dir){ return dir==='asc' ? 'A→Z' : 'Z→A'; } }
+  ];
   function initChartActions(){
     document.querySelectorAll('.chart-actions[data-chart]').forEach(function(slot){
       var key = slot.dataset.chart;
       var card = slot.closest('.chart-card');
       var stateKey = MODE_TOGGLE_STATE_KEY[key];
+      var sortStateKey = SORT_STATE_KEY[key];
+
+      if (sortStateKey) {
+        var paintSortBtns = [];
+        SORT_DEFS.forEach(function(def){
+          var sortBtn = document.createElement('button');
+          sortBtn.type = 'button';
+          function paint(){
+            var sort = state.chartSort[sortStateKey];
+            var active = sort.key === def.key;
+            var dir = active ? sort.dir : def.defaultDir;
+            sortBtn.textContent = def.label(dir);
+            sortBtn.title = 'Sort by ' + def.title + (active ? ' (click to reverse)' : '');
+            sortBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+          }
+          paintSortBtns.push(paint);
+          paint();
+          sortBtn.addEventListener('click', function(){
+            var sort = state.chartSort[sortStateKey];
+            if (sort.key === def.key) { sort.dir = sort.dir === 'asc' ? 'desc' : 'asc'; }
+            else { sort.key = def.key; sort.dir = def.defaultDir; }
+            paintSortBtns.forEach(function(p){ p(); });
+            render();
+          });
+          slot.appendChild(sortBtn);
+        });
+      }
 
       if (stateKey) {
         var modeBtn = document.createElement('button');
