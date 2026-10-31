@@ -213,6 +213,14 @@
     grid-template-columns: 1fr;
     gap: 18px;
   }
+  /* A grid item's default min-width is auto (its content's own min-content
+     size), not 0 -- here that content is a flex-wrap chip-list whose chips
+     have white-space:nowrap, so its min-content is driven by the single
+     widest chip (e.g. "Royal Netherlands Academy of Arts and Sciences"),
+     refusing to shrink below it and overflowing the sidebar on narrow
+     screens instead of wrapping. min-width:0 lets the grid item -- and so
+     the chip-list inside it -- actually shrink to the track's width. */
+  .filter-group { min-width: 0; }
   .filter-group h3 {
     font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
     color: var(--text-muted); margin: 0; font-weight: 650;
