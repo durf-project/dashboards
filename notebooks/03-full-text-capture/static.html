@@ -541,7 +541,7 @@
     </div>
     <div class="panel chart-card">
       <h2><span class="h2-title">File status by Publisher<span class="info-badge" data-q="publisher"></span></span><span class="chart-actions" data-chart="publisher"></span></h2>
-      <p class="desc">Normalized publisher names (variants merged), broken down by file status like the institution chart above. Only publishers with at least 100 publications in the current selection. "No publisher" and "Other publisher" (long tail, not normalized) are excluded here. Sorted by share with no file, high to low by default &mdash; candidates for further investigation appear at the top; use the sort buttons above to change this.</p>
+      <p class="desc">Normalized publisher names (variants merged), broken down by file status like the institution chart above. Only publishers with at least 100 publications in the current selection. "No publisher" and "Other publisher" (long tail, not normalized) are excluded here. Shows absolute counts, sorted by total publications, by default &mdash; use the buttons above to switch to percentages or a different sort.</p>
       <div class="canvas-wrap" id="publisher-canvas-wrap" style="height:520px"><canvas id="chart-publisher"></canvas></div>
     </div>
   </div>
@@ -585,7 +585,7 @@
       filestatusYear: 'relative',
       filestatusType: 'relative',
       filestatusOA: 'relative',
-      publisher: 'relative'
+      publisher: 'absolute'
     },
     // sort key: 'total' (absolute total), 'nofile' (relative no-file share) or
     // 'alpha' (label); dir: 'asc' or 'desc'. Toggled per chart via the sort
@@ -595,7 +595,7 @@
       filestatusInst: { key: 'total', dir: 'desc' },
       filestatusType: { key: 'total', dir: 'desc' },
       filestatusOA: { key: 'total', dir: 'desc' },
-      publisher: { key: 'nofile', dir: 'desc' }
+      publisher: { key: 'total', dir: 'desc' }
     }
   };
 
