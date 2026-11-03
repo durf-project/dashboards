@@ -16,6 +16,9 @@ cases = [
  ("doi_problem(' 10.1038/x')", 'whitespace'),
  ("doi_problem('')", 'missing'),
  ("doi_problem('10.1038/abc')", 'valid'),
+ ("doi_ok('10.1002/(SICI)1099-1077(1998110)13:2+<S87::AID-HUP53>3.0.CO;2-8')", True),  # old SICI DOI
+ ("doi_problem('10.1093/law/97801928824 86.001.0001')", 'whitespace'),
+ ("doi_problem('https://doi.org/doi: 10.1007/164_2020_356')", 'URL or doi: prefix'),
  ("ror_ok('https://ror.org/027m9bs27')", True),
  ("ror_ok('https://ror.org/02e2c7k09')", True),
  ("ror_ok('ror.org/027m9bs27')", False),

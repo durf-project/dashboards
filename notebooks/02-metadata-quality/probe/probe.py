@@ -22,27 +22,15 @@ Usage (needs network access to objectstore.surf.nl):
 """
 
 import json
-import os
-import pathlib
 import re
 
-import duckdb
+from lake import connect
 
-CATALOG = "ducklake:https://objectstore.surf.nl/cea01a7216d64348b7e51e5f3fc1901d:sprouts/catalog.ducklake"
-# PROBE_ATTACH=/path/to/file.duckdb runs the same probe against a local database (used for testing)
-ATTACH_TARGET = os.environ.get("PROBE_ATTACH", CATALOG)
 KEYWORDS = re.compile(r"doi|orcid|ror|isni|scopus|abstract|funding|fundref|funder|project|originatesfrom|access|corresponding|identifier", re.I)
 
 
 def main() -> None:
-    con = duckdb.connect()
-    options = "READ_ONLY"
-    if ATTACH_TARGET.startswith("ducklake:"):
-        for ext in ("ducklake", "httpfs"):
-            con.execute(f"INSTALL {ext}; LOAD {ext};")
-        options += ", CREATE_IF_NOT_EXISTS false"
-    con.execute(f"ATTACH '{ATTACH_TARGET}' AS lake ({options})")
-    con.execute((pathlib.Path(__file__).parent / "checks.sql").read_text())
+    con = connect()
 
     out: dict = {"tables": {}}
     tables = [r[0] for r in con.execute(

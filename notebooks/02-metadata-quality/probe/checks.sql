@@ -6,7 +6,9 @@ CREATE OR REPLACE MACRO mod11_2_ok(id) AS (
            lambda acc, d: ((acc + d) * 2) % 11, 0) % 11) % 11 AS VARCHAR), '10', 'X')
     = right(replace(id, '-', ''), 1)
 );
-CREATE OR REPLACE MACRO doi_ok(v) AS regexp_full_match(v, '10\.\d{4,9}/[-._;()/:A-Za-z0-9<>\[\]]+');
+-- DOI: directory indicator 10. + registrant code + / + suffix without whitespace. The DOI handbook allows
+-- almost any character in the suffix; Crossref's stricter pattern rejects valid old SICI DOIs (with + and <>).
+CREATE OR REPLACE MACRO doi_ok(v) AS regexp_full_match(v, '10\.\d{4,9}(\.\d+)*/\S+');
 CREATE OR REPLACE MACRO doi_problem(v) AS CASE
   WHEN v IS NULL OR trim(v) = '' THEN 'missing'
   WHEN doi_ok(v) THEN 'valid'
