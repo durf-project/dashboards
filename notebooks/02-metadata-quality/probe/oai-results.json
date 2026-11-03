@@ -1,0 +1,2611 @@
+[
+ {
+  "baseurl": "http://arts.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://arts.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://bibliotheek.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://bibliotheek.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://ccso.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://ccso.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://cds.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://cds.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://coelo.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://coelo.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://cris.maastrichtuniversity.nl/ws/oai",
+  "checked_url": "https://cris.maastrichtuniversity.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Maastricht University OAI Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2016-03-29T11:56:37Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 120,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1975",
+   "publications:year1975:withFiles",
+   "publications:year1976",
+   "publications:year1976:withFiles",
+   "publications:year1977"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "http://dare.uva.nl/cgi/arno/oai/Nyenrode",
+  "checked_url": "http://dare.uva.nl/cgi/arno/oai/Nyenrode",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: HTTPError: HTTP Error 404: Not Found)"
+ },
+ {
+  "baseurl": "http://dare.uva.nl/cgi/arno/oai/uvapub",
+  "checked_url": "http://dare.uva.nl/cgi/arno/oai/uvapub",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: HTTPError: HTTP Error 404: Not Found)"
+ },
+ {
+  "baseurl": "http://dissertations.ub.rug.nl/oai/",
+  "checked_url": "http://dissertations.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://dnpp.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://dnpp.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://doc.utwente.nl/cgi/oai2",
+  "checked_url": "http://doc.utwente.nl/cgi/oai2",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: ParseError: not well-formed (invalid token): line 46, column 14)"
+ },
+ {
+  "baseurl": "http://doc.utwente.nl/cgi/oai2/",
+  "checked_url": "http://doc.utwente.nl/cgi/oai2/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: ParseError: not well-formed (invalid token): line 46, column 14)"
+ },
+ {
+  "baseurl": "http://ebr.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://ebr.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://gbb.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://gbb.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://ggdc.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://ggdc.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://ics.uda.ub.rug.nl/oai/",
+  "checked_url": "http://ics.uda.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://ir.iss.nl/oai.php",
+  "checked_url": "http://ir.iss.nl/oai.php",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://ivem.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://ivem.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://keur.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://keur.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://library.tue.nl/csp/narcis/DARE.Repository.cls",
+  "checked_url": "http://library.tue.nl/csp/narcis/DARE.Repository.cls",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error [Errno 104] Connection reset by peer>)"
+ },
+ {
+  "baseurl": "http://library.wur.nl/oai",
+  "checked_url": "https://library.wur.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Wageningen University & Research Publications",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2013-01-02",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DD"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 8,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire"
+  ],
+  "sets_sample": [
+   "public",
+   "publickb",
+   "openaire",
+   "DARC",
+   "dataset",
+   "thesis",
+   "worldcat",
+   "edurep"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "http://msc.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://msc.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://nvl006.nivel.nl/oai/oai.ashx",
+  "checked_url": "http://nvl006.nivel.nl/oai/oai.ashx",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://prc.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://prc.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://proceedings.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://proceedings.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://rechten.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://rechten.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://redes.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://redes.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://repository.ubn.ru.nl/dspace-oai/request",
+  "checked_url": "https://repository.ubn.ru.nl/dspace-oai/request",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Radboud Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2008-02-18T11:17:41Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "nl_didl",
+   "oai_dc",
+   "qdc",
+   "xoai"
+  ],
+  "set_count": 22,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [
+   "com_2066_13798",
+   "com_2066_30183",
+   "com_2066_119633",
+   "com_2066_126649",
+   "col_2066_30204",
+   "col_2066_148787",
+   "col_2066_119645",
+   "col_2066_119641",
+   "col_2066_13799",
+   "col_2066_119634",
+   "col_2066_119635",
+   "col_2066_119636",
+   "col_2066_119637",
+   "col_2066_119638",
+   "col_2066_119639"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "http://repository.uvh.nl/oai/request",
+  "checked_url": "http://repository.uvh.nl/oai/request",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://repub.eur.nl/oai",
+  "checked_url": "https://repub.eur.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Erasmus University OAIPMH Feed",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2023-11-24T00:00:00Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_dc"
+  ],
+  "set_count": 2,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire"
+  ],
+  "sets_sample": [
+   "openaire",
+   "nwo"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "http://som.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://som.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://stratingh.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://stratingh.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://surfsharekit.nl:8080/oai/chw/",
+  "checked_url": "http://surfsharekit.nl:8080/oai/chw/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error [Errno 104] Connection reset by peer>)"
+ },
+ {
+  "baseurl": "http://theol.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://theol.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://theoluniv.ub.rug.nl/cgi/oai2",
+  "checked_url": "https://theoluniv.ub.rug.nl/cgi/oai2",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Theologische Universiteiten",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2015-09-14T11:57:23Z",
+   "deletedRecord": "persistent",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "didl",
+   "mets",
+   "nl_didl",
+   "oai_bibl",
+   "oai_dc",
+   "rdf",
+   "tu_oai_dc",
+   "uketd_dc"
+  ],
+  "set_count": 12,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "driver"
+  ],
+  "sets_sample": [
+   "7374617475733D756E707562",
+   "7374617475733D707562",
+   "7374617475733D7375626D6974746564",
+   "7374617475733D696E7072657373",
+   "74797065733D61727469636C65",
+   "74797065733D73747564656E745F746865736973",
+   "74797065733D626F6F6B",
+   "74797065733D746865736973",
+   "driver",
+   "pthu",
+   "thua",
+   "thuk"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": true
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "http://ursi.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://ursi.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://wewi.eldoc.ub.rug.nl/oai/",
+  "checked_url": "http://wewi.eldoc.ub.rug.nl/oai/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://www.fontyspublicaties.nl/oai/pub.fontys.nl.cgi",
+  "checked_url": "http://www.fontyspublicaties.nl/oai/pub.fontys.nl.cgi",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>)"
+ },
+ {
+  "baseurl": "http://www.scp.nl/oai",
+  "checked_url": "http://www.scp.nl/oai",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: HTTPError: HTTP Error 404: Not Found)"
+ },
+ {
+  "baseurl": "http://www.vliz.be/imis/nioz/imis.php",
+  "checked_url": "http://www.vliz.be/imis/nioz/imis.php",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 405: Method Not Allowed (https:// variant: HTTPError: HTTP Error 405: Method Not Allowed)"
+ },
+ {
+  "baseurl": "https://archaeology.datastations.nl/oai",
+  "checked_url": "https://archaeology.datastations.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "DANS Data Station Archaeology Dataverse OAI Archive",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2025-12-02T01:05:30Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "Datacite",
+   "dataverse_json",
+   "oai_datacite",
+   "oai_dc",
+   "oai_ddi"
+  ],
+  "set_count": 0,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://cris.maastrichtuniversity.nl/ws/oai",
+  "checked_url": "https://cris.maastrichtuniversity.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Maastricht University OAI Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2016-03-29T11:56:37Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 120,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1975",
+   "publications:year1975:withFiles",
+   "publications:year1976",
+   "publications:year1976:withFiles",
+   "publications:year1977"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://dspace.library.uu.nl/oai/openaire",
+  "checked_url": "https://dspace.library.uu.nl/oai/openaire",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 403: Forbidden"
+ },
+ {
+  "baseurl": "https://hanze.dare.ub.rug.nl/dspace-oai/request",
+  "checked_url": "https://hanze.dare.ub.rug.nl/dspace-oai/request",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "URLError: <urlopen error Tunnel connection failed: 502 Bad Gateway>"
+ },
+ {
+  "baseurl": "https://ir.amolf.nl/oai",
+  "checked_url": "https://ir.amolf.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "AMOLF OAIPMH Feed",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2026-05-29T00:00:00Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 0,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://ir.cwi.nl/oai",
+  "checked_url": "https://ir.cwi.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "CWI's OAIPMH Feed",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2026-05-28T00:00:00Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 3,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire"
+  ],
+  "sets_sample": [
+   "e_culture",
+   "openaire",
+   "nwo"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://library.wur.nl/oai",
+  "checked_url": "https://library.wur.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Wageningen University & Research Publications",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2013-01-02",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DD"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 8,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire"
+  ],
+  "sets_sample": [
+   "public",
+   "publickb",
+   "openaire",
+   "DARC",
+   "dataset",
+   "thesis",
+   "worldcat",
+   "edurep"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://lifesciences.datastations.nl/oai",
+  "checked_url": "https://lifesciences.datastations.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "DANS Data Station Life Sciences Dataverse OAI Archive",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2025-12-01T01:00:01Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "Datacite",
+   "dataverse_json",
+   "oai_datacite",
+   "oai_dc",
+   "oai_ddi"
+  ],
+  "set_count": 0,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://oai-pmh.tno.nl/OaiPmh",
+  "checked_url": "https://oai-pmh.tno.nl/OaiPmh",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "TNO repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "1970-01-01T00:00:00Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "nl_didl",
+   "oai_datacite",
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 0,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://oai.tudelft.nl/",
+  "checked_url": "https://oai.tudelft.nl/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "URLError: <urlopen error [Errno 104] Connection reset by peer>"
+ },
+ {
+  "baseurl": "https://oamemtfp.uci.ru.nl/metis-oaipmh-endpoint/OAIHandler",
+  "checked_url": "https://oamemtfp.uci.ru.nl/metis-oaipmh-endpoint/OAIHandler",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Metis Radboud University",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "1990-01-01",
+   "deletedRecord": "persistent",
+   "granularity": "YYYY-MM-DD"
+  },
+  "formats": [
+   "didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "pk_dare_all"
+  ],
+  "set_count": 6,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire_cris_orgunits",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_publications",
+   "bibOnly"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://oametisp.uci.ru.nl/metis-oaipmh-endpoint/OAIHandler",
+  "checked_url": "https://oametisp.uci.ru.nl/metis-oaipmh-endpoint/OAIHandler",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Metis Radboud University",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "1990-01-01",
+   "deletedRecord": "persistent",
+   "granularity": "YYYY-MM-DD"
+  },
+  "formats": [
+   "didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "pk_dare_all"
+  ],
+  "set_count": 6,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire_cris_orgunits",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_publications",
+   "bibOnly"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://openaccess.leidenuniv.nl/oai/request",
+  "checked_url": "https://openaccess.leidenuniv.nl/oai/request",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Leiden University Scholarly Publications",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "1900-01-01T00:00:00Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 23,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "hdl_1887_63609",
+   "hdl_1887_9744",
+   "hdl_1887_4539",
+   "hdl_1887_85175",
+   "open_access",
+   "hdl_1887_55785",
+   "hdl_1887_22737",
+   "hdl_1887_20773",
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_projects",
+   "openaire_cris_funding",
+   "openaire_cris_events"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://phys-techsciences.datastations.nl/oai",
+  "checked_url": "https://phys-techsciences.datastations.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "DANS Data Station Physical and Technical Sciences Dataverse OAI Archive",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2025-12-01T01:00:02Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "Datacite",
+   "dataverse_json",
+   "oai_datacite",
+   "oai_dc",
+   "oai_ddi"
+  ],
+  "set_count": 0,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://publications.beeldengeluid.nl/oai",
+  "checked_url": "https://publications.beeldengeluid.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Beeld en Geluid OAIPMH Feed",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2026-05-28T00:00:00Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 2,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [
+   "view",
+   "tmg"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://pure.buas.nl/ws/oai",
+  "checked_url": "https://pure.buas.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "BUAS Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2016-01-25T08:14:35Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 106,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1982",
+   "publications:year1982:withFiles",
+   "publications:year1983",
+   "publications:year1983:withFiles",
+   "publications:year1984"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://pure.eur.nl/ws/oai",
+  "checked_url": "https://pure.eur.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "EUR Research Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2021-06-14T10:37:49Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "mods_swepub",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 130,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1970",
+   "publications:year1970:withFiles",
+   "publications:year1971",
+   "publications:year1971:withFiles",
+   "publications:year1972"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://pure.hva.nl/ws/oai",
+  "checked_url": "https://pure.hva.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "HvA publications OAI repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2016-11-03T15:53:44Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 82,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1993",
+   "publications:year1993:withFiles",
+   "publications:year1994",
+   "publications:year1994:withFiles",
+   "publications:year1995"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://pure.knaw.nl/ws/oai",
+  "checked_url": "https://pure.knaw.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "KNAW Publication Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2014-09-15T20:04:04Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 170,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1950",
+   "publications:year1950:withFiles",
+   "publications:year1951",
+   "publications:year1951:withFiles",
+   "publications:year1952"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://pure.rug.nl/ws/oai",
+  "checked_url": "https://pure.rug.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "University of Groningen Research Database",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2014-03-11T08:52:52Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 530,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1770",
+   "publications:year1770:withFiles",
+   "publications:year1771",
+   "publications:year1771:withFiles",
+   "publications:year1772"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://pure.uva.nl/ws/oai",
+  "checked_url": "https://pure.uva.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "UvA-DARE",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2016-11-29T14:24:11Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 218,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1926",
+   "publications:year1926:withFiles",
+   "publications:year1927",
+   "publications:year1927:withFiles",
+   "publications:year1928"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://pure.uvt.nl/ws/oai",
+  "checked_url": "https://pure.uvt.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Tilburg University Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2014-03-17T09:00:31Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 4062,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year5",
+   "publications:year5:withFiles",
+   "publications:year6",
+   "publications:year6:withFiles",
+   "publications:year7"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://reports.nlr.nl/server/oai/openaire4",
+  "checked_url": "https://reports.nlr.nl/server/oai/openaire4",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "NLR Reports",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2012-03-09T11:10:19Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "oai_openaire"
+  ],
+  "set_count": 4,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [
+   "com_10921_111",
+   "col_10921_1529",
+   "col_10921_1451",
+   "col_10921_112"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": false,
+   "oai_dc": false,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://repository.naturalis.nl/oai",
+  "checked_url": "https://repository.naturalis.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Naturalis OAIPMH Feed",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2026-05-28T00:00:00Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 0,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://repository.ubn.ru.nl/oai/openaire",
+  "checked_url": "https://repository.ubn.ru.nl/oai/openaire",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Radboud Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2008-02-18T11:17:41Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mets",
+   "oai_dc"
+  ],
+  "set_count": 23,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire"
+  ],
+  "sets_sample": [
+   "openaire",
+   "com_2066_13798",
+   "com_2066_30183",
+   "com_2066_119633",
+   "com_2066_126649",
+   "col_2066_30204",
+   "col_2066_148787",
+   "col_2066_119645",
+   "col_2066_119641",
+   "col_2066_13799",
+   "col_2066_119634",
+   "col_2066_119635",
+   "col_2066_119636",
+   "col_2066_119637",
+   "col_2066_119638"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://repository.ubn.ru.nl/oai/request",
+  "checked_url": "https://repository.ubn.ru.nl/oai/request",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Radboud Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2008-02-18T11:17:41Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "nl_didl",
+   "oai_dc",
+   "qdc",
+   "xoai"
+  ],
+  "set_count": 22,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [
+   "com_2066_13798",
+   "com_2066_30183",
+   "com_2066_119633",
+   "com_2066_126649",
+   "col_2066_30204",
+   "col_2066_148787",
+   "col_2066_119645",
+   "col_2066_119641",
+   "col_2066_13799",
+   "col_2066_119634",
+   "col_2066_119635",
+   "col_2066_119636",
+   "col_2066_119637",
+   "col_2066_119638",
+   "col_2066_119639"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://repository.wodc.nl/oai/request",
+  "checked_url": "https://repository.wodc.nl/oai/request",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "WODC Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2021-01-20T08:52:57Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "didl",
+   "dim",
+   "etdms",
+   "marc",
+   "mets",
+   "mods",
+   "oai_dc",
+   "ore",
+   "qdc",
+   "rdf",
+   "uketd_dc",
+   "xoai"
+  ],
+  "set_count": 2,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [
+   "com_20.500.12832_1",
+   "col_20.500.12832_2"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://research-portal.uu.nl/ws/oai",
+  "checked_url": "https://research-portal.uu.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Utrecht University Pure OAI Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2014-10-07T12:56:25Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 312,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1879",
+   "publications:year1879:withFiles",
+   "publications:year1880",
+   "publications:year1880:withFiles",
+   "publications:year1881"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://research.hanze.nl/ws/oai",
+  "checked_url": "https://research.hanze.nl/ws/oai",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 500: Internal Server Error"
+ },
+ {
+  "baseurl": "https://research.ou.nl/ws/oai",
+  "checked_url": "https://research.ou.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Open University Netherlands",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2018-05-31T23:00:35Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "mods_swepub",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "uketd_dc",
+   "xmetadiss"
+  ],
+  "set_count": 164,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1974",
+   "publications:year1974:withFiles",
+   "publications:year1975",
+   "publications:year1975:withFiles",
+   "publications:year1976"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://research.uvh.nl/ws/oai",
+  "checked_url": "https://research.uvh.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "University of Humanistic Studies OAI Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2021-03-23T05:44:21Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "mods_swepub",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "uketd_dc",
+   "xmetadiss"
+  ],
+  "set_count": 166,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1976",
+   "publications:year1976:withFiles",
+   "publications:year1977",
+   "publications:year1977:withFiles",
+   "publications:year1978"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://research.vu.nl/ws/oai",
+  "checked_url": "https://research.vu.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Vrije Universiteit Amsterdam Repository",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2017-02-05T10:41:43Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 320,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1880",
+   "publications:year1880:withFiles",
+   "publications:year1881",
+   "publications:year1881:withFiles",
+   "publications:year1882"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://research.vumc.nl/ws/oai",
+  "checked_url": "https://research.vumc.nl/ws/oai",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1016)>"
+ },
+ {
+  "baseurl": "https://ris.utwente.nl/ws/oai",
+  "checked_url": "https://ris.utwente.nl/ws/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "University of Twente Research Information",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2017-05-10T10:48:44Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "mods",
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "qdc",
+   "xmetadiss"
+  ],
+  "set_count": 140,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire",
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_events",
+   "openaire_cris_equipments",
+   "openaire_cris_products",
+   "persons:all",
+   "publications:all",
+   "publications:withFiles",
+   "publications:year1965",
+   "publications:year1965:withFiles",
+   "publications:year1966",
+   "publications:year1966:withFiles",
+   "publications:year1967"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": true,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://rivm.dspace7.openrepository.com/server/oai/request",
+  "checked_url": "https://rivm.dspace7.openrepository.com/server/oai/request",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 403: Forbidden"
+ },
+ {
+  "baseurl": "https://rivm.openrepository.com/oai/request",
+  "checked_url": "https://rivm.openrepository.com/oai/request",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "URLError: <urlopen error [Errno 104] Connection reset by peer>"
+ },
+ {
+  "baseurl": "https://rivm.openrepository.com/server/oai/openaire4",
+  "checked_url": "https://rivm.openrepository.com/server/oai/openaire4",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "URLError: <urlopen error [Errno 104] Connection reset by peer>"
+ },
+ {
+  "baseurl": "https://scholarlypublications.universiteitleiden.nl/oai2",
+  "checked_url": "https://scholarlypublications.universiteitleiden.nl/oai2",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Leiden University Scholarly Publications",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "1900-01-01T00:00:00Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "nl_didl",
+   "oai_cerif_openaire",
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 23,
+  "sets_truncated": false,
+  "guideline_sets": [
+   "openaire_cris_equipments",
+   "openaire_cris_events",
+   "openaire_cris_funding",
+   "openaire_cris_orgunits",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_products",
+   "openaire_cris_projects",
+   "openaire_cris_publications"
+  ],
+  "sets_sample": [
+   "hdl_1887_63609",
+   "hdl_1887_9744",
+   "hdl_1887_4539",
+   "hdl_1887_85175",
+   "open_access",
+   "hdl_1887_55785",
+   "hdl_1887_22737",
+   "hdl_1887_20773",
+   "openaire_cris_publications",
+   "openaire_cris_patents",
+   "openaire_cris_persons",
+   "openaire_cris_orgunits",
+   "openaire_cris_projects",
+   "openaire_cris_funding",
+   "openaire_cris_events"
+  ],
+  "cris": {
+   "oai_cerif_openaire": true,
+   "sets": {
+    "openaire_cris_publications": true,
+    "openaire_cris_persons": true,
+    "openaire_cris_orgunits": true,
+    "openaire_cris_projects": true,
+    "openaire_cris_funding": true,
+    "openaire_cris_products": true,
+    "openaire_cris_patents": true,
+    "openaire_cris_equipments": true,
+    "openaire_cris_events": true
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://ssh.datastations.nl/oai",
+  "checked_url": "https://ssh.datastations.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "DANS Data Station Social Sciences and Humanities Dataverse OAI Archive",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2025-09-26T11:52:57Z",
+   "deletedRecord": "transient",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "Datacite",
+   "dataverse_json",
+   "oai_datacite",
+   "oai_dc",
+   "oai_ddi"
+  ],
+  "set_count": 8,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [
+   "CESSDA-EN",
+   "CESSDA-NL",
+   "clarin",
+   "humanities",
+   "oral_history",
+   "social_sciences",
+   "Social_Sciences2",
+   "world_war2"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://www.atmire.com/",
+  "checked_url": "https://www.atmire.com/",
+  "checked": "2026-11-03",
+  "ok": false,
+  "error": "ParseError: not well-formed (invalid token): line 1, column 2293"
+ },
+ {
+  "baseurl": "https://www.differ.nl/oai",
+  "checked_url": "https://www.differ.nl/oai",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Dutch Institute for Fundamental Energy Research",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2016-06-07T12:25:12Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "nl_didl"
+  ],
+  "set_count": 8,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [
+   "book",
+   "book_chapter",
+   "conference_paper",
+   "conference_proceedings",
+   "journal_article",
+   "magazine_article",
+   "report",
+   "thesis"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": false,
+   "set_openaire": false,
+   "oai_dc": false,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ },
+ {
+  "baseurl": "https://www.differ.nl/oai2",
+  "checked_url": "https://www.differ.nl/oai2",
+  "checked": "2026-11-03",
+  "identify": {
+   "repositoryName": "Dutch Institute for Fundamental Energy Research",
+   "protocolVersion": "2.0",
+   "earliestDatestamp": "2023-03-01T00:00:00Z",
+   "deletedRecord": "no",
+   "granularity": "YYYY-MM-DDThh:mm:ssZ"
+  },
+  "formats": [
+   "oai_dc",
+   "oai_openaire"
+  ],
+  "set_count": 8,
+  "sets_truncated": false,
+  "guideline_sets": [],
+  "sets_sample": [
+   "book",
+   "book_chapter",
+   "conference_paper",
+   "conference_proceedings",
+   "journal_article",
+   "magazine_article",
+   "report",
+   "thesis"
+  ],
+  "cris": {
+   "oai_cerif_openaire": false,
+   "sets": {
+    "openaire_cris_publications": false,
+    "openaire_cris_persons": false,
+    "openaire_cris_orgunits": false,
+    "openaire_cris_projects": false,
+    "openaire_cris_funding": false,
+    "openaire_cris_products": false,
+    "openaire_cris_patents": false,
+    "openaire_cris_equipments": false,
+    "openaire_cris_events": false
+   }
+  },
+  "literature": {
+   "oai_openaire": true,
+   "set_openaire": false,
+   "oai_dc": true,
+   "set_ec_fundedresources": false,
+   "set_driver": false
+  },
+  "ok": true
+ }
+]

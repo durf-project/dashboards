@@ -22,8 +22,10 @@ urls.json is a JSON list of base URLs. Only the standard library is used.
 
 import concurrent.futures as cf
 import json
+import os
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -32,21 +34,47 @@ NS = {"o": "http://www.openarchives.org/OAI/2.0/"}
 CRIS_SETS = ["openaire_cris_publications", "openaire_cris_persons", "openaire_cris_orgunits", "openaire_cris_projects",
              "openaire_cris_funding", "openaire_cris_products", "openaire_cris_patents", "openaire_cris_equipments", "openaire_cris_events"]
 HEADERS = {"User-Agent": "DURF-metadata-monitor/0.1 (OAI-PMH guidelines check)"}
+# behind a proxy that only sets HTTPS_PROXY, send plain-http endpoints through it too
+_proxy = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
+OPENER = urllib.request.build_opener(urllib.request.ProxyHandler(
+    {"http": os.environ.get("HTTP_PROXY") or os.environ.get("http_proxy") or _proxy, "https": _proxy} if _proxy else {}))
 
 
 def oai(base: str, **params) -> ET.Element:
     url = base + ("&" if "?" in base else "?") + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers=HEADERS)
-    with urllib.request.urlopen(req, timeout=60) as r:
-        root = ET.fromstring(r.read())
+    for attempt in range(2):  # one retry for transient errors (resets, 5xx, timeouts)
+        try:
+            with OPENER.open(urllib.request.Request(url, headers=HEADERS), timeout=60) as r:
+                root = ET.fromstring(r.read())
+            break
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+            if attempt or isinstance(e, urllib.error.HTTPError) and e.code < 500:
+                raise
+            time.sleep(5)
     err = root.find("o:error", NS)
-    if err is not None and err.get("code") != "noSetHierarchy":
+    # an empty set list is reported as noSetHierarchy, by some servers as noRecordsMatch
+    if err is not None and not (params.get("verb") == "ListSets" and err.get("code") in ("noSetHierarchy", "noRecordsMatch")):
         raise RuntimeError(f"{err.get('code')}: {(err.text or '').strip()[:120]}")
     return root
 
 
 def check(base: str) -> dict:
-    out: dict = {"baseurl": base, "checked": time.strftime("%Y-%m-%d")}
+    """Check one endpoint. For an http:// URL, try https:// first: many endpoints
+    have moved, and some networks (proxies) don't pass plain http at all."""
+    if base.startswith("http://"):
+        res = check_one("https://" + base[len("http://"):], base)
+        if res["ok"]:
+            return res
+        res_http = check_one(base, base)
+        if not res_http["ok"]:
+            res_http["error"] += f" (https:// variant: {res['error']})"
+        return res_http
+    return check_one(base, base)
+
+
+def check_one(url: str, base: str) -> dict:
+    out: dict = {"baseurl": base, "checked_url": url, "checked": time.strftime("%Y-%m-%d")}
+    base = url
     try:
         ident = oai(base, verb="Identify").find("o:Identify", NS)
         out["identify"] = {k: (ident.findtext(f"o:{k}", default="", namespaces=NS) or "").strip()

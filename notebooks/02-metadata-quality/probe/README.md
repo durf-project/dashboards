@@ -45,3 +45,19 @@ The OpenAIRE result tables in the DuckLake (`openaire.publications`, `datasets`,
 and `projects` columns (checked 3 November 2026), so they can't be counted per
 datasource or organisation; the Graph API is used for that instead.
 `oai_check.py` needs network access to the institutions' own servers (74 hosts).
+
+What the endpoint check of 3 November 2026 found (`oai-results.json`):
+
+- 38 of the 82 base URLs answered. For an `http://` URL the check tries
+  `https://` first; 35 endpoints only answer over plain http, which the
+  check environment's proxy does not pass, so they are "not checked" rather
+  than broken. The rest failed with 403, 500, resets or TLS errors.
+- All 13 reachable CRIS endpoints offer `oai_cerif_openaire`; the Pure ones
+  offer every `openaire_cris_*` set (publications, persons, orgunits,
+  projects, funding, products, patents, equipments, events), although
+  OpenAIRE is registered to harvest only publications, products and patents.
+- In the CERIF publication records of UvA, UU and RUG an author is only a
+  reference (`<cerif:Person id="…">`); the ORCIDs are in the separate Person
+  records (`openaire_cris_persons`: 29 of the first 100 at UvA, 7 at UU).
+  That explains why `lake.cris.publications` has no ORCID: the DuckLake only
+  harvests the publications set.
