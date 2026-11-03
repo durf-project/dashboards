@@ -31,3 +31,17 @@ What the schema check of 3 November 2026 found:
 - linked projects (`cerif:OriginatesFrom/cerif:Project`) carry only `@id` and a
   title: no grant number, no funder;
 - there is no corresponding-author element.
+
+## OpenAIRE tab
+
+| File | What it does |
+| --- | --- |
+| `openaire.py` | The RPOs from `"nl-orgs".baseline`, matched on ROR to `openaire.organizations`, their datasources (`openaire.datasources`), harvesting interfaces (OpenAIRE Datasource Manager API) and counts of research products per datasource and projects per organisation per 5-year period (OpenAIRE Graph API, ~4,300 requests, within its 7,200/hour limit). Embeds the result in `../static.html`: `uv run openaire.py [oai-results.json]` |
+| `oai_check.py` | Identify, ListMetadataFormats and ListSets on each OAI-PMH base URL, and which formats and sets of the OpenAIRE CRIS / literature guidelines are offered: `uv run oai_check.py oai-urls.json > oai-results.json`, then pass `oai-results.json` to `openaire.py`. |
+| `oai-urls.json` | The 82 base URLs of the RPOs' CRIS systems and literature repositories (written by `openaire.py`). |
+
+The OpenAIRE result tables in the DuckLake (`openaire.publications`, `datasets`,
+`software`, `otherresearchproducts`) have empty `collectedfrom`, `organizations`
+and `projects` columns (checked 3 November 2026), so they can't be counted per
+datasource or organisation; the Graph API is used for that instead.
+`oai_check.py` needs network access to the institutions' own servers (74 hosts).
