@@ -225,9 +225,9 @@
   html[data-embed] #kpis:not([data-embedded]),
   html[data-embed] .charts > .chart-card:not([data-embedded]) { display: none; }
   html[data-embed] .charts > .chart-card { --span: var(--grid-cols); }
-  html[data-embed] .kpis { grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: var(--space-2); }
+  html[data-embed] .kpis { grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr)); gap: var(--space-2); }
   html[data-embed] .kpi { padding: var(--space-3); }
-  html[data-embed] .kpi .value { font-size: var(--text-3); }
+  html[data-embed] .kpi .value { font-size: var(--text-4); }
   html[data-embed] .embed-credit { display: block; font-size: var(--text-8); color: var(--muted-foreground); }
   html[data-embed] .embed-credit a { color: var(--primary); }
 </style>
@@ -405,7 +405,7 @@
       <p>Paste this snippet into any web page (a CMS &ldquo;HTML&rdquo; block, a Markdown page, a blog post). It shows just this chart from the full dataset, with its current %/# setting and sort order, and links back to this dashboard. The sidebar filters are not carried over.</p>
       <label class="switch-row"><input type="checkbox" role="switch" id="embed-kpis"> Include the key figures above the chart</label>
       <textarea id="embed-code" readonly rows="6" aria-label="Embed code"></textarea>
-      <p class="text-light">The embedded page also reports its height to the host page (<code>postMessage</code> with <code>type: "durf-embed-height"</code>), so a page that listens for it can size the iframe exactly; otherwise the height in the snippet is used.</p>
+      <p class="text-light">The embedded page also reports its height to the host page (<code>postMessage</code> with <code>type: "durf-embed-height"</code>), so a page that listens for it can size the iframe exactly; otherwise the height in the snippet is used. A host page can switch the embed to its own light/dark theme with <code>postMessage({type: "durf-embed-theme", theme: "dark"})</code>.</p>
     </div>
     <footer>
       <a class="button outline" id="embed-preview" href="#" target="_blank" rel="noopener">Preview</a>
@@ -1750,6 +1750,15 @@
         window.parent.postMessage({ type: 'durf-embed-height', height: Math.ceil(document.documentElement.getBoundingClientRect().height) }, '*');
       };
       new ResizeObserver(postHeight).observe(document.body);
+      // the host page may tell the embed which theme it is showing:
+      // postMessage({type: 'durf-embed-theme', theme: 'light' | 'dark'})
+      window.addEventListener('message', function(e){
+        var t = e.data && e.data.type === 'durf-embed-theme' ? e.data.theme : null;
+        if ((t !== 'light' && t !== 'dark') || root.dataset.theme === t) return;
+        root.dataset.theme = t;
+        readColors();
+        render();
+      });
     }
   }
 
