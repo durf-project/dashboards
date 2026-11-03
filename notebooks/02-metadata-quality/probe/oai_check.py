@@ -8,12 +8,17 @@ For every base URL: Identify, ListMetadataFormats and ListSets (following
 resumption tokens), then which of the formats and sets the OpenAIRE guidelines
 ask for are offered:
 
-- CRIS systems (OpenAIRE Guidelines for CRIS Managers 1.1/1.2):
-  metadataPrefix oai_cerif_openaire, sets openaire_cris_publications,
-  _persons, _orgunits, _projects, _funding, _products, _patents, _equipments, _events;
-- literature repositories (OpenAIRE Guidelines for Literature Repositories 4):
-  metadataPrefix oai_openaire, set openaire; the older 3.0 profile uses oai_dc
-  with sets openaire / ec_fundedresources (and DRIVER: driver).
+- CRIS systems (OpenAIRE Guidelines for CRIS Managers 1.1/1.2, "Use of
+  OAI-PMH"): a metadataPrefix starting with oai_cerif_openaire, and all nine
+  sets openaire_cris_publications, _products, _patents, _persons, _orgunits,
+  _projects, _funding, _events and _equipments are mandatory ("shall be
+  recognized by the CRIS, even if not all of them are populated"); Identify
+  carries one CERIF Service record. For each of the nine sets the check also
+  asks ListIdentifiers whether it is populated;
+- literature repositories (OpenAIRE Guidelines for Literature Repositories
+  4.x): recommended metadataPrefix oai_openaire, no mandatory set (the
+  "openaire" set is commented out of the 4.x text); the older 3.0 profile
+  uses oai_dc with the mandatory set openaire. Its population is checked too.
 
     uv run oai_check.py urls.json > oai-results.json
 
@@ -58,6 +63,22 @@ def oai(base: str, **params) -> ET.Element:
     return root
 
 
+def first_page_count(base: str, prefix: str, set_spec: str):
+    """Records in a set: completeListSize when the server gives it, else the size
+    of the first page as a lower bound ("100+"); 0 when the set is empty."""
+    try:
+        root = oai(base, verb="ListIdentifiers", metadataPrefix=prefix, set=set_spec)
+    except RuntimeError as e:
+        return 0 if str(e).startswith("noRecordsMatch") else f"error: {str(e)[:80]}"
+    except Exception as e:
+        return f"error: {type(e).__name__}"
+    n = len(root.findall(".//o:header", NS))
+    token = root.find(".//o:resumptionToken", NS)
+    if token is not None and token.get("completeListSize"):
+        return int(token.get("completeListSize"))
+    return f"{n}+" if token is not None and (token.text or "").strip() else n
+
+
 def check(base: str) -> dict:
     """Check one endpoint. For an http:// URL, try https:// first: many endpoints
     have moved, and some networks (proxies) don't pass plain http at all."""
@@ -97,9 +118,16 @@ def check_one(url: str, base: str) -> dict:
         out["guideline_sets"] = sorted(s for s in sets if s in wanted)
         out["sets_sample"] = sets[:15]
         f, s = set(out["formats"]), set(sets)
-        out["cris"] = {"oai_cerif_openaire": "oai_cerif_openaire" in f, "sets": {x: x in s for x in CRIS_SETS}}
+        cris_prefix = next((x for x in out["formats"] if x.startswith("oai_cerif_openaire")), None)
+        out["cris"] = {"oai_cerif_openaire": bool(cris_prefix), "prefix": cris_prefix,
+                       "sets": {x: x in s for x in CRIS_SETS},
+                       "service_in_identify": any("Service" in el.tag for d in ident.findall("o:description", NS) for el in d.iter())}
+        if cris_prefix:
+            out["cris"]["records"] = {x: first_page_count(base, cris_prefix, x) for x in CRIS_SETS if x in s}
         out["literature"] = {"oai_openaire": "oai_openaire" in f, "set_openaire": "openaire" in s,
                              "oai_dc": "oai_dc" in f, "set_ec_fundedresources": "ec_fundedresources" in s, "set_driver": "driver" in s}
+        if "openaire" in s:
+            out["literature"]["records_openaire"] = first_page_count(base, "oai_openaire" if "oai_openaire" in f else "oai_dc", "openaire")
         out["ok"] = True
     except Exception as e:  # unreachable, not OAI-PMH, bad XML, ...
         out["ok"] = False

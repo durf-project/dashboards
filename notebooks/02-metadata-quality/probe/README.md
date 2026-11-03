@@ -52,10 +52,18 @@ What the endpoint check of 3 November 2026 found (`oai-results.json`):
   `https://` first; 35 endpoints only answer over plain http, which the
   check environment's proxy does not pass, so they are "not checked" rather
   than broken. The rest failed with 403, 500, resets or TLS errors.
-- All 13 reachable CRIS endpoints offer `oai_cerif_openaire`; the Pure ones
-  offer every `openaire_cris_*` set (publications, persons, orgunits,
-  projects, funding, products, patents, equipments, events), although
-  OpenAIRE is registered to harvest only publications, products and patents.
+- The OpenAIRE Guidelines for CRIS Managers 1.1/1.2 ("Use of OAI-PMH") require
+  a metadata prefix starting with `oai_cerif_openaire` and make all nine
+  `openaire_cris_*` sets mandatory, "even if not all of them are populated".
+  16 of the 18 reachable CRIS endpoints recognise all nine (Radboud's Metis
+  misses funding, patents, events and equipments). Many sets are empty:
+  equipments everywhere but Twente, funding and projects at most, and
+  Leiden's endpoint has no records in any set. OpenAIRE harvests only
+  publications (13), products (10) and patents (10) from these endpoints;
+  persons and orgunits at one, projects and funding at none.
+- Literature repositories: guidelines 4 recommend `oai_openaire` and no longer
+  require a set (the `openaire` set is commented out of the 4.x text);
+  the 3.0 profile requires `oai_dc` with set `openaire`.
 - In the CERIF publication records of UvA, UU and RUG an author is only a
   reference (`<cerif:Person id="…">`); the ORCIDs are in the separate Person
   records (`openaire_cris_persons`: 29 of the first 100 at UvA, 7 at UU).

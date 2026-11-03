@@ -86,6 +86,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -96,6 +97,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 145710,
+    "openaire_cris_persons": 300229,
+    "openaire_cris_orgunits": 110112,
+    "openaire_cris_projects": 22,
+    "openaire_cris_funding": 13,
+    "openaire_cris_products": 2628,
+    "openaire_cris_patents": 29,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 17778
    }
   },
   "literature": {
@@ -103,7 +116,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 78932
   },
   "ok": true
  },
@@ -239,6 +253,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -249,14 +264,16 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": true,
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": "200+"
   },
   "ok": true
  },
@@ -341,6 +358,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -351,7 +369,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": false,
@@ -396,6 +415,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -406,14 +426,16 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": false,
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 0
   },
   "ok": true
  },
@@ -472,10 +494,10 @@
    "driver"
   ],
   "sets_sample": [
-   "7374617475733D756E707562",
-   "7374617475733D707562",
    "7374617475733D7375626D6974746564",
    "7374617475733D696E7072657373",
+   "7374617475733D756E707562",
+   "7374617475733D707562",
    "74797065733D61727469636C65",
    "74797065733D73747564656E745F746865736973",
    "74797065733D626F6F6B",
@@ -487,6 +509,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -497,7 +520,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": false,
@@ -547,46 +571,8 @@
   "baseurl": "https://archaeology.datastations.nl/oai",
   "checked_url": "https://archaeology.datastations.nl/oai",
   "checked": "2026-11-03",
-  "identify": {
-   "repositoryName": "DANS Data Station Archaeology Dataverse OAI Archive",
-   "protocolVersion": "2.0",
-   "earliestDatestamp": "2025-12-02T01:05:30Z",
-   "deletedRecord": "transient",
-   "granularity": "YYYY-MM-DDThh:mm:ssZ"
-  },
-  "formats": [
-   "Datacite",
-   "dataverse_json",
-   "oai_datacite",
-   "oai_dc",
-   "oai_ddi"
-  ],
-  "set_count": 0,
-  "sets_truncated": false,
-  "guideline_sets": [],
-  "sets_sample": [],
-  "cris": {
-   "oai_cerif_openaire": false,
-   "sets": {
-    "openaire_cris_publications": false,
-    "openaire_cris_persons": false,
-    "openaire_cris_orgunits": false,
-    "openaire_cris_projects": false,
-    "openaire_cris_funding": false,
-    "openaire_cris_products": false,
-    "openaire_cris_patents": false,
-    "openaire_cris_equipments": false,
-    "openaire_cris_events": false
-   }
-  },
-  "literature": {
-   "oai_openaire": false,
-   "set_openaire": false,
-   "oai_dc": true,
-   "set_ec_fundedresources": false,
-   "set_driver": false
-  },
-  "ok": true
+  "ok": false,
+  "error": "ParseError: syntax error: line 1, column 0"
  },
  {
   "baseurl": "https://cris.maastrichtuniversity.nl/ws/oai",
@@ -640,6 +626,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -650,6 +637,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 145710,
+    "openaire_cris_persons": 300229,
+    "openaire_cris_orgunits": 110112,
+    "openaire_cris_projects": 22,
+    "openaire_cris_funding": 13,
+    "openaire_cris_products": 2628,
+    "openaire_cris_patents": 29,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 17778
    }
   },
   "literature": {
@@ -657,7 +656,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 78932
   },
   "ok": true
  },
@@ -697,6 +697,7 @@
   "sets_sample": [],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -707,7 +708,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": true,
@@ -747,6 +749,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -757,14 +760,16 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": true,
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": "100+"
   },
   "ok": true
  },
@@ -802,6 +807,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -812,14 +818,16 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": true,
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": "200+"
   },
   "ok": true
  },
@@ -847,6 +855,7 @@
   "sets_sample": [],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -857,7 +866,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": false,
@@ -891,6 +901,7 @@
   "sets_sample": [],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -901,7 +912,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": true,
@@ -955,6 +967,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -965,6 +978,14 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": "50+",
+    "openaire_cris_persons": "50+",
+    "openaire_cris_orgunits": "50+",
+    "openaire_cris_projects": "50+",
+    "openaire_cris_products": "50+"
    }
   },
   "literature": {
@@ -1012,6 +1033,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -1022,6 +1044,14 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": "50+",
+    "openaire_cris_persons": "50+",
+    "openaire_cris_orgunits": "50+",
+    "openaire_cris_projects": "50+",
+    "openaire_cris_products": "50+"
    }
   },
   "literature": {
@@ -1082,6 +1112,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -1092,6 +1123,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 0,
+    "openaire_cris_persons": 0,
+    "openaire_cris_orgunits": 0,
+    "openaire_cris_projects": 0,
+    "openaire_cris_funding": 0,
+    "openaire_cris_products": 0,
+    "openaire_cris_patents": 0,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 0
    }
   },
   "literature": {
@@ -1107,46 +1150,8 @@
   "baseurl": "https://phys-techsciences.datastations.nl/oai",
   "checked_url": "https://phys-techsciences.datastations.nl/oai",
   "checked": "2026-11-03",
-  "identify": {
-   "repositoryName": "DANS Data Station Physical and Technical Sciences Dataverse OAI Archive",
-   "protocolVersion": "2.0",
-   "earliestDatestamp": "2025-12-01T01:00:02Z",
-   "deletedRecord": "transient",
-   "granularity": "YYYY-MM-DDThh:mm:ssZ"
-  },
-  "formats": [
-   "Datacite",
-   "dataverse_json",
-   "oai_datacite",
-   "oai_dc",
-   "oai_ddi"
-  ],
-  "set_count": 0,
-  "sets_truncated": false,
-  "guideline_sets": [],
-  "sets_sample": [],
-  "cris": {
-   "oai_cerif_openaire": false,
-   "sets": {
-    "openaire_cris_publications": false,
-    "openaire_cris_persons": false,
-    "openaire_cris_orgunits": false,
-    "openaire_cris_projects": false,
-    "openaire_cris_funding": false,
-    "openaire_cris_products": false,
-    "openaire_cris_patents": false,
-    "openaire_cris_equipments": false,
-    "openaire_cris_events": false
-   }
-  },
-  "literature": {
-   "oai_openaire": false,
-   "set_openaire": false,
-   "oai_dc": true,
-   "set_ec_fundedresources": false,
-   "set_driver": false
-  },
-  "ok": true
+  "ok": false,
+  "error": "ParseError: syntax error: line 1, column 0"
  },
  {
   "baseurl": "https://publications.beeldengeluid.nl/oai",
@@ -1174,6 +1179,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -1184,7 +1190,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": true,
@@ -1247,6 +1254,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -1257,6 +1265,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 6979,
+    "openaire_cris_persons": 3807,
+    "openaire_cris_orgunits": 2710,
+    "openaire_cris_projects": 313,
+    "openaire_cris_funding": 278,
+    "openaire_cris_products": 269,
+    "openaire_cris_patents": 1,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 4683
    }
   },
   "literature": {
@@ -1264,7 +1284,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 1437
   },
   "ok": true
  },
@@ -1321,6 +1342,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -1331,6 +1353,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 271709,
+    "openaire_cris_persons": 413452,
+    "openaire_cris_orgunits": 63292,
+    "openaire_cris_projects": 0,
+    "openaire_cris_funding": 0,
+    "openaire_cris_products": 3716,
+    "openaire_cris_patents": 0,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 26744
    }
   },
   "literature": {
@@ -1338,7 +1372,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 77035
   },
   "ok": true
  },
@@ -1394,6 +1429,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -1404,6 +1440,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 7773,
+    "openaire_cris_persons": 13426,
+    "openaire_cris_orgunits": 5062,
+    "openaire_cris_projects": 39,
+    "openaire_cris_funding": 0,
+    "openaire_cris_products": 1066,
+    "openaire_cris_patents": 0,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 7024
    }
   },
   "literature": {
@@ -1411,7 +1459,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 5205
   },
   "ok": true
  },
@@ -1467,6 +1516,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -1477,6 +1527,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 53274,
+    "openaire_cris_persons": 72282,
+    "openaire_cris_orgunits": 13773,
+    "openaire_cris_projects": 1332,
+    "openaire_cris_funding": 525,
+    "openaire_cris_products": 2045,
+    "openaire_cris_patents": 2,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 22048
    }
   },
   "literature": {
@@ -1484,7 +1546,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 18965
   },
   "ok": true
  },
@@ -1540,6 +1603,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -1550,6 +1614,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 321449,
+    "openaire_cris_persons": 507642,
+    "openaire_cris_orgunits": 184907,
+    "openaire_cris_projects": 315,
+    "openaire_cris_funding": 8,
+    "openaire_cris_products": 6573,
+    "openaire_cris_patents": 570,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 46351
    }
   },
   "literature": {
@@ -1557,7 +1633,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 142791
   },
   "ok": true
  },
@@ -1613,6 +1690,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -1623,6 +1701,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 231859,
+    "openaire_cris_persons": 7385,
+    "openaire_cris_orgunits": 432,
+    "openaire_cris_projects": 13,
+    "openaire_cris_funding": 0,
+    "openaire_cris_products": 5758,
+    "openaire_cris_patents": 0,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 72904
    }
   },
   "literature": {
@@ -1630,7 +1720,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 69035
   },
   "ok": true
  },
@@ -1686,6 +1777,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -1696,6 +1788,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 113737,
+    "openaire_cris_persons": 82735,
+    "openaire_cris_orgunits": 40956,
+    "openaire_cris_projects": 1585,
+    "openaire_cris_funding": 48,
+    "openaire_cris_products": 3030,
+    "openaire_cris_patents": 2,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 14955
    }
   },
   "literature": {
@@ -1703,7 +1807,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 25449
   },
   "ok": true
  },
@@ -1732,6 +1837,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -1742,7 +1848,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": true,
@@ -1776,6 +1883,7 @@
   "sets_sample": [],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -1786,7 +1894,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": true,
@@ -1836,6 +1945,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -1846,14 +1956,16 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": false,
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 297025
   },
   "ok": true
  },
@@ -1896,6 +2008,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -1906,7 +2019,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": false,
@@ -1951,6 +2065,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -1961,7 +2076,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": false,
@@ -2024,6 +2140,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -2034,6 +2151,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 289615,
+    "openaire_cris_persons": 342032,
+    "openaire_cris_orgunits": 83229,
+    "openaire_cris_projects": 0,
+    "openaire_cris_funding": 4,
+    "openaire_cris_products": 4334,
+    "openaire_cris_patents": 333,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 70776
    }
   },
   "literature": {
@@ -2041,7 +2170,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 85455
   },
   "ok": true
  },
@@ -2106,6 +2236,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -2116,6 +2247,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 17382,
+    "openaire_cris_persons": 26330,
+    "openaire_cris_orgunits": 5964,
+    "openaire_cris_projects": 199,
+    "openaire_cris_funding": 2,
+    "openaire_cris_products": 802,
+    "openaire_cris_patents": 0,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 4827
    }
   },
   "literature": {
@@ -2123,7 +2266,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 8269
   },
   "ok": true
  },
@@ -2181,6 +2325,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -2191,6 +2336,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 42844,
+    "openaire_cris_persons": 5332,
+    "openaire_cris_orgunits": 892,
+    "openaire_cris_projects": 74,
+    "openaire_cris_funding": 71,
+    "openaire_cris_products": 146,
+    "openaire_cris_patents": 0,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 3517
    }
   },
   "literature": {
@@ -2198,7 +2355,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 917
   },
   "ok": true
  },
@@ -2254,6 +2412,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -2264,6 +2423,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 218018,
+    "openaire_cris_persons": 332274,
+    "openaire_cris_orgunits": 102305,
+    "openaire_cris_projects": 5191,
+    "openaire_cris_funding": 0,
+    "openaire_cris_products": 7394,
+    "openaire_cris_patents": 90,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 46321
    }
   },
   "literature": {
@@ -2271,7 +2442,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 71031
   },
   "ok": true
  },
@@ -2334,6 +2506,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -2344,6 +2517,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 167803,
+    "openaire_cris_persons": 25360,
+    "openaire_cris_orgunits": 11456,
+    "openaire_cris_projects": 31,
+    "openaire_cris_funding": 4,
+    "openaire_cris_products": 2433,
+    "openaire_cris_patents": 1195,
+    "openaire_cris_equipments": 8,
+    "openaire_cris_events": 27949
    }
   },
   "literature": {
@@ -2351,7 +2536,8 @@
    "set_openaire": true,
    "oai_dc": true,
    "set_ec_fundedresources": false,
-   "set_driver": false
+   "set_driver": false,
+   "records_openaire": 58788
   },
   "ok": true
  },
@@ -2360,14 +2546,14 @@
   "checked_url": "https://rivm.dspace7.openrepository.com/server/oai/request",
   "checked": "2026-11-03",
   "ok": false,
-  "error": "HTTPError: HTTP Error 403: Forbidden"
+  "error": "URLError: <urlopen error [Errno 104] Connection reset by peer>"
  },
  {
   "baseurl": "https://rivm.openrepository.com/oai/request",
   "checked_url": "https://rivm.openrepository.com/oai/request",
   "checked": "2026-11-03",
   "ok": false,
-  "error": "URLError: <urlopen error [Errno 104] Connection reset by peer>"
+  "error": "HTTPError: HTTP Error 403: Forbidden"
  },
  {
   "baseurl": "https://rivm.openrepository.com/server/oai/openaire4",
@@ -2425,6 +2611,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": true,
+   "prefix": "oai_cerif_openaire",
    "sets": {
     "openaire_cris_publications": true,
     "openaire_cris_persons": true,
@@ -2435,6 +2622,18 @@
     "openaire_cris_patents": true,
     "openaire_cris_equipments": true,
     "openaire_cris_events": true
+   },
+   "service_in_identify": true,
+   "records": {
+    "openaire_cris_publications": 0,
+    "openaire_cris_persons": 0,
+    "openaire_cris_orgunits": 0,
+    "openaire_cris_projects": 0,
+    "openaire_cris_funding": 0,
+    "openaire_cris_products": 0,
+    "openaire_cris_patents": 0,
+    "openaire_cris_equipments": 0,
+    "openaire_cris_events": 0
    }
   },
   "literature": {
@@ -2479,6 +2678,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -2489,7 +2689,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": false,
@@ -2536,6 +2737,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -2546,7 +2748,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": false,
@@ -2587,6 +2790,7 @@
   ],
   "cris": {
    "oai_cerif_openaire": false,
+   "prefix": null,
    "sets": {
     "openaire_cris_publications": false,
     "openaire_cris_persons": false,
@@ -2597,7 +2801,8 @@
     "openaire_cris_patents": false,
     "openaire_cris_equipments": false,
     "openaire_cris_events": false
-   }
+   },
+   "service_in_identify": false
   },
   "literature": {
    "oai_openaire": true,
