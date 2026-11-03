@@ -208,6 +208,28 @@
   .dialog-body [role=alert] { font-size: var(--text-7); }
 
   footer.note { color: var(--muted-foreground); font-size: var(--text-8); line-height: 1.55; }
+
+  /* embed dialog */
+  #embed-dialog { width: min(100% - 2rem, 40rem); }
+  #embed-code { font-family: var(--font-mono); font-size: var(--text-8); resize: vertical; }
+  #embed-dialog footer { display: flex; gap: var(--space-2); justify-content: flex-end; flex-wrap: wrap; }
+
+  /* Embed mode (?embed=...): only the requested pieces, no app chrome, on a
+     transparent background so it sits naturally in the host page's iframe. */
+  .embed-credit { display: none; }
+  html[data-embed] body { background: transparent; }
+  html[data-embed] :is(.back-bar, nav[data-topnav], aside[data-sidebar], .page-head, #exploratory-accordion, footer.note, .expand-btn, .embed-btn) { display: none; }
+  html[data-embed] #app-shell { display: block; height: auto; }
+  html[data-embed] #app-shell > main { overflow: visible; }
+  html[data-embed] .main-inner { max-width: none; padding: 2px; gap: var(--space-3); }
+  html[data-embed] #kpis:not([data-embedded]),
+  html[data-embed] .charts > .chart-card:not([data-embedded]) { display: none; }
+  html[data-embed] .charts > .chart-card { --span: var(--grid-cols); }
+  html[data-embed] .kpis { grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: var(--space-2); }
+  html[data-embed] .kpi { padding: var(--space-3); }
+  html[data-embed] .kpi .value { font-size: var(--text-3); }
+  html[data-embed] .embed-credit { display: block; font-size: var(--text-8); color: var(--muted-foreground); }
+  html[data-embed] .embed-credit a { color: var(--primary); }
 </style>
 </head>
 <body>
@@ -368,9 +390,30 @@
       <footer class="note">
         File status is determined per publication: "Open file" if at least one file is publicly accessible (COAR c_abf2), otherwise "Embargoed file" if files exist but are all embargoed (c_f1cf), otherwise "No file". License is the first license of the first file; where file or license information is missing, this is shown separately. "Unknown" for open access status means: no <code>ar:Access</code> value in the source metadata. Publisher is the first name from <code>cerif:Publishers</code>, with common spelling variants (e.g. "Elsevier B.V.", "Elsevier Inc.", "Elsevier Ltd") merged into a single name; publications with no publisher field fall under "No publisher", less frequent publishers under "Other publisher". "OA Switchboard partner" uses that same first publisher name, matched by substring against the <a href="https://www.oaswitchboard.org/participants" target="_blank" rel="noopener">OA Switchboard participant list</a> (checked 1 Oct 2026); it is independent of the Publisher bucketing above and may classify some long-tail publishers as a match even though they aren't broken out individually elsewhere in the dashboard.
       </footer>
+      <p class="embed-credit">Source: <a class="dashboard-link" href="./03-full-text-capture.html" target="_blank" rel="noopener">DURF Full Text Monitor</a> &middot; static snapshot of the SURF ORI DuckLake catalog (<code>cris.publications</code>, loaded 4 March 2026) &middot; open the interactive dashboard for filters and the queries behind the figures.</p>
     </div>
   </main>
 </div>
+
+<dialog id="embed-dialog" closedby="any" aria-labelledby="embed-title">
+  <form method="dialog">
+    <header>
+      <h3 id="embed-title">Embed this chart</h3>
+      <p id="embed-chart-name"></p>
+    </header>
+    <div class="dialog-body">
+      <p>Paste this snippet into any web page (a CMS &ldquo;HTML&rdquo; block, a Markdown page, a blog post). It shows just this chart from the full dataset, with its current %/# setting and sort order, and links back to this dashboard. The sidebar filters are not carried over.</p>
+      <label class="switch-row"><input type="checkbox" role="switch" id="embed-kpis"> Include the key figures above the chart</label>
+      <textarea id="embed-code" readonly rows="6" aria-label="Embed code"></textarea>
+      <p class="text-light">The embedded page also reports its height to the host page (<code>postMessage</code> with <code>type: "durf-embed-height"</code>), so a page that listens for it can size the iframe exactly; otherwise the height in the snippet is used.</p>
+    </div>
+    <footer>
+      <a class="button outline" id="embed-preview" href="#" target="_blank" rel="noopener">Preview</a>
+      <button type="button" id="embed-copy">Copy code</button>
+      <button type="submit" class="outline" value="close">Close</button>
+    </footer>
+  </form>
+</dialog>
 
 <dialog id="about-dialog" closedby="any" aria-labelledby="about-title">
   <form method="dialog">
@@ -1628,8 +1671,88 @@
         paintExpandBtn();
       });
       slot.appendChild(expandBtn);
+
+      var embedBtn = document.createElement('button');
+      embedBtn.type = 'button';
+      embedBtn.className = 'ghost small icon embed-btn';
+      embedBtn.innerHTML = EMBED_SVG;
+      setTip(embedBtn, 'Embed this chart in another page');
+      embedBtn.addEventListener('click', function(){ openEmbedDialog(key, card); });
+      slot.appendChild(embedBtn);
     });
   }
+
+  // ---- embedding: ?embed=kpis,filestatus-inst&mode=relative&sort=nofile-desc&theme=light ----
+  var EMBED_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>';
+  var DASHBOARD_URL = location.origin + location.pathname;
+  document.querySelectorAll('.embed-credit .dashboard-link').forEach(function(a){ a.href = DASHBOARD_URL; });
+
+  function embedUrl(key, withKpis){
+    var p = new URLSearchParams();
+    p.set('embed', (withKpis ? 'kpis,' : '') + key);
+    var modeKey = MODE_TOGGLE_STATE_KEY[key], sortKey = SORT_STATE_KEY[key];
+    if (modeKey) p.set('mode', state.chartMode[modeKey]);
+    if (sortKey) p.set('sort', state.chartSort[sortKey].key + '-' + state.chartSort[sortKey].dir);
+    return DASHBOARD_URL + '?' + p.toString().replace(/%2C/g, ',');
+  }
+  // the h3's own text, without the info badge's popover content
+  function chartTitle(card){ return card.querySelector('h3').firstChild.textContent.trim(); }
+  var embedDialog = document.getElementById('embed-dialog');
+  var embedKpis = document.getElementById('embed-kpis');
+  var embedCode = document.getElementById('embed-code');
+  var embedCurrent = null;
+  function paintEmbedCode(){
+    var key = embedCurrent.key, card = embedCurrent.card;
+    var url = embedUrl(key, embedKpis.checked);
+    // the chart at full iframe width + the credit line, plus the KPI row if asked for
+    var height = Math.ceil((card.offsetHeight + 60 + (embedKpis.checked ? document.getElementById('kpis').offsetHeight + 16 : 0)) / 10) * 10;
+    var title = 'DURF Full Text Monitor: ' + chartTitle(card);
+    embedCode.value = '<iframe src="' + url + '" title="' + title.replace(/"/g, '&quot;') + '" loading="lazy" style="width:100%;height:' + height + 'px;border:0"></iframe>';
+    document.getElementById('embed-preview').href = url;
+  }
+  function openEmbedDialog(key, card){
+    embedCurrent = { key: key, card: card };
+    document.getElementById('embed-chart-name').textContent = chartTitle(card);
+    paintEmbedCode();
+    embedDialog.showModal();
+  }
+  embedKpis.addEventListener('change', paintEmbedCode);
+  document.getElementById('embed-copy').addEventListener('click', function(){
+    embedCode.select();
+    var done = function(){ if (window.ot && ot.toast) ot.toast('Embed code copied to the clipboard', 'Copied', { variant: 'success' }); };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(embedCode.value).then(done, function(){ document.execCommand('copy'); done(); });
+    else { document.execCommand('copy'); done(); }
+  });
+
+  var params = new URLSearchParams(location.search);
+  var embedKeys = (params.get('embed') || '').split(',').map(function(k){ return k.trim(); }).filter(Boolean);
+  if (embedKeys.length) {
+    var root = document.documentElement;
+    root.dataset.embed = '';
+    // embeds default to light, whatever the visitor's OS prefers, to match most host pages
+    var theme = params.get('theme') || 'light';
+    if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
+    readColors();
+    if (embedKeys.indexOf('kpis') !== -1) document.getElementById('kpis').dataset.embedded = '';
+    document.querySelectorAll('.chart-actions[data-chart]').forEach(function(slot){
+      if (embedKeys.indexOf(slot.dataset.chart) !== -1) slot.closest('.chart-card').dataset.embedded = '';
+    });
+    var mode = params.get('mode'), sort = (params.get('sort') || '').split('-');
+    embedKeys.forEach(function(k){
+      if (MODE_TOGGLE_STATE_KEY[k] && (mode === 'relative' || mode === 'absolute')) state.chartMode[MODE_TOGGLE_STATE_KEY[k]] = mode;
+      if (SORT_STATE_KEY[k] && ['total', 'nofile', 'alpha'].indexOf(sort[0]) !== -1 && ['asc', 'desc'].indexOf(sort[1]) !== -1) {
+        state.chartSort[SORT_STATE_KEY[k]] = { key: sort[0], dir: sort[1] };
+      }
+    });
+    // let the host page size the iframe to the content
+    if (window.parent !== window) {
+      var postHeight = function(){
+        window.parent.postMessage({ type: 'durf-embed-height', height: Math.ceil(document.documentElement.getBoundingClientRect().height) }, '*');
+      };
+      new ResizeObserver(postHeight).observe(document.body);
+    }
+  }
+
   initChartActions();
 
   // redraw the charts in the new palette when the OS switches light/dark mode
