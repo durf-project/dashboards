@@ -90,3 +90,19 @@ from eight institutions; not one has a URN:NBN, in the DuckLake or in the
 CRIS exports sampled. Only the repositories of CWI (`urn:nbn:nl:ui:18-`),
 Naturalis (`ui:19-`) and Beeld en Geluid (`in:10-`) send URN:NBNs, each with
 its assigned prefix.
+
+## Links to the publication
+
+`extract.py` also records, per institution x year x publication type x open
+access status, whether a publication has a valid DOI and/or a file in the CRIS
+(`links` in the embedded data), whether `cerif:URL` is filled, and whether the
+landing page or any file link points outside the domain the institution uses
+most (its CRIS portal).
+
+Found on 5 November 2026 (1995-2025): the landing page is always the CRIS
+portal page and every file link points to the CRIS itself, so the only link
+towards the publisher is the DOI (51.7%; 68.6% for journal articles), which
+leads to the publisher's landing page rather than to the file. 739,539
+publications (38.7%) have neither a DOI nor a file. The open access status
+follows the links: "Metadata only" = no DOI and no file, no status = DOI but
+no file, "Open access"/"Embargoed" = a file in the CRIS.

@@ -44,6 +44,11 @@ BASE = """
          "ar:Access" AS access,
          "cerif:Handle" AS handle,
          "cerif:URL" AS url,
+         "cerif:FileLocations" IS NOT NULL AS has_file,
+         -- registered domain (last two labels) of the landing page and of every file link
+         regexp_extract(lower(regexp_extract("cerif:URL", '^\\s*https?://([^/:]+)', 1)), '([^.]+\\.[^.]+)$', 1) AS url_domain,
+         list_transform("cerif:FileLocations"."cerif:Medium",
+             lambda f: regexp_extract(lower(regexp_extract(trim(f."cerif:URI"), '^https?://([^/:]+)', 1)), '([^.]+\\.[^.]+)$', 1)) AS file_domains,
          len(list_filter("cerif:OriginatesFrom", lambda x: x."cerif:Project"."@id" IS NOT NULL)) > 0 AS has_project
   FROM lake.cris.publications
 """
@@ -51,7 +56,8 @@ BASE = """
 # of the prefix (11245.1 and 11245 are both UvA, 1871.1 and 1871 both VU), except
 # for 20.500.* prefixes, which are separate prefixes each.
 FAMILY = "CASE WHEN handle_prefix(handle) LIKE '20.500.%' THEN handle_prefix(handle) ELSE split_part(handle_prefix(handle), '.', 1) END"
-MAIN_PREFIX = f"SELECT inst, mode({FAMILY}) AS main_prefix FROM p WHERE handle_ok(handle) GROUP BY inst"
+MAIN_PREFIX = (f"SELECT inst, mode({FAMILY}) FILTER (WHERE handle_ok(handle)) AS main_prefix, "
+               "mode(url_domain) FILTER (WHERE url_domain <> '') AS main_domain FROM p GROUP BY inst")
 MEASURES = {
     "n": "COUNT(*)",
     "doi_present": "COUNT(*) FILTER (WHERE doi <> 'missing')",
@@ -70,6 +76,12 @@ MEASURES = {
     # valid, and with the prefix family the institution uses most
     "handle_mainprefix": f"COUNT(*) FILTER (WHERE handle_ok(handle) AND {FAMILY} = main_prefix)",
     # a URN:NBN anywhere in the Handle or URL field (the harvest has no URN column)
+    # links: the landing page (cerif:URL) and file links, and whether they point outside the CRIS's own domain
+    "url_present": "COUNT(*) FILTER (WHERE nullif(trim(url), '') IS NOT NULL)",
+    # outside the domain the institution uses most for its landing pages (its CRIS portal)
+    "url_external": "COUNT(*) FILTER (WHERE url_domain <> '' AND url_domain <> main_domain)",
+    "file_present": "COUNT(*) FILTER (WHERE has_file)",
+    "file_external": "COUNT(*) FILTER (WHERE has_file AND len(list_filter(file_domains, lambda d: d <> '' AND d <> main_domain)) > 0)",
     "urn_found": "COUNT(*) FILTER (WHERE regexp_matches(lower(coalesce(handle, '') || ' ' || coalesce(url, '')), 'urn:nbn:'))",
 }
 
@@ -92,6 +104,23 @@ def main() -> None:
         'SELECT r, mode(doi) FROM (SELECT doi_problem("cerif:DOI") AS r, "cerif:DOI" AS doi FROM lake.cris.publications) '
         "WHERE r NOT IN ('valid', 'missing') AND length(doi) BETWEEN 15 AND 60 GROUP BY 1"
     ).fetchall())
+    # which links a record has (a valid DOI, a file in the CRIS), by open access status
+    links = con.execute(f"""WITH p AS ({BASE})
+        SELECT inst, yr, pubtype, CASE access
+            WHEN 'http://purl.org/coar/access_right/c_abf2' THEN 'Open access'
+            WHEN 'http://purl.org/coar/access_right/c_f1cf' THEN 'Embargoed'
+            WHEN 'http://purl.org/coar/access_right/c_16ec' THEN 'Restricted'
+            WHEN 'http://purl.org/coar/access_right/c_14cb' THEN 'Metadata only'
+            ELSE 'Unknown' END AS acc,
+          COUNT(*) FILTER (WHERE doi = 'valid' AND has_file), COUNT(*) FILTER (WHERE doi = 'valid' AND NOT has_file),
+          COUNT(*) FILTER (WHERE doi <> 'valid' AND has_file), COUNT(*) FILTER (WHERE doi <> 'valid' AND NOT has_file)
+        FROM p WHERE yr BETWEEN 1995 AND 2025 GROUP BY ALL""").fetchall()
+    link_rows: dict = {}
+    for inst, yr, pt, acc, *counts in links:
+        key = (inst, yr, PUBTYPES.get(pt, "Other"), acc)
+        link_rows[key] = [a + b for a, b in zip(link_rows.get(key, [0, 0, 0, 0]), counts)]
+    accs = ["Open access", "Embargoed", "Restricted", "Metadata only", "Unknown"]
+
     # Handle prefixes per institution (top 5), and each institution's ROR (to look up its URN:NBN prefix)
     prefixes: dict = {}
     for inst, pref, n in con.execute(
@@ -111,6 +140,9 @@ def main() -> None:
         "measures": list(MEASURES),
         "rows": [[insts.index(i), y, pubtypes.index(p), *c] for (i, y, p), c in sorted(agg.items())],
         "handle_prefixes": prefixes,
+        "access": accs,
+        # [institution, year, publication type, access, DOI + file, DOI only, file only, neither]
+        "links": [[insts.index(i), y, pubtypes.index(p), accs.index(a), *c] for (i, y, p, a), c in sorted(link_rows.items()) if i in insts],
         "inst_ror": rors,
         "examples": {"doi_prefix": examples.get("URL or doi: prefix"), "doi_ws": examples.get("whitespace"), "doi_other": examples.get("other format error")},
     }
