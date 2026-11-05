@@ -69,3 +69,24 @@ What the endpoint check of 3 November 2026 found (`oai-results.json`):
   records (`openaire_cris_persons`: 29 of the first 100 at UvA, 7 at UU).
   That explains why `lake.cris.publications` has no ORCID: the DuckLake only
   harvests the publications set.
+
+## Handle and URN:NBN
+
+| File | What it does |
+| --- | --- |
+| `identifier_sample.py` | First page of publication records at every endpoint `oai_check.py` reached (CRIS: `oai_cerif_openaire`, set `openaire_cris_publications`; repositories: `oai_openaire` or `oai_dc`): records with a DOI, a Handle and a URN:NBN, and the URN:NBN prefixes found. `uv run identifier_sample.py oai-results.json > identifier-sample.json` |
+| `identifier-sample.json` | Its output of 5 November 2026. |
+
+`extract.py` measures `cerif:Handle` (filled in, valid, and with the
+institution's own prefix family: the first segment of the prefix, or the whole
+`20.500.*` prefix) and searches the Handle and URL fields for a URN:NBN; the
+harvest has no URN column. The URN:NBN prefixes assigned by the KB come from
+[`surf-ori/nl-research-organisations`](https://github.com/surf-ori/nl-research-organisations),
+`data/curated/nbn_prefixes.csv`, matched on ROR and, where that list has no
+ROR, on the organisation's name.
+
+Found on 5 November 2026: 37% of the publications (1995-2025) carry a Handle,
+from eight institutions; not one has a URN:NBN, in the DuckLake or in the
+CRIS exports sampled. Only the repositories of CWI (`urn:nbn:nl:ui:18-`),
+Naturalis (`ui:19-`) and Beeld en Geluid (`in:10-`) send URN:NBNs, each with
+its assigned prefix.

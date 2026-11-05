@@ -42,9 +42,16 @@ BASE = """
          list_filter("cerif:Abstract", lambda a: nullif(trim(a."#text"), '') IS NOT NULL)[1]."#text" AS abstract,
          "cerif:Title"[1]."#text" AS title,
          "ar:Access" AS access,
+         "cerif:Handle" AS handle,
+         "cerif:URL" AS url,
          len(list_filter("cerif:OriginatesFrom", lambda x: x."cerif:Project"."@id" IS NOT NULL)) > 0 AS has_project
   FROM lake.cris.publications
 """
+# the Handle prefix family each institution uses most. A family is the first segment
+# of the prefix (11245.1 and 11245 are both UvA, 1871.1 and 1871 both VU), except
+# for 20.500.* prefixes, which are separate prefixes each.
+FAMILY = "CASE WHEN handle_prefix(handle) LIKE '20.500.%' THEN handle_prefix(handle) ELSE split_part(handle_prefix(handle), '.', 1) END"
+MAIN_PREFIX = f"SELECT inst, mode({FAMILY}) AS main_prefix FROM p WHERE handle_ok(handle) GROUP BY inst"
 MEASURES = {
     "n": "COUNT(*)",
     "doi_present": "COUNT(*) FILTER (WHERE doi <> 'missing')",
@@ -58,14 +65,20 @@ MEASURES = {
     "oa_present": "COUNT(*) FILTER (WHERE nullif(trim(access), '') IS NOT NULL)",
     "oa_valid": "COUNT(*) FILTER (WHERE coar_access_ok(access))",
     "proj_present": "COUNT(*) FILTER (WHERE has_project)",
+    "handle_present": "COUNT(*) FILTER (WHERE nullif(trim(handle), '') IS NOT NULL)",
+    "handle_valid": "COUNT(*) FILTER (WHERE handle_ok(handle))",
+    # valid, and with the prefix family the institution uses most
+    "handle_mainprefix": f"COUNT(*) FILTER (WHERE handle_ok(handle) AND {FAMILY} = main_prefix)",
+    # a URN:NBN anywhere in the Handle or URL field (the harvest has no URN column)
+    "urn_found": "COUNT(*) FILTER (WHERE regexp_matches(lower(coalesce(handle, '') || ' ' || coalesce(url, '')), 'urn:nbn:'))",
 }
 
 
 def main() -> None:
     con = connect()
     rows = con.execute(
-        f"WITH p AS ({BASE}) SELECT inst, yr, pubtype, {', '.join(f'{v} AS {k}' for k, v in MEASURES.items())} "
-        "FROM p WHERE yr BETWEEN 1995 AND 2025 GROUP BY ALL"
+        f"WITH p AS ({BASE}), main AS ({MAIN_PREFIX}) SELECT inst, yr, pubtype, {', '.join(f'{v} AS {k}' for k, v in MEASURES.items())} "
+        "FROM p LEFT JOIN main USING (inst) WHERE yr BETWEEN 1995 AND 2025 GROUP BY ALL"
     ).fetchall()
     # collapse publication types to the labelled ones + "Other"
     agg: dict = {}
@@ -79,6 +92,15 @@ def main() -> None:
         'SELECT r, mode(doi) FROM (SELECT doi_problem("cerif:DOI") AS r, "cerif:DOI" AS doi FROM lake.cris.publications) '
         "WHERE r NOT IN ('valid', 'missing') AND length(doi) BETWEEN 15 AND 60 GROUP BY 1"
     ).fetchall())
+    # Handle prefixes per institution (top 5), and each institution's ROR (to look up its URN:NBN prefix)
+    prefixes: dict = {}
+    for inst, pref, n in con.execute(
+        f"WITH p AS ({BASE}) SELECT inst, handle_prefix(handle), COUNT(*) FROM p "
+        "WHERE yr BETWEEN 1995 AND 2025 AND handle_ok(handle) GROUP BY ALL ORDER BY 1, 3 DESC"
+    ).fetchall():
+        if len(prefixes.setdefault(inst, [])) < 5:
+            prefixes[inst].append([pref, n])
+    rors = dict(con.execute("SELECT repository_info.institution, any_value(repository_info.ror) FROM lake.cris.publications GROUP BY 1").fetchall())
     snapshot = con.execute("SELECT CAST(max(snapshot_time) AS VARCHAR) FROM ducklake_snapshots('lake')").fetchone()[0]
     newest = con.execute("SELECT CAST(max(header.datestamp) AS VARCHAR) FROM lake.cris.publications").fetchone()[0]
     data = {
@@ -88,6 +110,8 @@ def main() -> None:
         "dims": {"institution": insts, "pubtype": pubtypes},
         "measures": list(MEASURES),
         "rows": [[insts.index(i), y, pubtypes.index(p), *c] for (i, y, p), c in sorted(agg.items())],
+        "handle_prefixes": prefixes,
+        "inst_ror": rors,
         "examples": {"doi_prefix": examples.get("URL or doi: prefix"), "doi_ws": examples.get("whitespace"), "doi_other": examples.get("other format error")},
     }
     payload = json.dumps(data, separators=(",", ":"))

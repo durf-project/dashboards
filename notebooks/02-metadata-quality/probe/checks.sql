@@ -27,3 +27,9 @@ CREATE OR REPLACE MACRO raid_ok(v) AS regexp_full_match(v, 'https://raid\.org/10
 CREATE OR REPLACE MACRO iso_date_ok(v) AS regexp_full_match(v, '\d{4}(-\d{2}(-\d{2})?)?') AND TRY_CAST(rpad(v, 10, '-01-01')[1:10] AS DATE) IS NOT NULL;
 CREATE OR REPLACE MACRO abstract_ok(abstract, title) AS
   length(trim(abstract)) >= 100 AND lower(trim(abstract)) <> lower(trim(coalesce(title, '')));
+-- Handle: optional resolver (https://hdl.handle.net/ or hdl:) + prefix (e.g. 11245, 1871.1, 20.500.11755) + / + suffix
+CREATE OR REPLACE MACRO handle_ok(v) AS regexp_full_match(v, '(https?://hdl\.handle\.net/|hdl:)?\d+(\.\d+)*/\S+');
+CREATE OR REPLACE MACRO handle_prefix(v) AS nullif(regexp_extract(v, '^(?:https?://hdl\.handle\.net/|hdl:)?(\d+(?:\.\d+)*)/', 1), '');
+-- URN:NBN as assigned by the KB for Dutch institutions: urn:nbn:nl:{ui|hs|in}:NN-<local part>
+CREATE OR REPLACE MACRO urn_nbn_ok(v) AS regexp_full_match(lower(v), 'urn:nbn:nl:(ui|hs|in):\d{2}-\S+');
+CREATE OR REPLACE MACRO urn_nbn_prefix(v) AS nullif(regexp_extract(lower(v), '^(urn:nbn:nl:(?:ui|hs|in):\d{2}-)', 1), '');

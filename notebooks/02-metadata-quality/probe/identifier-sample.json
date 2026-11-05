@@ -1,0 +1,489 @@
+[
+ {
+  "baseurl": "http://cris.maastrichtuniversity.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 51,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "http://library.wur.nl/oai",
+  "metadataPrefix": "oai_openaire",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 200,
+  "with_doi": 155,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "http://repository.ubn.ru.nl/dspace-oai/request",
+  "metadataPrefix": "oai_dc",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 90,
+  "with_doi": 34,
+  "with_handle": 84,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "hdl.handle.net/2066/315596"
+  }
+ },
+ {
+  "baseurl": "http://repub.eur.nl/oai",
+  "metadataPrefix": "oai_dc",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 96,
+  "with_doi": 60,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "http://theoluniv.ub.rug.nl/cgi/oai2",
+  "metadataPrefix": "oai_dc",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 0,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://cris.maastrichtuniversity.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 51,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://ir.amolf.nl/oai",
+  "metadataPrefix": "oai_openaire",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 58,
+  "with_doi": 58,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://ir.cwi.nl/oai",
+  "metadataPrefix": "oai_openaire",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 91,
+  "with_doi": 66,
+  "with_handle": 0,
+  "with_urn": 91,
+  "urn_prefixes": {
+   "urn:nbn:nl:ui:18-": 91
+  },
+  "examples": {
+   "urn": "urn:nbn:nl:ui:18-36762"
+  }
+ },
+ {
+  "baseurl": "https://library.wur.nl/oai",
+  "metadataPrefix": "oai_openaire",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 200,
+  "with_doi": 155,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://lifesciences.datastations.nl/oai",
+  "metadataPrefix": "oai_dc",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 10,
+  "with_doi": 10,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://oai-pmh.tno.nl/OaiPmh",
+  "metadataPrefix": "oai_openaire",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 75,
+  "with_doi": 43,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://oamemtfp.uci.ru.nl/metis-oaipmh-endpoint/OAIHandler",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 50,
+  "with_doi": 13,
+  "with_handle": 9,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "https://repository.ubn.ru.nl/handle/2066/60073"
+  }
+ },
+ {
+  "baseurl": "https://oametisp.uci.ru.nl/metis-oaipmh-endpoint/OAIHandler",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 50,
+  "with_doi": 13,
+  "with_handle": 9,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "https://repository.ubn.ru.nl/handle/2066/60073"
+  }
+ },
+ {
+  "baseurl": "https://openaccess.leidenuniv.nl/oai/request",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": false,
+  "error": "RuntimeError: noRecordsMatch: The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list."
+ },
+ {
+  "baseurl": "https://publications.beeldengeluid.nl/oai",
+  "metadataPrefix": "oai_openaire",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 99,
+  "with_doi": 65,
+  "with_handle": 0,
+  "with_urn": 99,
+  "urn_prefixes": {
+   "urn:nbn:nl:in:10-": 99
+  },
+  "examples": {
+   "urn": "urn:nbn:nl:in:10-2607"
+  }
+ },
+ {
+  "baseurl": "https://pure.buas.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 0,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://pure.eur.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 0,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://pure.hva.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 2,
+  "with_handle": 85,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "https://hdl.handle.net/20.500.11884/7288bd68-d62b-4db0-8cea-5f189e209254"
+  }
+ },
+ {
+  "baseurl": "https://pure.knaw.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 42,
+  "with_handle": 100,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "https://hdl.handle.net/20.500.11755/b60766aa-6f12-4d42-b339-6b37d94ae636"
+  }
+ },
+ {
+  "baseurl": "https://pure.rug.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 31,
+  "with_handle": 100,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "https://hdl.handle.net/11370/8385acb8-70d8-47aa-839a-59d2fd768ea8"
+  }
+ },
+ {
+  "baseurl": "https://pure.uva.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 39,
+  "with_handle": 98,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "https://hdl.handle.net/11245/1.447131"
+  }
+ },
+ {
+  "baseurl": "https://pure.uvt.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 0,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://reports.nlr.nl/server/oai/openaire4",
+  "metadataPrefix": "oai_openaire",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 98,
+  "with_doi": 2,
+  "with_handle": 98,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "hdl.handle.net/10921/1714"
+  }
+ },
+ {
+  "baseurl": "https://repository.naturalis.nl/oai",
+  "metadataPrefix": "oai_openaire",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 49,
+  "with_doi": 36,
+  "with_handle": 6,
+  "with_urn": 49,
+  "urn_prefixes": {
+   "urn:nbn:nl:ui:19-": 49
+  },
+  "examples": {
+   "urn": "urn:nbn:nl:ui:19-802457",
+   "handle": "hdl.handle.net/1874/35848"
+  }
+ },
+ {
+  "baseurl": "https://repository.ubn.ru.nl/oai/openaire",
+  "metadataPrefix": "oai_dc",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 91,
+  "with_doi": 35,
+  "with_handle": 85,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "hdl.handle.net/2066/315596"
+  }
+ },
+ {
+  "baseurl": "https://repository.ubn.ru.nl/oai/request",
+  "metadataPrefix": "oai_dc",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 90,
+  "with_doi": 34,
+  "with_handle": 84,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "hdl.handle.net/2066/315596"
+  }
+ },
+ {
+  "baseurl": "https://repository.wodc.nl/oai/request",
+  "metadataPrefix": "oai_dc",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 0,
+  "with_handle": 97,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "hdl.handle.net/20.500.12832/252"
+  }
+ },
+ {
+  "baseurl": "https://research-portal.uu.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 13,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://research.ou.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 2,
+  "with_handle": 100,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "https://hdl.handle.net/1820/213"
+  }
+ },
+ {
+  "baseurl": "https://research.uvh.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 7,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://research.vu.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 14,
+  "with_handle": 100,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {
+   "handle": "https://hdl.handle.net/1871.1/320f2df6-c0ec-42fa-b880-0a641a3aa284"
+  }
+ },
+ {
+  "baseurl": "https://ris.utwente.nl/ws/oai",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 100,
+  "with_doi": 17,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://scholarlypublications.universiteitleiden.nl/oai2",
+  "metadataPrefix": "oai_cerif_openaire",
+  "set": "openaire_cris_publications",
+  "checked": "2026-11-05",
+  "ok": false,
+  "error": "RuntimeError: noRecordsMatch: The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list."
+ },
+ {
+  "baseurl": "https://ssh.datastations.nl/oai",
+  "metadataPrefix": "oai_dc",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": true,
+  "records": 10,
+  "with_doi": 10,
+  "with_handle": 0,
+  "with_urn": 0,
+  "urn_prefixes": {},
+  "examples": {}
+ },
+ {
+  "baseurl": "https://www.differ.nl/oai",
+  "metadataPrefix": "oai_dc",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": false,
+  "error": "RuntimeError: badArgument: The argument metadataPrefix (value=oai_dc) included in the request is not valid."
+ },
+ {
+  "baseurl": "https://www.differ.nl/oai2",
+  "metadataPrefix": "oai_openaire",
+  "set": null,
+  "checked": "2026-11-05",
+  "ok": false,
+  "error": "HTTPError: HTTP Error 500: 500 Service unavailable (with message)"
+ }
+]
