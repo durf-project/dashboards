@@ -56,10 +56,31 @@ def _export_html_wasm(notebook_path: Path, output_dir: Path, format: str) -> boo
         output_file.parent.mkdir(parents=True, exist_ok=True)
         logger.info(f"Exporting {notebook_path} to {output_file} as {format}")
         subprocess.run(cmd, capture_output=True, text=True, check=True)
+        _add_feedback_button(output_file, notebook_path.parent.name)
         return True
     except subprocess.CalledProcessError as e:
         logger.error(f"Error exporting {notebook_path}:\n{e.stderr}")
         return False
+
+
+# marimo writes these pages itself, so they cannot load durf.css (oat would restyle
+# marimo's own UI). They get only durf-nav.js, without the topbar: that adds the
+# floating feedback button, which lives in its own shadow root, plus the
+# theme number so the feedback dialog names the right theme lead.
+FEEDBACK_SCRIPT = (
+    '<script src="https://durf-project.github.io/durf-design-system/durf-nav.js"'
+    ' data-topbar="off" data-durf-theme="{theme}"></script>'
+)
+
+
+def _add_feedback_button(html_file: Path, slug: str) -> None:
+    """Insert the DURF feedback button into an exported marimo page."""
+    theme = slug.split("-", 1)[0].lstrip("0") or "0"
+    html = html_file.read_text()
+    if "durf-nav.js" in html or "</head>" not in html:
+        return
+    html_file.write_text(html.replace("</head>", FEEDBACK_SCRIPT.format(theme=theme) + "\n</head>", 1))
+    logger.info(f"Added the DURF feedback button to {html_file}")
 
 
 def _export_static(notebook_dir: Path, output_dir: Path) -> bool:

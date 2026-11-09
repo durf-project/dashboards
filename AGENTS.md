@@ -115,7 +115,13 @@ only in the `SITES` list in `durf-nav.js`.
   `<html data-theme>` changes (MutationObserver), which covers the topbar
   button, `?theme=` and `postMessage({type: "durf-embed-theme", theme})`.
 - The marimo notebooks (`"format": "app"`) are exported by marimo and do not
-  load the design system.
+  load `durf.css` (Oat would restyle marimo's UI). `.github/scripts/build.py`
+  adds only `durf-nav.js` with `data-topbar="off"` to each export, which gives
+  them the floating feedback button.
+- Feedback: every page has a floating Feedback button (from `durf-nav.js`) that
+  opens an issue with `.github/ISSUE_TEMPLATE/feedback.yml` or an e-mail to
+  durf@surf.nl. `data-durf-theme="N"` on `<html>` (static pages) or the script
+  tag (marimo pages) tells the dialog which theme lead answers.
 
 ## Marimo notebook conventions
 

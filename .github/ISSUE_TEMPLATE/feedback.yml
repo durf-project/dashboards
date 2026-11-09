@@ -1,0 +1,40 @@
+name: Feedback
+description: A question, an idea, something that looks off, or something you liked about a DURF dashboard. All feedback helps.
+title: "Feedback: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thank you for taking the time to share your thoughts.** Every remark helps: a question, an idea, a figure that looks off, a typo, or something you liked. We read feedback as a sign that you care, never as criticism. DURF is something we build together, as a community.
+
+        Your feedback is read and answered by **the theme lead of the dashboard's theme**. You can also write to [durf@surf.nl](mailto:durf@surf.nl); that works without a GitHub account and is not public.
+
+        | Dashboard | Theme lead who answers |
+        | --- | --- |
+        | 1. Governance | the theme lead at TU Delft |
+        | 2. Metadata Quality Improvement | Rutger, theme lead at Leiden University |
+        | 3. Full Text Capture | the theme lead at the University of Amsterdam |
+        | 4. KB e-Depot Archiving | the theme lead at the KB National Library |
+        | 5. Distribution & Discovery | the theme lead at Leiden University |
+        | 6. NL Research Portal | the theme lead at TU Delft |
+
+        The feedback button on every DURF page fills in this form for you.
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: The address of the page or dashboard your feedback is about.
+      placeholder: https://durf-project.github.io/...
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Your feedback
+      description: Tell us in your own words. A screenshot is welcome too (paste or drag it here).
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Your name or e-mail (optional)
+      description: Only if you would like a reply outside GitHub. This issue is public, so leave it empty if you prefer.
