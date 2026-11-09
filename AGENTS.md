@@ -95,6 +95,28 @@ uv run notebooks/<slug>/notebook.py
 `marimo check` is a static linter; it won't catch a missing dependency or a
 runtime `AttributeError`. Only `uv run` actually imports the notebook's cells.
 
+## DURF design system
+
+The index page (`index.html.j2`) and the hand-built `static.html` dashboards
+(`02-metadata-quality`, `03-full-text-capture`, `"format": "static"` in
+`metadata.json`) load the DURF design system in `<head>`, in this order and
+without `defer`: `oat.min.css` (CDN), `durf.css` and `durf-nav.js` from
+`https://durf-project.github.io/durf-design-system/`. Those two files give the
+tokens (`--background`, `--card`, `--chart-good|warn|bad|none|grid`, ...), the
+topbar with the shared site menu and the light/dark switch (localStorage key
+`durf-theme`). Don't define own colour, font or theme variables in these
+pages, don't add an own header, back bar or theme button, and change the menu
+only in the `SITES` list in `durf-nav.js`.
+
+- Pick the accent with `data-accent` on `<html>` (theme 2: `yellow`, theme 3: `blue`).
+- The Oat sidebar layout (`#app-shell`) is as tall as the viewport minus the
+  topbar: `height: calc(100dvh - var(--topbar-h) - 1px)`.
+- Charts read their colours from the tokens (`resolveColor`) and repaint when
+  `<html data-theme>` changes (MutationObserver), which covers the topbar
+  button, `?theme=` and `postMessage({type: "durf-embed-theme", theme})`.
+- The marimo notebooks (`"format": "app"`) are exported by marimo and do not
+  load the design system.
+
 ## Marimo notebook conventions
 
 - **Name every cell** (`def dutch_institutions_query(...):`, not `def _():`)
