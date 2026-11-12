@@ -4,22 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DURF Dashboards | Progress monitoring for the Dutch Repository Federation</title>
-  <!-- DURF design system: Oat UI, then durf.css, then durf-nav.js (topbar, menu,
-       theme button). No defer: the theme must be set before first paint. -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@knadh/oat@1.0.0/oat.min.css">
+  <meta name="description" content="Progress monitoring for the six DURF project themes.">
+  <link rel="icon" type="image/svg+xml" href="https://durf-project.github.io/durf-design-system/assets/favicon.svg">
+  <link rel="apple-touch-icon" href="https://durf-project.github.io/durf-design-system/assets/apple-touch-icon.png">
+  <meta property="og:image" content="https://durf-project.github.io/durf-design-system/assets/durf-og.png">
+  <!-- DURF design system v1.1: Oat UI (vendored), then durf.css, then durf-nav.js (topbar,
+       menu, theme button). No defer: the theme must be set before first paint. -->
+  <link rel="stylesheet" href="https://durf-project.github.io/durf-design-system/lib/oat.min.css">
   <link rel="stylesheet" href="https://durf-project.github.io/durf-design-system/durf.css">
   <script src="https://durf-project.github.io/durf-design-system/durf-nav.js"></script>
   <style>
     /* Page-specific rules only; colours, fonts, topbar and page head come from durf.css */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1.25rem; padding-block: 0; }
-    .nb-card {
-      border: 1px solid var(--border);
-      border-radius: .5rem;
-      background: var(--card);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
+    /* .durf-card gives border, radius and background; the bar is the theme colour:
+       --durf-theme-N from the slug's theme number, metadata.json "colour" as fallback. */
+    .nb-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
     .nb-card__bar { height: .375rem; background: var(--card-colour, var(--chart-none)); }
     .nb-card__body { padding: 1rem 1.25rem 1.25rem; display: flex; flex-direction: column; flex: 1; }
     .nb-card__title { font-family: var(--font-heading); font-weight: 700; font-size: 1.0625rem; margin: 0 0 .5rem; }
@@ -40,7 +39,8 @@
   <main class="durf-shell">
     <div class="grid">
       {% for notebook in notebooks %}
-      <div class="nb-card" style="--card-colour: {{ notebook.colour | default('#B2B6BE') }};">
+      {% set fallback = notebook.colour or 'var(--chart-none)' %}
+      <div class="durf-card nb-card"{% if notebook.theme %} data-theme-n="{{ notebook.theme }}" style="--card-colour: var(--durf-theme-{{ notebook.theme }}, {{ fallback }});"{% else %} style="--card-colour: {{ fallback }};"{% endif %}>
         <div class="nb-card__bar"></div>
         {% if notebook.image %}
         <a href="{{ notebook.html_path }}">

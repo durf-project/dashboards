@@ -25,6 +25,7 @@ The exported files are placed in --output-dir (default: _site).
 # ///
 
 import json
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -66,11 +67,15 @@ def _export_html_wasm(notebook_path: Path, output_dir: Path, format: str) -> boo
 # marimo writes these pages itself, so they cannot load durf.css (oat would restyle
 # marimo's own UI). They get only durf-nav.js, without the topbar: that adds the
 # floating feedback button, which lives in its own shadow root, plus the
-# theme number so the feedback dialog names the right theme lead.
+# theme number so the feedback dialog names the right theme lead. They also get the
+# DURF favicon from the design system instead of marimo's.
+DS = "https://durf-project.github.io/durf-design-system/"
 FEEDBACK_SCRIPT = (
-    '<script src="https://durf-project.github.io/durf-design-system/durf-nav.js"'
-    ' data-topbar="off" data-durf-theme="{theme}"></script>'
+    f'<link rel="icon" type="image/svg+xml" href="{DS}assets/favicon.svg">\n'
+    f'<link rel="apple-touch-icon" href="{DS}assets/apple-touch-icon.png">\n'
+    f'<script src="{DS}durf-nav.js" data-topbar="off" data-durf-theme="{{theme}}"></script>'
 )
+ICON_LINK = re.compile(r'<link\b[^>]*\brel=["\'](?:shortcut icon|icon|apple-touch-icon)["\'][^>]*>\s*', re.I)
 
 
 def _add_feedback_button(html_file: Path, slug: str) -> None:
@@ -79,6 +84,7 @@ def _add_feedback_button(html_file: Path, slug: str) -> None:
     html = html_file.read_text()
     if "durf-nav.js" in html or "</head>" not in html:
         return
+    html = ICON_LINK.sub("", html)
     html_file.write_text(html.replace("</head>", FEEDBACK_SCRIPT.format(theme=theme) + "\n</head>", 1))
     logger.info(f"Added the DURF feedback button to {html_file}")
 
@@ -103,6 +109,11 @@ def _get_metadata(notebook_dir: Path) -> dict:
         metadata = json.load(f)
     metadata["html_path"] = str(Path(notebook_dir.name).with_suffix(".html"))
     metadata.setdefault("format", "app")
+    # Theme number from the slug prefix (02-metadata-quality -> 2), so the index can
+    # colour the card with the design system's --durf-theme-N token.
+    prefix = notebook_dir.name.split("-", 1)[0]
+    if prefix.isdigit() and 1 <= int(prefix) <= 6:
+        metadata.setdefault("theme", int(prefix))
     return metadata
 
 
