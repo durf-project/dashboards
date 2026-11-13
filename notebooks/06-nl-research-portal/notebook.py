@@ -30,7 +30,7 @@ def intro(mo):
 
     ## Goal
 
-    Deliver a fully-functional, user-centered Netherlands Research Portal that serves as the primary discovery point for Dutch research outputs.
+    Deliver a fully-functional, user-centered Netherlands Research Portal that serves as the primary discovery point for Dutch scholarly output.
 
     ## What this dashboard monitors
 

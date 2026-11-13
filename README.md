@@ -45,9 +45,9 @@ the full pipeline and how to add validation later if spam becomes a problem.
 | 1. Governance of the Federation and NL Research Portal | [`notebooks/01-governance/`](notebooks/01-governance/notebook.py) | A sustainable governance framework for the Dutch federated research information ecosystem. |
 | 2. Metadata Quality Improvement | [`notebooks/02-metadata-quality/`](notebooks/02-metadata-quality/notebook.py) | Repository/CRIS systems adopt updated metadata and exchange standards for high-quality, internationally compliant research metadata. |
 | 3. Full Text Capture | [`notebooks/03-full-text-capture/`](notebooks/03-full-text-capture/notebook.py) | Comprehensive full-text availability in Dutch repository/CRIS systems, for preservation, text-mining, AI use and Taverne. |
-| 4. KB National Library e-Depot Archiving | [`notebooks/04-edepot-archiving/`](notebooks/04-edepot-archiving/notebook.py) | Comprehensive preservation of Dutch scientific output in the KB e-Depot. |
+| 4. KB National Library e-Depot Archiving | [`notebooks/04-edepot-archiving/`](notebooks/04-edepot-archiving/notebook.py) | Comprehensive preservation of Dutch scholarly output in the KB e-Depot. |
 | 5. Metadata Distribution & Discovery Optimization | [`notebooks/05-distribution-discovery/`](notebooks/05-distribution-discovery/notebook.py) | Increase the visibility of Dutch research content in major international indexes. |
-| 6. NL Research Portal Update | [`notebooks/06-nl-research-portal/`](notebooks/06-nl-research-portal/notebook.py) | A fully-functional, user-centered Netherlands Research Portal as the primary discovery point for Dutch research outputs. |
+| 6. NL Research Portal Update | [`notebooks/06-nl-research-portal/`](notebooks/06-nl-research-portal/notebook.py) | A fully-functional, user-centered Netherlands Research Portal as the primary discovery point for Dutch scholarly output. |
 
 Notebook directories carry the theme number so they sort in project order
 everywhere — filesystem, exported `.html` filenames, and the index page —
