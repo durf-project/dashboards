@@ -30,7 +30,7 @@ def intro(mo):
 
     ## Goal
 
-    Comprehensive preservation achieved of Dutch scientific output in the KB e-Depot.
+    Comprehensive preservation achieved of Dutch scholarly output in the KB e-Depot.
 
     ## What this dashboard monitors
 
