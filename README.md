@@ -47,7 +47,7 @@ the full pipeline and how to add validation later if spam becomes a problem.
 | 3. Full Text Capture | [`notebooks/03-full-text-capture/`](notebooks/03-full-text-capture/notebook.py) | Comprehensive full-text availability in Dutch repository/CRIS systems, for preservation, text-mining, AI use and Taverne. |
 | 4. KB National Library e-Depot Archiving | [`notebooks/04-edepot-archiving/`](notebooks/04-edepot-archiving/notebook.py) | Comprehensive preservation of Dutch scholarly output in the KB e-Depot. |
 | 5. Metadata Distribution & Discovery Optimization | [`notebooks/05-distribution-discovery/`](notebooks/05-distribution-discovery/notebook.py) | Increase the visibility of Dutch research content in major international indexes. |
-| 6. NL Research Portal Update | [`notebooks/06-nl-research-portal/`](notebooks/06-nl-research-portal/notebook.py) | A fully-functional, user-centered Netherlands Research Portal as the primary discovery point for Dutch scholarly output. |
+| 6. NL Research Portal Update | [`notebooks/06-nl-research-portal/`](notebooks/06-nl-research-portal/static.html) | Portal Usage Monitor: visits, depth of use, channels, referrers, pages and reach of the Netherlands Research Portal, from its Matomo statistics (April 2023 to November 2026). |
 
 Notebook directories carry the theme number so they sort in project order
 everywhere — filesystem, exported `.html` filenames, and the index page —

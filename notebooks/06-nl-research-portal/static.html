@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en" data-accent="theme-6" data-durf-theme="6">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DURF Portal Usage Monitor</title>
+<link rel="icon" type="image/svg+xml" href="https://durf-project.github.io/durf-design-system/assets/favicon.svg">
+<meta property="og:image" content="https://durf-project.github.io/durf-design-system/assets/durf-og.png">
+<!-- DURF design system: Oat (vendored), durf.css, durf-nav.js (topbar, theme button, ?embed, feedback).
+     The dashboard's own tokens below are mapped onto the design system tokens, so light and dark
+     follow the DURF theme button. Data: Matomo exports of netherlands.openaire.eu, embedded below. -->
+<link rel="stylesheet" href="https://durf-project.github.io/durf-design-system/lib/oat.min.css">
+<link rel="stylesheet" href="https://durf-project.github.io/durf-design-system/durf.css">
+<script src="https://durf-project.github.io/durf-design-system/durf-nav.js"></script>
+<style>
+:root{
+  /* mapped onto the DURF design system tokens (durf.css), light and dark */
+  --ground: var(--background); --surface: var(--card); --surface-2: var(--muted);
+  --ink: var(--foreground); --ink-2: color-mix(in srgb, var(--foreground) 70%, var(--muted-foreground)); --ink-3: var(--muted-foreground);
+  --line: var(--border); --line-strong: color-mix(in srgb, var(--border) 60%, var(--muted-foreground));
+  --accent: var(--durf-theme-3); --s1: var(--durf-theme-3);
+  --c1: var(--durf-theme-3); --c2: var(--durf-theme-1); --c3: var(--durf-theme-4); --c4: var(--durf-theme-2); --c5: var(--durf-theme-5);
+  --nl: var(--durf-theme-6);
+  --warn: #F6DA44; --warn-ink: #6B5A00; --warn-bg: color-mix(in srgb, #F6DA44 18%, var(--background));
+  --crit: #C8312A; --crit-bg: color-mix(in srgb, #C8312A 12%, var(--background)); --good: var(--durf-theme-4);
+  --shadow: 0 1px 2px rgba(5,14,29,.06), 0 8px 24px -12px rgba(5,14,29,.16);
+}
+:root[data-theme="dark"] { --nl: #E0726B; --warn-ink: #F6DA44; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --nl: #E0726B; --warn-ink: #F6DA44; } }
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 72px}
+html[data-embed] .wrap{padding-top:8px}
+h1,h2,h3{font-family:var(--font-heading);text-wrap:balance;margin:0}
+h1{font-size:2.45rem;font-weight:800;letter-spacing:-.024em;line-height:1.06}
+h2{font-size:1.25rem;font-weight:800;letter-spacing:-.008em}
+h3{font-size:.95rem;font-weight:800}
+.eyebrow{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.7rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+header{padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.lede{color:var(--ink-2);max-width:66ch;margin:10px 0 0;font-size:1.02rem}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:16px;font-size:.8rem;color:var(--ink-3)}
+.meta b{color:var(--ink-2);font-weight:500}
+
+.banner{display:flex;gap:14px;background:var(--warn-bg);border:1px solid color-mix(in srgb,var(--warn) 42%,transparent);
+  border-radius:10px;padding:16px 18px;margin-bottom:26px}
+.banner .mark{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--warn);color:#3a2800;
+  font-weight:700;font-size:.82rem;display:grid;place-items:center;margin-top:1px;font-family:var(--font-sans)}
+.banner h3{color:var(--warn-ink);margin-bottom:3px}
+.banner p{margin:0;font-size:.88rem;color:var(--ink-2)}
+.banner p + p{margin-top:7px}
+
+section{margin-bottom:34px}
+.sechead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.sechead p{margin:2px 0 0;font-size:.86rem;color:var(--ink-3);max-width:70ch}
+
+.portals{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr));gap:16px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:14px;min-width:0}
+.pcard .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.ptitle{display:flex;align-items:center;gap:9px}
+.swatch{width:10px;height:10px;border-radius:3px;flex:0 0 auto}
+.pname{font-family:var(--font-heading);font-weight:600;font-size:1.05rem;letter-spacing:-.01em}
+.purl{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.7rem;color:var(--ink-3);margin-top:1px}
+.hero{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.hero .v{font-family:var(--font-heading);font-weight:800;font-size:2.5rem;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.hero .u{font-size:.8rem;color:var(--ink-3)}
+.spark{width:100%;height:52px;display:block}
+.substats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-radius:9px;overflow:hidden}
+.substats div{background:var(--surface);padding:11px 13px;min-width:0}
+.substats .k{font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.substats .v{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-variant-numeric:tabular-nums;font-size:1.05rem;font-weight:500;margin-top:2px}
+.trend{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.78rem;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.trend.down{background:var(--crit-bg);color:var(--crit)}
+.trend.up{background:color-mix(in srgb,var(--good) 14%,transparent);color:var(--good)}
+.trend.flat{background:var(--surface-2);color:var(--ink-2)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow);min-width:0}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:2px}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink-2);font:inherit;font-size:.8rem;
+  padding:5px 11px;border-radius:6px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12);font-weight:500}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.78rem;color:var(--ink-2);margin-top:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:block}
+.legend i.sq{width:10px;height:10px;border-radius:3px}
+.chartbox{position:relative;margin-top:6px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.gridline{stroke:var(--line);stroke-width:1}
+.axistext{fill:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:10px}
+.tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .1s;background:var(--surface);
+  border:1px solid var(--line-strong);border-radius:8px;padding:9px 11px;font-size:.78rem;box-shadow:var(--shadow);
+  min-width:150px;z-index:5}
+.tip .th{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.72rem;color:var(--ink-3);margin-bottom:5px;letter-spacing:.04em}
+.tip .row{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.tip .row .lbl{display:flex;align-items:center;gap:6px;color:var(--ink-2)}
+.tip .row .val{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-variant-numeric:tabular-nums;font-weight:500}
+.tip .note{margin-top:6px;padding-top:6px;border-top:1px solid var(--line);color:var(--warn-ink);font-size:.72rem}
+
+.tablewrap{overflow-x:auto;margin-top:14px;max-width:100%}
+.tablewrap.tall{max-height:560px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:.84rem}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
+  border-bottom:1px solid var(--line-strong);position:sticky;top:0;background:var(--surface)}
+tbody td.n{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-variant-numeric:tabular-nums}
+tbody tr:hover td{background:var(--surface-2)}
+.pathcell{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.78rem}
+.pathcell small{display:block;font-family:var(--font-sans);color:var(--ink-3);font-size:.72rem;margin-top:1px}
+.bar{height:6px;border-radius:3px;background:var(--c1);min-width:2px}
+.barcell{width:140px}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:16px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.82em;background:var(--surface-2);padding:1px 5px;border-radius:4px;border:1px solid var(--line)}
+.notes{font-size:.85rem;color:var(--ink-2)}
+.notes dt{font-weight:600;color:var(--ink);margin-top:13px;font-size:.87rem}
+.notes dt:first-child{margin-top:0}
+.notes dd{margin:3px 0 0}
+.flagpill{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  background:var(--warn-bg);color:var(--warn-ink);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);
+  padding:1px 7px;border-radius:999px;margin-left:4px}
+.flagpill.nl{background:color-mix(in srgb,var(--nl) 14%,transparent);color:var(--nl);border-color:color-mix(in srgb,var(--nl) 40%,transparent)}
+.flagpill.mute{background:var(--surface-2);color:var(--ink-3);border-color:var(--line)}
+footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-size:.78rem;color:var(--ink-3)}
+footer ul{margin:6px 0 0;padding-left:18px}
+@media (max-width:640px){
+  .wrap{padding:20px 16px 56px}
+  h1{font-size:1.9rem}
+  .hero .v{font-size:2rem}
+  .panel,.pcard{padding:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">DURF theme 6 &middot; Netherlands Research Portal &middot; OpenAIRE CONNECT</div>
+  <h1>Portal Usage Monitor</h1>
+  <p class="lede">Monthly usage of the <b>Netherlands Research Portal</b>, the OpenAIRE CONNECT gateway for the Netherlands, <span style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:.92em">netherlands.openaire.eu</span>, from Matomo.</p>
+  <div class="meta" id="meta"></div>
+</header>
+
+<section>
+  <div class="sechead"><div><h2>Where the portal stands</h2>
+    <p>Headline volume over the full tracked period, then the same figures with the automated-traffic months taken out. The year-on-year trend compares the last twelve complete months with the twelve before them.</p></div></div>
+  <div class="portals" id="portals"></div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div><h2>Monthly visits</h2>
+      <p>Months carrying an automated-traffic signature are ringed. With the scale capped, flagged peaks are clipped and their true value printed, so the ordinary months stay readable.</p></div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Time range">
+        <button data-range="all" aria-pressed="true">All time</button>
+        <button data-range="24" aria-pressed="false">Last 24 m</button>
+        <button data-range="12" aria-pressed="false">Last 12 m</button>
+      </div>
+      <div class="seg" role="group" aria-label="Scale">
+        <button data-scale="cap" aria-pressed="true">Capped</button>
+        <button data-scale="full" aria-pressed="false">Full scale</button>
+      </div>
+      <div class="seg" role="group" aria-label="View">
+        <button data-view="chart" aria-pressed="true">Chart</button>
+        <button data-view="table" aria-pressed="false">Table</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="chartbox" id="visitsBox">
+      <svg id="visitsChart" viewBox="0 0 920 330" role="img" aria-label="Monthly visits to the Netherlands Research Portal"></svg>
+      <div class="tip" id="visitsTip"></div>
+    </div>
+    <div class="legend" id="visitsLegend"></div>
+    <div class="tablewrap tall" id="visitsTable" hidden></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><div><h2>Depth of use</h2>
+    <p>Actions per visit: pages viewed, searches run and links followed within one session. Volume says how many arrived; this says whether they did anything.</p></div></div>
+  <div class="panel">
+    <div class="chartbox" id="depthBox">
+      <svg id="depthChart" viewBox="0 0 920 260" role="img" aria-label="Actions per visit by month"></svg>
+      <div class="tip" id="depthTip"></div>
+    </div>
+    <div class="legend" id="depthLegend"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><div><h2>How visitors arrive</h2>
+    <p>Share of visits by referrer channel, per month, built from the daily export. Referral traffic from Dutch university and library websites is the portal&rsquo;s real audience channel.</p></div></div>
+  <div class="panel">
+    <div class="chartbox" id="chBox">
+      <svg id="chChart" viewBox="0 0 920 250" role="img" aria-label="Referrer channel share by month"></svg>
+      <div class="tip" id="chTip"></div>
+    </div>
+    <div class="legend" id="chLegend"></div>
+    <div class="tablewrap" id="chTable"></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><div><h2>Who sends traffic</h2>
+    <p id="refIntro"></p></div></div>
+  <div class="duo">
+    <div class="panel">
+      <h3>Referral sources by kind</h3>
+      <div id="refSplit"></div>
+    </div>
+    <div class="panel">
+      <h3>Top referrers</h3>
+      <div class="tablewrap tall" id="refTable"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><div><h2>What people land on</h2>
+    <p id="pagesIntro"></p></div></div>
+  <div class="panel"><div class="tablewrap" id="pagesTable"></div></div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div><h2>Where visitors come from</h2>
+      <p id="geoIntro"></p></div>
+  </div>
+  <div class="duo" style="margin-bottom:16px">
+    <div class="panel">
+      <h3>National reach</h3>
+      <p style="margin:2px 0 0;font-size:.84rem;color:var(--ink-3)">Visits split by origin.</p>
+      <div id="geoSplit"></div>
+    </div>
+    <div class="panel">
+      <h3>Dutch cities</h3>
+      <p style="margin:2px 0 0;font-size:.84rem;color:var(--ink-3)">Districts merged into their city. The institution column is a hint from location, not a measured affiliation.</p>
+      <div class="tablewrap" id="nlCityTable"></div>
+    </div>
+  </div>
+  <div class="duo">
+    <div class="panel">
+      <h3>Top countries</h3>
+      <div class="tablewrap" id="countryTable"></div>
+    </div>
+    <div class="panel">
+      <h3>Top cities, worldwide</h3>
+      <p style="margin:2px 0 0;font-size:.84rem;color:var(--ink-3)">City is inferred from IP address and is the least reliable dimension here. Rows with the one-page, instant-bounce pattern of automated traffic are marked.</p>
+      <div class="tablewrap" id="cityTable"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><div><h2>Notes and caveats</h2></div></div>
+  <div class="panel"><dl class="notes" id="notes"></dl></div>
+</section>
+
+</div>
+
+<script>
+const DATA = {"months":[["2023-04",16,53,4,53,16,8122,4,2,0,14,0,0,0,null,true,30],["2023-05",149,480,61,480,151,22972,21,10,0,139,0,0,0,null,false,31],["2023-06",484,900,291,900,496,114917,26,258,9,217,0,0,0,null,false,30],["2023-07",2790,3999,2083,3999,2792,341606,31,860,49,1628,252,1,0,null,false,31],["2023-08",1773,2377,1373,2377,1773,144263,31,470,76,1219,8,0,0,null,false,31],["2023-09",2547,9178,1163,9161,6472,440952,30,750,127,1639,30,1,17,null,false,30],["2023-10",2107,8306,778,8266,6013,383363,31,568,106,1428,5,0,40,null,false,31],["2023-11",7148,30496,5541,30192,22082,2145341,30,5476,175,1497,0,0,304,"partial",false,30],["2023-12",23548,32612,21377,31062,29524,541868,31,21727,188,1633,0,0,1550,"bot",false,31],["2024-01",36067,38856,34225,37364,36627,194102,31,34582,169,1315,1,0,1492,"bot",false,31],["2024-02",34692,37868,32761,36236,35533,229293,29,33203,182,1307,0,0,1632,"bot",false,29],["2024-03",12793,33114,10840,31462,30802,649675,31,11297,132,1364,0,0,1652,"partial",false,31],["2024-04",4727,28577,2863,27170,25249,789392,30,3203,179,1345,0,0,1407,"partial",false,30],["2024-05",1269,4691,486,4681,3408,199221,30,469,116,682,2,0,10,null,false,31],["2024-06",758,3259,280,3252,2248,140580,20,303,57,398,0,0,7,null,false,30],["2024-07",1165,5119,416,5088,3603,211478,31,392,110,661,2,0,31,null,false,31],["2024-08",1087,4227,421,4209,3060,187955,31,379,98,610,0,0,18,null,false,31],["2024-09",1720,6987,623,6981,5083,265208,30,580,121,1016,3,0,6,null,false,30],["2024-10",2052,8131,876,8128,5880,346027,31,904,115,1033,0,0,3,null,false,31],["2024-11",1491,6151,539,6143,4458,250654,30,575,12,904,0,0,8,null,false,30],["2024-12",1250,5360,451,5345,3770,214667,31,452,9,789,0,0,15,null,false,31],["2025-01",1437,6336,518,6309,4455,258883,31,667,37,731,2,0,27,null,false,31],["2025-02",2604,8294,1397,8289,6251,375399,28,1888,31,685,0,0,5,null,false,28],["2025-03",1858,7036,827,7025,5091,288158,31,1100,24,733,0,1,11,null,false,31],["2025-04",1366,5206,586,5198,3705,192911,30,760,19,585,0,2,8,null,false,30],["2025-05",2142,6776,1285,6762,4983,340564,31,1521,20,600,1,0,14,null,false,31],["2025-06",1040,4077,422,4065,2935,168006,30,564,3,471,2,0,12,null,false,30],["2025-07",874,4183,323,4177,3059,154850,31,467,3,404,0,0,6,null,false,31],["2025-08",1025,4668,477,4657,3274,176470,31,548,2,475,0,0,11,null,false,31],["2025-09",1698,7431,756,7417,5385,268402,30,928,10,759,0,1,14,null,false,30],["2025-10",1381,5050,796,5009,3813,198298,20,911,10,459,0,1,41,null,false,31],["2025-11",415,2048,103,2044,1454,81420,26,189,6,220,0,0,4,null,false,30],["2025-12",471,2235,160,2229,1614,92383,31,239,4,224,0,4,6,null,false,31],["2026-01",480,2184,173,2169,1576,92981,31,250,9,221,0,0,15,null,false,31],["2026-02",455,2414,131,2406,1769,88676,28,209,12,232,0,2,8,null,false,28],["2026-03",469,2463,147,2456,1740,99116,31,254,19,196,0,0,7,null,false,31],["2026-04",362,1735,123,1730,1286,68770,30,216,29,117,0,0,5,null,false,30],["2026-05",353,1595,115,1595,1171,60212,31,210,34,109,0,0,0,null,false,31],["2026-06",581,1795,367,1753,1412,67411,29,218,291,68,0,4,21,null,false,30],["2026-07",51,170,21,170,136,8684,24,44,3,4,0,0,0,null,false,31],["2026-08",30,99,14,99,78,2893,18,28,1,1,0,0,0,null,false,31],["2026-09",48,158,20,158,117,9369,17,38,4,6,0,0,0,null,false,30],["2026-10",23,73,9,73,59,4460,16,22,1,0,0,0,0,null,false,31],["2026-11",9,22,5,22,19,1330,5,7,1,1,0,0,0,null,true,30]],"channels":[["Direct Entry",127738,236867,115307,6344415],["Websites",28139,102174,9329,4217618],["Search Engines",2603,7264,1337,340878],["Social Networks",308,409,248,16177],["Campaigns",17,75,6,2214]],"refs":[["dspace.library.uu.nl","dutch",7449,27054,2447,914053],["dans.knaw.nl","dutch",6997,21643,2618,973063],["www.uu.nl","dutch",4722,19475,1138,729951],["Keyword not defined","search",2585,7245,1320,340876],["www.openaccess.nl","dutch",793,3376,201,162798],["databanken.library.uu.nl","dutch",638,2911,161,118282],["www.openaire.eu","openaire",537,2240,231,133089],["bibliotheek.hu.nl","dutch",509,2162,121,82096],["uba.uva.nl","dutch",466,2046,128,93435],["aai.openaire.eu","openaire",352,1222,96,118630],["explore.openaire.eu","openaire",309,771,139,17439],["ndltd.org","other",287,1540,83,66321],["statics.teams.cdn.office.net","other",248,558,145,32580],["databases.library.uu.nl","dutch",217,727,67,32244],["vubis.politieacademie.nl","dutch",208,667,67,27870],["www.shb-online.nl","dutch",200,224,184,5045],["libguides.ru.nl","dutch",190,649,59,21493],["avans.libguides.com","dutch",189,795,39,24679],["libsearch.uvt.nl","dutch",183,745,60,35741],["Twitter","social",174,235,136,10699],["www.nhlstenden.com","other",173,690,38,21328],["libguides.library.uu.nl","dutch",170,813,44,42519],["www.fontys.nl","dutch",166,744,33,27551],["libguides.hanze.nl","dutch",153,584,47,23643],["studiecentrumche.nl","dutch",151,492,36,22497],["libguides.eur.nl","dutch",140,596,37,23853],["connect.openaire.eu","openaire",123,340,52,19373],["LinkedIn","social",112,146,94,4993],["admin.connect.openaire.eu","openaire",103,579,29,53288],["hz.nl","dutch",99,520,16,19677]],"refTot":{"dutch":25082,"search":2603,"openaire":1502,"other":1555,"social":308,"campaign":17},"refCount":341,"pages":[["search",219847,256099,100209,"95%","00:00:31"],["/index",47840,63341,46798,"43%","00:00:42"],["participate",13159,14170,10675,"98%","00:00:15"],["/fields-of-science",844,1038,333,"68%","00:00:36"],["/sdgs",518,581,275,"74%","00:00:23"],["/organizations",377,411,81,"68%","00:00:57"],["/faqs",308,343,74,"74%","00:01:01"],["/content",211,233,53,"72%","00:01:28"],["/curators",207,223,58,"71%","00:00:25"],["/roadmap",166,177,58,"76%","00:00:33"],["/develop",82,90,36,"69%","00:00:27"],["/my-orcid-links",41,68,1,"0%","00:00:25"],["/myclaims",33,43,0,"0%","00:00:35"],["/get-started",8,8,6,"100%","00:00:00"],["/projects",5,8,4,"75%","00:00:09"],["/s",3,3,0,"0%","00:00:01"],["/reload",2,4,0,"0%","00:13:25"],["/subjects",2,3,0,"0%","00:00:01"],["/invite",1,1,0,"0%","00:00:00"],["/national-bulletins",1,1,0,"0%","00:02:53"]],"pageGroups":{"callback":{"upv":698,"pv":1424,"ent":55,"n":492},"preview":{"upv":14,"pv":14,"ent":0,"n":14},"probe":{"upv":55,"pv":78,"ent":26,"n":40}},"countries":[["Netherlands","nl",34993,127751,13005,5507272],["United States","us",22627,82519,21000,3248131],["United Kingdom","gb",16542,18447,15944,109565],["Ireland","ie",14736,15009,14572,10435],["Canada","ca",14643,15386,14360,29145],["Australia","au",14616,15072,14443,31017],["New Zealand","nz",13709,13829,13631,4304],["India","in",2467,4373,1949,177336],["Germany","de",2317,7110,1545,177178],["China","cn",1778,3091,1295,108256],["Belgium","be",1400,5068,521,170892],["France","fr",1227,2579,929,84886],["Brazil","br",1064,1390,971,18129],["Italy","it",877,2163,518,95656],["Singapore","sg",838,1064,744,58308],["Spain","es",763,1797,487,77916],["Turkey","tr",732,2008,446,101832],["Japan","jp",668,1110,560,26549],["Indonesia","id",554,1530,355,55942],["Philippines","ph",542,901,362,43127],["Vietnam","vn",518,579,489,2446],["Mexico","mx",480,643,441,10392],["Greece","gr",437,1093,260,35932],["Poland","pl",419,705,330,17500],["Sweden","se",366,1102,179,46621],["Austria","at",344,802,215,30635],["Ukraine","ua",336,573,277,16964],["Saudi Arabia","sa",312,340,294,2389],["North Macedonia","mk",310,640,161,40914],["Denmark","dk",269,539,205,18492],["Nigeria","ng",266,1012,102,31279],["Colombia","co",262,362,238,3802],["Thailand","th",255,396,220,13117],["Switzerland","ch",243,672,124,24136],["Peru","pe",236,349,203,7021],["Hong Kong SAR China","hk",232,2144,121,104494],["Romania","ro",230,559,153,12536],["Portugal","pt",220,541,119,16016],["Algeria","dz",203,294,179,6270],["Egypt","eg",200,291,168,9486],["South Korea","kr",193,382,137,8165],["Finland","fi",190,428,124,14260],["Iran","ir",187,618,88,26735],["Chile","cl",164,219,134,2821],["South Africa","za",158,274,116,8718],["Argentina","ar",156,223,132,3083],["Taiwan","tw",152,330,106,14131],["Pakistan","pk",150,342,103,12951],["Hungary","hu",143,323,102,7219],["Norway","no",142,336,84,14614],["Czechia","cz",140,290,88,9516],["Israel","il",120,270,84,9352],["Morocco","ma",116,213,86,11615],["Bulgaria","bg",110,192,88,5855],["Malaysia","my",110,161,95,3697],["United Arab Emirates","ae",106,207,82,6086],["Serbia","rs",104,236,74,6459],["Curaçao","cw",103,366,44,17047],["Venezuela","ve",103,133,96,2031],["Kenya","ke",100,194,75,7044],["Lithuania","lt",99,213,52,5227],["Suriname","sr",97,277,45,12977],["Bangladesh","bd",91,164,72,2876],["Uzbekistan","uz",86,100,78,398],["Ecuador","ec",81,88,77,101],["Ethiopia","et",78,218,51,6492],["Ghana","gh",75,259,31,10821],["Kazakhstan","kz",73,120,67,1210],["Belarus","by",61,67,57,1207],["Bolivia","bo",60,84,50,2927],["Mongolia","mn",60,61,59,28],["Dominican Republic","do",58,61,55,878],["Croatia","hr",57,126,36,3315],["Seychelles","sc",57,176,22,4353],["Nepal","np",54,122,42,2751],["Slovakia","sk",52,97,37,2190],["Guatemala","gt",51,66,45,3133],["Iraq","iq",50,151,28,4786],["Slovenia","si",49,140,33,5700],["Sri Lanka","lk",44,62,41,375],["Luxembourg","lu",42,86,22,2666],["Costa Rica","cr",41,54,36,303],["Jamaica","jm",41,57,38,670],["Myanmar (Burma)","mm",40,42,39,27],["Honduras","hn",38,38,38,0],["Trinidad & Tobago","tt",38,40,36,9],["Albania","al",37,46,35,589],["Jordan","jo",37,43,32,76],["Latvia","lv",37,61,29,348],["Mauritius","mu",37,67,30,1866],["Azerbaijan","az",35,46,31,456],["Cambodia","kh",35,39,31,603],["Estonia","ee",34,83,18,4829],["Oman","om",34,40,32,92],["Russia","ru",34,118,22,2474],["Uganda","ug",34,45,26,322],["Bosnia & Herzegovina","ba",33,64,24,5168],["Moldova","md",32,96,27,2751],["Qatar","qa",30,59,22,3259],["Tunisia","tn",30,41,25,891],["Cyprus","cy",28,66,17,1223],["Georgia","ge",27,34,25,213],["Libya","ly",27,44,19,2369],["Paraguay","py",26,26,26,0],["Uruguay","uy",23,39,19,5105],["Cuba","cu",22,35,13,1407],["Malta","mt",22,64,15,1779],["Senegal","sn",22,23,21,3],["Côte d’Ivoire","ci",20,20,20,0],["Kuwait","kw",19,23,16,57],["Armenia","am",18,21,16,248],["Tanzania","tz",18,27,13,324],["Kyrgyzstan","kg",16,16,16,0],["Mozambique","mz",16,57,8,2919],["Bermuda","bm",15,29,11,1413],["Aruba","aw",14,54,5,5993],["Belize","bz",14,18,12,87],["Unknown","xk",14,32,10,930],["Bahrain","bh",13,18,11,77],["Cameroon","cm",13,30,6,1100],["Laos","la",13,13,13,0],["Yemen","ye",13,52,6,4541],["Angola","ao",12,13,11,64],["Malawi","mw",12,59,5,1810],["Panama","pa",12,12,12,0],["Puerto Rico","pr",12,15,9,64],["Burkina Faso","bf",11,11,11,0],["Guyana","gy",11,11,11,0],["Iceland","is",11,28,4,651],["Rwanda","rw",11,16,8,260],["Afghanistan","af",10,23,4,1264],["Bahamas","bs",10,10,10,0],["Nicaragua","ni",10,18,7,337],["Zimbabwe","zw",10,14,8,124],["Barbados","bb",9,9,9,0],["Gabon","ga",9,9,9,0],["Lebanon","lb",9,36,3,3642],["Togo","tg",9,9,9,0],["Congo - Kinshasa","cd",8,16,6,803],["El Salvador","sv",8,8,8,0],["Macao SAR China","mo",8,12,6,54],["Palestinian Territories","ps",8,8,8,0],["Réunion","re",8,8,8,0],["Benin","bj",7,11,5,558],["Madagascar","mg",7,8,6,11],["Maldives","mv",7,7,7,0],["Zambia","zm",7,27,5,1402],["Congo - Brazzaville","cg",6,6,6,0],["Montenegro","me",6,8,5,2],["Botswana","bw",5,22,4,731],["Caribbean Netherlands","bq",5,16,0,244],["Cayman Islands","ky",5,6,4,5],["Namibia","na",5,21,2,473],["Tajikistan","tj",5,7,4,5],["Brunei","bn",4,4,4,0],["Faroe Islands","fo",4,11,2,116],["Fiji","fj",4,4,4,0],["Gambia","gm",4,8,3,107],["Norfolk Island","nf",4,17,1,262],["Sierra Leone","sl",4,14,3,176],["Somalia","so",4,23,1,865],["St. Lucia","lc",4,4,4,0],["American Samoa","as",3,5,2,36],["Antigua & Barbuda","ag",3,3,3,0],["Isle of Man","im",3,3,3,0],["Lesotho","ls",3,3,3,0],["Mali","ml",3,16,2,205],["St. Kitts & Nevis","kn",3,3,3,0],["St. Vincent & Grenadines","vc",3,3,3,0],["Andorra","ad",2,2,2,0],["British Virgin Islands","vg",2,2,2,0],["Burundi","bi",2,2,2,0],["Cape Verde","cv",2,5,1,195],["Dominica","dm",2,2,2,0],["Eswatini","sz",2,3,1,25],["Guam","gu",2,2,2,0],["Guinea","gn",2,2,2,0],["Mayotte","yt",2,2,2,0],["New Caledonia","nc",2,2,2,0],["Papua New Guinea","pg",2,2,2,0],["Sint Maarten","sx",2,4,1,19],["French Polynesia","pf",1,2,0,11],["Grenada","gd",1,1,1,0],["Guinea-Bissau","gw",1,1,1,0],["Haiti","ht",1,1,1,0],["Liechtenstein","li",1,1,1,0],["Mauritania","mr",1,1,1,0],["Micronesia","fm",1,1,1,0],["Palau","pw",1,1,1,0],["South Sudan","ss",1,1,1,0],["Sudan","sd",1,6,0,12],["Syria","sy",1,9,0,120],["Turks & Caicos Islands","tc",1,1,1,0]],"cities":[["Amsterdam","Netherlands","nl",14933,54060,5795],["","","",9488,10168,9027],["Auckland (Auckland CBD)","New Zealand","nz",4785,4812,4762],["Dublin","Ireland","ie",4103,4214,4028],["Sydney","Australia","au",3930,4009,3884],["Auckland","New Zealand","nz",3669,3694,3648],["London","United Kingdom","gb",2489,3157,2320],["Melbourne","Australia","au",1712,1751,1692],["Utrecht (Oost)","Netherlands","nl",1557,5697,496],["London (Shadwell)","United Kingdom","gb",1469,1562,1444],["Toronto","Canada","ca",1381,1571,1327],["Utrecht","Netherlands","nl",1364,4542,532],["Toronto (Old Toronto)","Canada","ca",1221,1345,1181],["New York","United States","us",1174,1434,1086],["Ashburn","United States","us",1172,1301,1108],["Artane","Ireland","ie",1152,1166,1139],["Schiphol-Rijk","Netherlands","nl",1152,4538,363],["The Hague (Laak)","Netherlands","nl",1125,4226,374],["Perth","Australia","au",1104,1109,1100],["Auckland (Takapuna)","New Zealand","nz",984,989,979],["Chicago","United States","us",923,1185,851],["Amsterdam (Amsterdam-Zuidoost)","Netherlands","nl",905,2686,407],["North Sydney","Australia","au",833,839,830],["Montreal (Rosemont—La Petite-Patrie)","Canada","ca",832,842,825],["Frankfurt am Main","Germany","de",823,1971,564],["Brisbane","Australia","au",806,873,792],["Macquarie Park","Australia","au",716,761,706],["Adelaide","Australia","au",631,645,626],["Tauranga","New Zealand","nz",628,633,624],["Montreal","Canada","ca",594,620,581],["The Hague","Netherlands","nl",573,3332,175],["Wageningen","Netherlands","nl",564,1860,232],["Newark","United States","us",545,598,525],["London (Colindale)","United Kingdom","gb",540,554,533],["London (South Bank)","United Kingdom","gb",518,541,508],["Nijmegen","Netherlands","nl",511,1592,214],["Singapore (Changi Village)","Singapore","sg",489,550,433],["Southport","Australia","au",483,493,480],["The Hague (Haagse Hout)","Netherlands","nl",470,900,352],["Leiden","Netherlands","nl",459,1335,233]],"cityCount":11745,"nlCities":[["Amsterdam",16310,58589,6397,10],["Utrecht",3088,10894,1094,7],["The Hague",2458,9582,979,7],["Schiphol-Rijk",1152,4538,363,1],["Nijmegen",703,2103,306,7],["Wageningen",564,1860,232,1],["Leiden",459,1335,233,1],["Rotterdam",443,1755,155,6],["Amstelveen",382,1636,105,1],["Groningen",358,1340,129,8],["Eindhoven",358,1500,109,8],["Breda",347,1209,143,6],["Tilburg",341,1225,110,5],["Hilversum",331,1269,111,1],["Venlo",246,677,118,1],["Ede",240,952,80,1],["Zwolle",234,695,83,1],["Enschede",227,911,74,6],["'s-Hertogenbosch",222,908,72,1],["Leeuwarden",185,572,71,1]],"nlCityCount":643,"meta":{"first":"2023-04-25","last":"2026-11-14","dailyRows":1200,"uvEq":1194,"returning":6,"median":1207.5,"files":["Export _ All Channels _ April 24, 2023 – November 15, 2026.csv","Export _ Channel Type _ April 24, 2023 – November 15, 2026.csv","Export _ City _ April 24, 2023 – November 15, 2026.csv","Export _ Country _ April 24, 2023 – November 15, 2026.csv","Export _ Main metrics _ April 24, 2023 – November 15, 2026.csv","Export _ Page URLs _ April 24, 2023 – November 15, 2026.csv"],"built":"2026-11-16"}};
+
+// ---------- helpers ----------
+const MLAB=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fmtMonth=m=>MLAB[+m.slice(5)-1]+' '+m.slice(2,4);
+const fmtMonthLong=m=>MLAB[+m.slice(5)-1]+' '+m.slice(0,4);
+const fmtDay=d=>{const [y,m,dd]=d.split('-');return (+dd)+' '+MLAB[+m-1]+' '+y;};
+const nf=n=>Math.round(n).toLocaleString('en-GB');
+const kf=n=>n>=10000?(n/1000).toFixed(0)+'k':n>=1000?(n/1000).toFixed(1)+'k':String(n);
+const pc=(a,b)=>b?Math.round(a/b*100)+'%':'—';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const listJoin=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' and '+a[a.length-1];
+const dur=s=>Math.floor(s/60)+'m '+String(Math.round(s%60)).padStart(2,'0')+'s';
+function el(tag,attrs,txt){const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  for(const k in attrs)e.setAttribute(k,attrs[k]); if(txt!==undefined)e.textContent=txt; return e;}
+function niceTicks(max,count){
+  if(max<=0)return [0,1];
+  const raw=max/count, mag=Math.pow(10,Math.floor(Math.log10(raw)));
+  const step=[1,2,2.5,5,10].map(s=>s*mag).find(s=>s>=raw)||10*mag;
+  const out=[]; for(let v=0;v<=max+step*0.001;v+=step)out.push(v);
+  if(out[out.length-1]<max)out.push(out[out.length-1]+step);
+  return out;
+}
+function monthsBetween(a,b){const out=[];let [y,m]=a.split('-').map(Number);const [ey,em]=b.split('-').map(Number);
+  while(y<ey||(y===ey&&m<=em)){out.push(y+'-'+String(m).padStart(2,'0'));m++;if(m>12){m=1;y++;}}return out;}
+
+// ---------- data model ----------
+const META=DATA.meta;
+const D={};
+DATA.months.forEach(r=>{
+  const [m,visits,actions,bounces,pv,upv,secs,days,direct,search,web,social,camp,dl,flag,partial,dim]=r;
+  D[m]={visits,actions,bounces,pv,upv,secs,days,dl,flag,partial,dim,
+    ch:{'Direct Entry':direct,'Websites':web,'Search Engines':search,'Social Networks':social,'Campaigns':camp},
+    apv:visits?actions/visits:0, br:visits?bounces/visits:0, dir:visits?direct/visits:0};
+});
+const ALL_MONTHS=monthsBetween(META.first.slice(0,7),META.last.slice(0,7));
+const COMPLETE=ALL_MONTHS.filter(m=>D[m]&&!D[m].partial);
+const FLAGGED=ALL_MONTHS.filter(m=>D[m]&&D[m].flag);
+const BOT=ALL_MONTHS.filter(m=>D[m]&&D[m].flag==='bot');
+const CH=[{k:'Direct Entry',v:'--c1'},{k:'Websites',v:'--c3'},{k:'Search Engines',v:'--c2'},{k:'Social Networks',v:'--c4'},{k:'Campaigns',v:'--c5'}];
+const COLOR='var(--s1)';
+
+function summarise(filter){
+  const ms=ALL_MONTHS.filter(m=>D[m]&&filter(m));
+  const sum=(arr,k)=>arr.reduce((s,m)=>s+(D[m]&&filter(m)?D[m][k]:0),0);
+  const total=sum(ms,'visits'), actions=sum(ms,'actions'), bounces=sum(ms,'bounces'), secs=sum(ms,'secs');
+  const last12=COMPLETE.slice(-12), prev12=COMPLETE.slice(-24,-12);
+  const l=sum(last12,'visits'), p=sum(prev12,'visits');
+  const peak=ms.reduce((a,m)=>D[m].visits>D[a].visits?m:a,ms[0]);
+  return {ms,total,actions,bounces,secs,l,p,delta:p?(l-p)/p:0,peak,last12,prev12,
+    apv:actions/total,br:bounces/total,avgDur:secs/total,avgL12:l/12};
+}
+const S_ALL=summarise(()=>true);
+const S_CLEAN=summarise(m=>!D[m].flag);
+const botVisits=BOT.reduce((s,m)=>s+D[m].visits,0);
+const flaggedVisits=FLAGGED.reduce((s,m)=>s+D[m].visits,0);
+
+// ---------- header + banner ----------
+document.getElementById('meta').innerHTML=`
+  <span><b>Period</b> ${fmtDay(META.first)} &ndash; ${fmtDay(META.last)}</span>
+  <span><b>Source</b> Matomo &mdash; ${META.files.length} CSV exports</span>
+  <span><b>Compiled</b> ${fmtDay(META.built)}</span>`;
+
+// ---------- summary cards ----------
+function sparkPath(filter,w,h){
+  const vals=ALL_MONTHS.map(m=>D[m]&&filter(m)?D[m].visits:null);
+  const nn=vals.filter(v=>v!==null); const max=Math.max(...nn,1);
+  const x=i=>i/(ALL_MONTHS.length-1)*w, y=v=>h-2-(v/max)*(h-6);
+  let d='',started=false;
+  vals.forEach((v,i)=>{if(v===null){started=false;return;} d+=(started?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1)+' ';started=true;});
+  let lastI=vals.length-1; while(lastI>0&&vals[lastI]===null)lastI--;
+  return {d,lx:x(lastI),ly:y(vals[lastI])};
+}
+function card(title,sub,S,filter,note){
+  const sp=sparkPath(filter,300,50);
+  const cls=Math.abs(S.delta)<.02?'flat':(S.delta<0?'down':'up');
+  const arrow=cls==='down'?'▼':cls==='up'?'▲':'■';
+  const pk=D[S.peak];
+  return `<div class="pcard">
+    <div class="top">
+      <div><div class="ptitle"><span class="swatch" style="background:${COLOR}"></span><span class="pname">${title}</span></div>
+        <div class="purl">${sub}</div></div>
+      <span class="trend ${cls}" title="Last 12 complete months vs the 12 before">${arrow} ${Math.abs(S.delta*100).toFixed(0)}% YoY</span>
+    </div>
+    <div>
+      <div class="hero"><span class="v">${nf(S.total)}</span><span class="u">visits, ${fmtMonthLong(ALL_MONTHS[0])} – ${fmtMonthLong(ALL_MONTHS[ALL_MONTHS.length-1])}</span></div>
+      <svg class="spark" viewBox="0 0 300 50" preserveAspectRatio="none" aria-hidden="true">
+        <path d="${sp.d}" fill="none" stroke="${COLOR}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+        <circle cx="${sp.lx.toFixed(1)}" cy="${sp.ly.toFixed(1)}" r="3.5" fill="${COLOR}" stroke="var(--surface)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="substats">
+      <div><div class="k">Last 12 complete months</div><div class="v">${nf(S.l)} <span style="font-size:.72rem;color:var(--ink-3)">vs ${nf(S.p)}</span></div></div>
+      <div><div class="k">Monthly average, L12M</div><div class="v">${nf(S.avgL12)}</div></div>
+      <div><div class="k">Actions per visit</div><div class="v">${S.apv.toFixed(1)}</div></div>
+      <div><div class="k">Bounce rate</div><div class="v">${(S.br*100).toFixed(0)}%</div></div>
+      <div><div class="k">Busiest month</div><div class="v" style="font-size:.92rem">${fmtMonthLong(S.peak)} · ${nf(pk.visits)}${pk.flag?' <span class="flagpill">flagged</span>':''}</div></div>
+      <div><div class="k">Avg. visit duration</div><div class="v">${dur(S.avgDur)}</div></div>
+    </div>
+    ${note?`<div style="font-size:.8rem;color:var(--ink-3)">${note}</div>`:''}
+  </div>`;
+}
+document.getElementById('portals').innerHTML=
+  card('All recorded traffic','netherlands.openaire.eu',S_ALL,()=>true,'') +
+  card('Excluding flagged months','same portal, automated-traffic months removed',S_CLEAN,m=>!D[m].flag,
+    `${FLAGGED.length} months removed: ${nf(flaggedVisits)} visits, ${pc(flaggedVisits,S_ALL.total)} of everything recorded.`);
+
+// ---------- visits chart ----------
+let range='all', view='chart', scale='cap';
+const visibleMonths=()=>range==='all'?ALL_MONTHS:ALL_MONTHS.slice(-Number(range));
+const VC={w:920,h:330,l:50,r:16,t:22,b:34};
+function drawVisits(){
+  const svg=document.getElementById('visitsChart'); svg.innerHTML='';
+  const ms=visibleMonths(); const plotW=VC.w-VC.l-VC.r, plotH=VC.h-VC.t-VC.b;
+  const vis=ms.filter(m=>D[m]);
+  const fullMax=Math.max(1,...vis.map(m=>D[m].visits));
+  const cleanMax=Math.max(1,...vis.filter(m=>!D[m].flag).map(m=>D[m].visits));
+  const capped=scale==='cap' && fullMax>cleanMax*1.25;
+  const ticks=niceTicks(capped?cleanMax*1.1:fullMax,5), top=ticks[ticks.length-1];
+  const X=i=>VC.l+(ms.length===1?plotW/2:i/(ms.length-1)*plotW);
+  const Y=v=>VC.t+plotH-(Math.min(v,top)/top)*plotH;
+  ticks.forEach(t=>{svg.appendChild(el('line',{x1:VC.l,x2:VC.w-VC.r,y1:Y(t),y2:Y(t),class:'gridline'}));
+    svg.appendChild(el('text',{x:VC.l-9,y:Y(t)+3.5,'text-anchor':'end',class:'axistext'},nf(t)));});
+  const every=ms.length>30?3:(ms.length>14?2:1);
+  ms.forEach((m,i)=>{if(i%every!==0&&!(i===ms.length-1&&(ms.length-1)%every>=Math.ceil(every/2)))return;
+    svg.appendChild(el('text',{x:X(i),y:VC.h-VC.b+18,'text-anchor':'middle',class:'axistext'},fmtMonth(m)));});
+  const pts=ms.map((m,i)=>({i,m,d:D[m]}));
+  let seg=[],segs=[]; pts.forEach(pt=>{if(pt.d)seg.push(pt);else{if(seg.length)segs.push(seg);seg=[];}}); if(seg.length)segs.push(seg);
+  segs.forEach(s=>{const d=s.map((pt,j)=>(j?'L':'M')+X(pt.i).toFixed(1)+' '+Y(pt.d.visits).toFixed(1)).join(' ');
+    svg.appendChild(el('path',{d,fill:'none',stroke:COLOR,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));});
+  let over=0;
+  pts.forEach(pt=>{if(!pt.d)return;
+    if(pt.d.flag){svg.appendChild(el('circle',{cx:X(pt.i),cy:Y(pt.d.visits),r:6,fill:'var(--surface)',stroke:'var(--warn)','stroke-width':2,
+      'stroke-dasharray':pt.d.flag==='partial'?'3 2':'none'}));}
+    if(pt.d.visits>top){over++; svg.appendChild(el('text',{x:X(pt.i),y:Y(top)-(over%2?11:22),'text-anchor':'middle',class:'axistext',style:'fill:var(--warn-ink);font-weight:600'},kf(pt.d.visits)));}
+    if(pt.d.partial){svg.appendChild(el('circle',{cx:X(pt.i),cy:Y(pt.d.visits),r:3,fill:'var(--surface)',stroke:COLOR,'stroke-width':1.5}));}
+  });
+  const last=pts.filter(x=>x.d).pop();
+  if(last&&!last.d.partial)svg.appendChild(el('circle',{cx:X(last.i),cy:Y(last.d.visits),r:4,fill:COLOR,stroke:'var(--surface)','stroke-width':2}));
+  hover(svg,VC,ms,X,i=>{const d=D[ms[i]]; return d?Y(d.visits):null;},'visitsTip','visitsBox',m=>{
+    const d=D[m]; if(!d)return `<div class="th">${fmtMonthLong(m)}</div><div class="row"><span class="lbl">No data</span></div>`;
+    let note='';
+    if(d.flag==='bot')note='Automated-traffic signature: '+pc(d.bounces,d.visits)+' bounce, '+pc(d.ch['Direct Entry'],d.visits)+' direct';
+    else if(d.flag==='partial')note='Elevated, partly automated: '+pc(d.bounces,d.visits)+' bounce';
+    if(d.partial)note+=(note?'<br>':'')+`Partial month: ${d.days} days in the export window`;
+    else if(d.days<d.dim)note+=(note?'<br>':'')+`Only ${d.days} of ${d.dim} days have recorded traffic`;
+    return `<div class="th">${fmtMonthLong(m)}</div>
+      <div class="row"><span class="lbl">Visits</span><span class="val">${nf(d.visits)}</span></div>
+      <div class="row"><span class="lbl">Actions</span><span class="val">${nf(d.actions)}</span></div>
+      <div class="row"><span class="lbl">Bounce</span><span class="val">${pc(d.bounces,d.visits)}</span></div>`+(note?`<div class="note">${note}</div>`:'');
+  });
+}
+function hover(svg,C,ms,X,Yof,tipId,boxId,html){
+  const plotW=C.w-C.l-C.r, plotH=C.h-C.t-C.b;
+  const hv=el('line',{x1:0,x2:0,y1:C.t,y2:C.t+plotH,stroke:'var(--line-strong)','stroke-width':1,opacity:0}); svg.appendChild(hv);
+  const dot=el('circle',{r:5,fill:COLOR,stroke:'var(--surface)','stroke-width':2,opacity:0}); svg.appendChild(dot);
+  const ov=el('rect',{x:C.l,y:C.t,width:plotW,height:plotH,fill:'transparent'}); svg.appendChild(ov);
+  const tip=document.getElementById(tipId), box=document.getElementById(boxId);
+  function move(ev){
+    const r=svg.getBoundingClientRect(); const cx=(ev.touches?ev.touches[0].clientX:ev.clientX);
+    const px=(cx-r.left)/r.width*C.w;
+    let i=Math.round((px-C.l)/plotW*(ms.length-1)); i=Math.max(0,Math.min(ms.length-1,i));
+    hv.setAttribute('x1',X(i)); hv.setAttribute('x2',X(i)); hv.setAttribute('opacity',1);
+    const y=Yof(i); if(y!==null){dot.setAttribute('cx',X(i));dot.setAttribute('cy',y);dot.setAttribute('opacity',1);} else dot.setAttribute('opacity',0);
+    tip.innerHTML=html(ms[i]); tip.style.opacity=1;
+    const bx=box.getBoundingClientRect(); const relX=X(i)/C.w*bx.width;
+    const left=relX+14+tip.offsetWidth>bx.width?relX-14-tip.offsetWidth:relX+14;
+    tip.style.left=Math.max(0,left)+'px'; tip.style.top=(C.t/C.h*bx.height)+'px';
+  }
+  ov.addEventListener('mousemove',move); ov.addEventListener('touchstart',move,{passive:true}); ov.addEventListener('touchmove',move,{passive:true});
+  ov.addEventListener('mouseleave',()=>{tip.style.opacity=0;hv.setAttribute('opacity',0);dot.setAttribute('opacity',0);});
+}
+document.getElementById('visitsLegend').innerHTML=
+  `<span><i style="background:${COLOR}"></i>Visits</span>`+
+  `<span><i class="sq" style="background:transparent;border:2px solid var(--warn);border-radius:50%"></i>Automated-traffic month</span>`+
+  `<span><i class="sq" style="background:transparent;border:2px dashed var(--warn);border-radius:50%"></i>Partly automated</span>`+
+  `<span><i class="sq" style="background:transparent;border:1.5px solid ${COLOR};border-radius:50%;width:7px;height:7px"></i>Partial month (export window)</span>`;
+
+function drawVisitsTable(){
+  const ms=visibleMonths().slice().reverse();
+  let h='<table><thead><tr><th>Month</th><th>Visits</th><th>Actions</th><th>Actions / visit</th><th>Bounce</th><th>Direct</th><th>From websites</th><th>Days with data</th></tr></thead><tbody>';
+  ms.forEach(m=>{const d=D[m];
+    if(!d){h+=`<tr><td>${fmtMonthLong(m)}</td><td class="n" colspan="7" style="color:var(--ink-3)">no data</td></tr>`;return;}
+    const tag=(d.flag==='bot'?' <span class="flagpill">automated</span>':d.flag==='partial'?' <span class="flagpill">partly automated</span>':'')+(d.partial?' <span class="flagpill mute">partial month</span>':'');
+    h+=`<tr><td>${fmtMonthLong(m)}${tag}</td><td class="n">${nf(d.visits)}</td><td class="n">${nf(d.actions)}</td>
+      <td class="n">${d.apv.toFixed(1)}</td><td class="n">${pc(d.bounces,d.visits)}</td><td class="n">${pc(d.ch['Direct Entry'],d.visits)}</td>
+      <td class="n">${nf(d.ch['Websites'])}</td><td class="n"${d.days<d.dim&&!d.partial?' style="color:var(--warn-ink)"':''}>${d.days} / ${d.dim}</td></tr>`;});
+  document.getElementById('visitsTable').innerHTML=h+'</tbody></table>';
+}
+
+// ---------- depth chart ----------
+const DC={w:920,h:260,l:50,r:16,t:22,b:34};
+function drawDepth(){
+  const svg=document.getElementById('depthChart'); svg.innerHTML='';
+  const ms=visibleMonths(); const plotW=DC.w-DC.l-DC.r, plotH=DC.h-DC.t-DC.b;
+  let max=Math.max(1,...ms.filter(m=>D[m]).map(m=>D[m].apv)); max=Math.min(max,10);
+  const ticks=niceTicks(max,4), top=ticks[ticks.length-1];
+  const X=i=>DC.l+(ms.length===1?plotW/2:i/(ms.length-1)*plotW), Y=v=>DC.t+plotH-(Math.min(v,top)/top)*plotH;
+  ticks.forEach(t=>{svg.appendChild(el('line',{x1:DC.l,x2:DC.w-DC.r,y1:Y(t),y2:Y(t),class:'gridline'}));
+    svg.appendChild(el('text',{x:DC.l-9,y:Y(t)+3.5,'text-anchor':'end',class:'axistext'},t%1?t.toFixed(1):t.toFixed(0)));});
+  const every=ms.length>30?3:(ms.length>14?2:1);
+  ms.forEach((m,i)=>{if(i%every!==0&&!(i===ms.length-1&&(ms.length-1)%every>=Math.ceil(every/2)))return;
+    svg.appendChild(el('text',{x:X(i),y:DC.h-DC.b+18,'text-anchor':'middle',class:'axistext'},fmtMonth(m)));});
+  // shade flagged months
+  ms.forEach((m,i)=>{const d=D[m]; if(d&&d.flag){const w=plotW/Math.max(1,ms.length-1);
+    svg.appendChild(el('rect',{x:X(i)-w/2,y:DC.t,width:w,height:plotH,fill:'var(--warn)',opacity:d.flag==='bot'?.14:.07}));}});
+  const pts=ms.map((m,i)=>({i,m,d:D[m]}));
+  let seg=[],segs=[]; pts.forEach(pt=>{if(pt.d)seg.push(pt);else{if(seg.length)segs.push(seg);seg=[];}}); if(seg.length)segs.push(seg);
+  segs.forEach(s=>{const d=s.map((pt,j)=>(j?'L':'M')+X(pt.i).toFixed(1)+' '+Y(pt.d.apv).toFixed(1)).join(' ');
+    svg.appendChild(el('path',{d,fill:'none',stroke:COLOR,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));});
+  pts.forEach(pt=>{if(pt.d&&pt.d.apv>top){svg.appendChild(el('circle',{cx:X(pt.i),cy:Y(top),r:5,fill:'none',stroke:'var(--warn)','stroke-width':2}));
+    svg.appendChild(el('text',{x:X(pt.i),y:Y(top)-11,'text-anchor':'middle',class:'axistext',style:'fill:var(--warn-ink)'},pt.d.apv.toFixed(0)));}});
+  hover(svg,DC,ms,X,i=>{const d=D[ms[i]];return d?Y(d.apv):null;},'depthTip','depthBox',m=>{const d=D[m];
+    return `<div class="th">${fmtMonthLong(m)} · actions per visit</div><div class="row"><span class="lbl">Actions / visit</span><span class="val">${d?d.apv.toFixed(1):'—'}</span></div>`+
+      (d&&d.flag?`<div class="note">${d.flag==='bot'?'Automated-traffic month':'Partly automated month'}</div>`:'');});
+}
+document.getElementById('depthLegend').innerHTML=
+  `<span><i style="background:${COLOR}"></i>Actions per visit</span><span><i class="sq" style="background:var(--warn);opacity:.35"></i>Flagged month</span>`;
+
+// ---------- channels ----------
+function drawChannels(){
+  const svg=document.getElementById('chChart'); svg.innerHTML='';
+  const W=920,H=250,L=40,R=8,T=10,B=28;
+  const ms=ALL_MONTHS.filter(m=>D[m]);
+  const plotW=W-L-R, plotH=H-T-B, slot=plotW/ms.length, bw=Math.max(2,slot-3);
+  [0,25,50,75,100].forEach(t=>{const y=T+plotH-(t/100)*plotH;
+    svg.appendChild(el('line',{x1:L,x2:W-R,y1:y,y2:y,class:'gridline'}));
+    svg.appendChild(el('text',{x:L-6,y:y+3.5,'text-anchor':'end',class:'axistext'},t+'%'));});
+  const every=Math.ceil(ms.length/12);
+  const tip=document.getElementById('chTip'), box=document.getElementById('chBox');
+  ms.forEach((m,i)=>{
+    const d=D[m], tot=CH.reduce((s,c)=>s+d.ch[c.k],0)||1; let acc=0; const x=L+i*slot+1.5;
+    CH.forEach(c=>{const v=d.ch[c.k]; if(!v)return; const h=v/tot*plotH; const y=T+plotH-acc-h;
+      svg.appendChild(el('rect',{x:x.toFixed(1),y:(y+.5).toFixed(1),width:bw.toFixed(1),height:Math.max(.5,h-1).toFixed(1),fill:`var(${c.v})`,rx:1})); acc+=h;});
+    if(d.flag)svg.appendChild(el('rect',{x:x.toFixed(1),y:T+plotH+3,width:bw.toFixed(1),height:3,fill:'var(--warn)',rx:1}));
+    if(i%every===0)svg.appendChild(el('text',{x:(x+bw/2).toFixed(1),y:H-B+18,'text-anchor':'middle',class:'axistext'},fmtMonth(m)));
+    const hit=el('rect',{x:(L+i*slot).toFixed(1),y:T,width:slot.toFixed(1),height:plotH,fill:'transparent'});
+    const show=()=>{
+      const rows=CH.filter(c=>d.ch[c.k]).map(c=>`<div class="row"><span class="lbl"><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(${c.v})"></i>${c.k}</span><span class="val">${nf(d.ch[c.k])} · ${Math.round(d.ch[c.k]/tot*100)}%</span></div>`).join('');
+      tip.innerHTML=`<div class="th">${fmtMonthLong(m)} · ${nf(tot)} visits</div>${rows}`+(d.flag?`<div class="note">${d.flag==='bot'?'Automated-traffic month':'Partly automated month'}</div>`:'');
+      tip.style.opacity=1; const bx=box.getBoundingClientRect(); const relX=(x+bw/2)/W*bx.width;
+      tip.style.left=Math.min(Math.max(relX-tip.offsetWidth/2,0),bx.width-tip.offsetWidth-2)+'px'; tip.style.top='2px';};
+    hit.addEventListener('mouseenter',show); hit.addEventListener('touchstart',show,{passive:true});
+    hit.addEventListener('mouseleave',()=>{tip.style.opacity=0;});
+    svg.appendChild(hit);
+  });
+}
+document.getElementById('chLegend').innerHTML=CH.map(c=>`<span><i class="sq" style="background:var(${c.v})"></i>${c.k}</span>`).join('')+
+  `<span><i style="background:var(--warn);height:3px"></i>Flagged month</span>`;
+(function(){
+  const rows=DATA.channels, tot=rows.reduce((s,r)=>s+r[1],0), max=Math.max(...rows.map(r=>r[1]));
+  let h='<table><thead><tr><th>Channel, whole period</th><th class="barcell"></th><th>Visits</th><th>Share</th><th>Actions / visit</th><th>Bounce</th></tr></thead><tbody>';
+  rows.forEach(r=>{const c=CH.find(x=>x.k===r[0]);
+    h+=`<tr><td>${esc(r[0])}</td><td class="barcell"><div class="bar" style="width:${Math.max(2,r[1]/max*100)}%;background:var(${c?c.v:'--line-strong'})"></div></td>
+      <td class="n">${nf(r[1])}</td><td class="n">${pc(r[1],tot)}</td><td class="n">${(r[2]/r[1]).toFixed(1)}</td><td class="n">${pc(r[3],r[1])}</td></tr>`;});
+  document.getElementById('chTable').innerHTML=h+'</tbody></table>';
+})();
+
+// ---------- referrers ----------
+(function(){
+  const T=DATA.refTot, web=(T.dutch||0)+(T.openaire||0)+(T.other||0);
+  document.getElementById('refIntro').innerHTML=`Every site, search engine and social network that sent at least one visit &mdash; ${nf(DATA.refCount)} sources in all. Direct entry is excluded here; it has no referrer.`;
+  const parts=[
+    {k:'Dutch institutions (.nl &amp; library guides)',v:T.dutch||0,c:'var(--nl)'},
+    {k:'OpenAIRE&rsquo;s own sites',v:T.openaire||0,c:'var(--c1)'},
+    {k:'Other websites',v:T.other||0,c:'var(--c3)'},
+    {k:'Search engines',v:T.search||0,c:'var(--c2)'},
+    {k:'Social networks',v:T.social||0,c:'var(--c4)'},
+    {k:'Campaigns',v:T.campaign||0,c:'var(--c5)'}].filter(p=>p.v);
+  const tot=parts.reduce((s,p)=>s+p.v,0);
+  document.getElementById('refSplit').innerHTML=`
+    <div style="display:flex;height:26px;border-radius:6px;overflow:hidden;gap:2px;margin:16px 0 12px">
+      ${parts.map(p=>`<div title="${p.k.replace(/&[a-z]+;/g,'')}" style="width:${p.v/tot*100}%;background:${p.c}"></div>`).join('')}</div>
+    <div class="substats" style="grid-template-columns:1fr">
+      ${parts.map(p=>`<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+        <span class="k" style="text-transform:none;font-size:.82rem;color:var(--ink-2)"><span class="swatch" style="display:inline-block;background:${p.c};margin-right:7px"></span>${p.k}</span>
+        <span class="v" style="font-size:.98rem">${nf(p.v)} <span style="color:var(--ink-3);font-size:.8rem">${pc(p.v,tot)}</span></span></div>`).join('')}
+    </div>
+    <p style="margin:14px 0 0;font-size:.84rem;color:var(--ink-2)">Dutch university repositories, library guides and research-data services account for ${pc(T.dutch||0,tot)} of all referred traffic. These visitors bounce far less than direct entries and go several pages deep: this is the audience the gateway is built for.</p>`;
+  const rows=DATA.refs, max=rows[0][2];
+  const KIND={dutch:['NL','nl'],openaire:['OpenAIRE',''],other:['',''],search:['search','mute'],social:['social','mute'],campaign:['campaign','mute']};
+  let h='<table><thead><tr><th>Source</th><th class="barcell"></th><th>Visits</th><th>Actions / visit</th><th>Bounce</th></tr></thead><tbody>';
+  rows.forEach(r=>{const k=KIND[r[1]]||['',''];
+    const label=r[0]==='Keyword not defined'?'Search engines (keyword hidden)':r[0];
+    h+=`<tr><td class="pathcell">${esc(label)}${k[0]?` <span class="flagpill ${k[1]}">${k[0]}</span>`:''}</td>
+      <td class="barcell"><div class="bar" style="width:${Math.max(2,r[2]/max*100)}%;background:${r[1]==='dutch'?'var(--nl)':r[1]==='openaire'?'var(--c1)':'var(--line-strong)'}"></div></td>
+      <td class="n">${nf(r[2])}</td><td class="n">${(r[3]/r[2]).toFixed(1)}</td><td class="n">${pc(r[4],r[2])}</td></tr>`;});
+  document.getElementById('refTable').innerHTML=h+'</tbody></table>';
+})();
+
+// ---------- pages ----------
+const NICE={
+  'search':['Search results','Discover Dutch publications, datasets, software'],
+  '/index':['Gateway home','netherlands.openaire.eu landing page'],
+  'participate':['Participate / link','Claim outputs and link them to projects'],
+  '/fields-of-science':['Fields of science',''], '/sdgs':['Sustainable Development Goals',''],
+  '/organizations':['Organizations','Dutch research organisations'], '/faqs':['FAQs',''],
+  '/content':['Content sources',''], '/curators':['Curators',''], '/roadmap':['Roadmap',''],
+  '/develop':['Develop / APIs',''], '/my-orcid-links':['My ORCID links',''], '/myclaims':['My claims',''],
+  '/get-started':['Get started',''], '/projects':['Projects',''], '/subjects':['Subjects',''], '/reload':['Reload','']
+};
+(function(){
+  const rows=DATA.pages, G=DATA.pageGroups, max=rows[0][1];
+  const s=rows.find(r=>r[0]==='search');
+  document.getElementById('pagesIntro').innerHTML=`Whole period as one total; Matomo exported pages without a monthly split, so there is no trend here. Login callbacks, layout previews and malformed or scanner URLs are grouped at the bottom.${s?` The search page&rsquo;s ${s[4]} bounce rate carries the automated traffic: most of the automated visits land on search and leave.`:''}`;
+  let h='<table><thead><tr><th>Page</th><th class="barcell">Unique pageviews</th><th></th><th>Pageviews</th><th>Entrances</th><th>Bounce</th><th>Avg. time</th></tr></thead><tbody>';
+  rows.filter(r=>r[1]>=3).forEach(r=>{const n=NICE[r[0]]||[r[0],''];
+    h+=`<tr><td class="pathcell">${esc(n[0])}${n[1]?`<small>${n[1]}</small>`:''}<small style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace">${esc(r[0])}</small></td>
+      <td class="barcell"><div class="bar" style="width:${Math.max(2,r[1]/max*100)}%"></div></td>
+      <td class="n">${nf(r[1])}</td><td class="n">${nf(r[2])}</td><td class="n">${nf(r[3])}</td><td class="n">${esc(r[4])}</td><td class="n">${esc(r[5])}</td></tr>`;});
+  const grp=(t,sub,g)=>`<tr><td class="pathcell">${t}<small>${sub}</small></td>
+    <td class="barcell"><div class="bar" style="width:${Math.max(2,g.upv/max*100)}%;background:var(--ink-3)"></div></td>
+    <td class="n">${nf(g.upv)}</td><td class="n">${nf(g.pv)}</td><td class="n">${nf(g.ent)}</td><td class="n">—</td><td class="n">—</td></tr>`;
+  h+=grp('Login &amp; claim callbacks',`OAuth / e-mail verification redirects across ${nf(G.callback.n)} distinct URLs: transit, not destinations`,G.callback);
+  if(G.preview.n)h+=grp('Layout previews',`Portal-configuration previews across ${G.preview.n} URLs: internal admin activity`,G.preview);
+  h+=grp('Malformed, tagged &amp; scanner URLs',`${G.probe.n} URLs: tracking parameters, typos and vulnerability probes (e.g. Log4j <code>jndi</code>, WordPress <code>rest_route</code>)`,G.probe);
+  const tail=rows.filter(r=>r[1]<3);
+  if(tail.length)h+=grp('Other pages',`${tail.length} pages with fewer than 3 unique pageviews`,{upv:tail.reduce((s,r)=>s+r[1],0),pv:tail.reduce((s,r)=>s+r[2],0),ent:tail.reduce((s,r)=>s+r[3],0)});
+  document.getElementById('pagesTable').innerHTML=h+'</tbody></table>';
+})();
+
+// ---------- geography ----------
+const BLOC={us:1,gb:1,ie:1,ca:1,au:1,nz:1};
+const NL_HINT={'Amsterdam':'UvA, VU Amsterdam','Utrecht':'Utrecht University, SURF','The Hague':'DANS / KNAW, KB, The Hague University','Wageningen':'Wageningen University &amp; Research',
+  'Nijmegen':'Radboud University','Leiden':'Leiden University','Tilburg':'Tilburg University','Rotterdam':'Erasmus University Rotterdam',
+  'Groningen':'University of Groningen','Delft':'TU Delft','Eindhoven':'TU Eindhoven','Enschede':'University of Twente','Maastricht':'Maastricht University',
+  'Amstelveen':'(Amsterdam area)','Hilversum':'(network / ISP hub)','Schiphol-Rijk':'(data-centre / network hub)','Breda':'Avans, BUas','Zwolle':'Windesheim',
+  "'s-Hertogenbosch":'Avans, HAS','Leeuwarden':'NHL Stenden','Venlo':'Fontys Venlo','Ede':'CHE (Christelijke Hogeschool Ede)','Bilthoven':'RIVM'};
+(function(){
+  const ctry=DATA.countries, city=DATA.cities;
+  const total=ctry.reduce((s,c)=>s+c[2],0);
+  const nl=(ctry.find(c=>c[1]==='nl')||[0,0,0,0,0])[2], nlRow=ctry.find(c=>c[1]==='nl');
+  const blocRows=ctry.filter(c=>BLOC[c[1]]), bloc=blocRows.reduce((s,c)=>s+c[2],0), blocB=blocRows.reduce((s,c)=>s+c[4],0);
+  const other=total-nl-bloc;
+  document.getElementById('geoIntro').innerHTML=`Whole period, ${fmtDay(META.first)} &ndash; ${fmtDay(META.last)}, as one total: ${nf(total)} visits from ${ctry.length} countries. The geography exports have no monthly split, so automated months cannot be filtered out of these figures.`;
+  const P=v=>v/total*100;
+  document.getElementById('geoSplit').innerHTML=`
+    <div style="display:flex;height:26px;border-radius:6px;overflow:hidden;gap:2px;margin:16px 0 12px">
+      <div title="Netherlands" style="width:${P(nl)}%;background:var(--nl)"></div>
+      <div title="Six English-speaking countries" style="width:${P(bloc)}%;background:var(--warn)"></div>
+      <div title="Everywhere else" style="width:${P(other)}%;background:var(--line-strong)"></div></div>
+    <div class="substats" style="grid-template-columns:1fr">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+        <span class="k" style="text-transform:none;font-size:.82rem;color:var(--ink-2)"><span class="swatch" style="display:inline-block;background:var(--nl);margin-right:7px"></span>Netherlands</span>
+        <span class="v" style="font-size:.98rem">${nf(nl)} <span style="color:var(--ink-3);font-size:.8rem">${P(nl).toFixed(0)}%</span></span></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+        <span class="k" style="text-transform:none;font-size:.82rem;color:var(--ink-2)"><span class="swatch" style="display:inline-block;background:var(--warn);margin-right:7px"></span>US, UK, Ireland, Canada, Australia, NZ</span>
+        <span class="v" style="font-size:.98rem">${nf(bloc)} <span style="color:var(--ink-3);font-size:.8rem">${P(bloc).toFixed(0)}%</span></span></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+        <span class="k" style="text-transform:none;font-size:.82rem;color:var(--ink-2)"><span class="swatch" style="display:inline-block;background:var(--line-strong);margin-right:7px"></span>Everywhere else &mdash; ${ctry.length-1-blocRows.length} countries</span>
+        <span class="v" style="font-size:.98rem">${nf(other)} <span style="color:var(--ink-3);font-size:.8rem">${P(other).toFixed(0)}%</span></span></div>
+    </div>
+    <p style="margin:14px 0 0;font-size:.84rem;color:var(--ink-2)">The six English-speaking countries bounce at <b>${pc(blocB,bloc)}</b>, against ${pc(nlRow[4],nlRow[2])} for the Netherlands, with close to one action per visit. That is the footprint of the automated traffic in the flagged months, so the Dutch share of genuine use is far higher than ${P(nl).toFixed(0)}%. Dutch visits average ${(nlRow[3]/nlRow[2]).toFixed(1)} actions and ${dur(nlRow[5]/nlRow[2])} per visit.</p>`;
+
+  const nlc=DATA.nlCities, nmax=nlc[0][1];
+  let h='<table><thead><tr><th>City</th><th>Likely institution</th><th>Visits</th><th>Actions / visit</th><th>Bounce</th></tr></thead><tbody>';
+  nlc.slice(0,15).forEach(c=>{
+    h+=`<tr><td>${esc(c[0])}${c[4]>1?` <span style="color:var(--ink-3);font-size:.74rem">${c[4]} districts</span>`:''}</td>
+      <td style="text-align:left;white-space:normal;color:var(--ink-3);font-size:.78rem">${NL_HINT[c[0]]||''}</td>
+      <td class="n">${nf(c[1])}</td><td class="n">${(c[2]/c[1]).toFixed(1)}</td><td class="n">${pc(c[3],c[1])}</td></tr>`;});
+  const rest=nl-nlc.slice(0,15).reduce((s,c)=>s+c[1],0);
+  h+=`<tr><td style="color:var(--ink-3)">${nf(DATA.nlCityCount-15)} further Dutch places</td><td></td><td class="n">${nf(rest)}</td><td class="n">—</td><td class="n">—</td></tr>`;
+  document.getElementById('nlCityTable').innerHTML=h+'</tbody></table>';
+
+  const cmax=ctry[0][2];
+  h='<table><thead><tr><th>Country</th><th class="barcell"></th><th>Visits</th><th>Actions / visit</th><th>Bounce</th></tr></thead><tbody>';
+  ctry.slice(0,15).forEach(c=>{const br=c[4]/c[2], auto=br>=.85&&c[2]>=200, isNL=c[1]==='nl';
+    h+=`<tr><td>${esc(c[0])}${isNL?' <span class="flagpill nl">NL</span>':''}${auto?' <span class="flagpill" title="Bounce rate above 85% with about one action per visit">mostly automated</span>':''}</td>
+      <td class="barcell"><div class="bar" style="width:${Math.max(2,c[2]/cmax*100)}%;background:${isNL?'var(--nl)':auto?'var(--warn)':'var(--line-strong)'}"></div></td>
+      <td class="n">${nf(c[2])}</td><td class="n">${(c[3]/c[2]).toFixed(1)}</td><td class="n"${auto?' style="color:var(--warn-ink)"':''}>${Math.round(br*100)}%</td></tr>`;});
+  h+=`<tr><td style="color:var(--ink-3)">${ctry.length-15} further countries</td><td></td><td class="n">${nf(ctry.slice(15).reduce((s,c)=>s+c[2],0))}</td><td class="n">—</td><td class="n">—</td></tr>`;
+  document.getElementById('countryTable').innerHTML=h+'</tbody></table>';
+
+  const cimax=city[0][3];
+  h='<table><thead><tr><th>City</th><th class="barcell"></th><th>Visits</th><th>Bounce</th></tr></thead><tbody>';
+  city.slice(0,20).forEach(c=>{const br=c[3]?c[5]/c[3]:0, apv=c[3]?c[4]/c[3]:0, isNL=c[2]==='nl';
+    const auto=!isNL&&br>=.9&&apv<1.4;
+    const tag=isNL?`<small style="color:var(--nl)">Netherlands</small>`:auto?`<small style="color:var(--warn-ink)">${esc(c[1])} &mdash; automated pattern</small>`:`<small>${esc(c[1])}</small>`;
+    h+=`<tr><td class="pathcell" style="font-family:var(--font-sans)">${esc(c[0])}${tag}</td>
+      <td class="barcell"><div class="bar" style="width:${Math.max(2,c[3]/cimax*100)}%;background:${isNL?'var(--nl)':auto?'var(--warn)':'var(--line-strong)'}"></div></td>
+      <td class="n">${nf(c[3])}</td><td class="n">${Math.round(br*100)}%</td></tr>`;});
+  document.getElementById('cityTable').innerHTML=h+'</tbody></table>';
+})();
+
+// ---------- notes ----------
+(function(){
+  const firstDrop=(()=>{ // first complete month after which visits fall below 20% of the previous 6-month average
+    const CL=COMPLETE.filter(x=>!D[x].flag); // ignore automated months on both sides
+    for(let i=6;i<CL.length;i++){const m=CL[i], prev=CL.slice(i-6,i).map(x=>D[x].visits);
+      const avg=prev.reduce((a,b)=>a+b,0)/6; if(D[m].visits<avg*.2 && !prev.some(x=>x<avg*.2))return {m,avg};}
+    return null;})();
+  const gaps=COMPLETE.filter(m=>D[m].days<D[m].dim*.8);
+  const dl=ALL_MONTHS.filter(m=>D[m]).reduce((s,m)=>s+D[m].dl,0), dlBot=FLAGGED.reduce((s,m)=>s+D[m].dl,0);
+  const nlRow=DATA.countries.find(c=>c[1]==='nl');
+  const notes=[
+    ['Downloads are concentrated in the flagged months',
+     `${nf(dl)} downloads were recorded in all, ${nf(dlBot)} of them (${pc(dlBot,dl)}) in the flagged months. Outside those months downloads run at single or low double digits a month, so the download total is not a reliable engagement measure.`],
+    ['Dutch referrals are the real audience channel',
+     `Utrecht University&rsquo;s repository and website, DANS, openaccess.nl and dozens of university and hogeschool library guides together send ${nf(DATA.refTot.dutch||0)} visits. These visitors go several pages deep and bounce far less than direct entries. The Netherlands as a whole averages ${(nlRow[3]/nlRow[2]).toFixed(1)} actions per visit, against close to one for the countries carrying the automated traffic.`],
+    ['Dates and coverage',
+     `The export window runs ${fmtDay(META.first)} &ndash; ${fmtDay(META.last)}, so ${fmtMonthLong(ALL_MONTHS[0])} and ${fmtMonthLong(ALL_MONTHS[ALL_MONTHS.length-1])} are partial months and are left out of the year-on-year comparison. Months are calendar months built from the daily export; days with no traffic are absent from the source.${gaps.length?` ${gaps.map(fmtMonthLong).join(', ')} have recorded traffic on fewer than 80% of their days, which may be a tracking gap rather than quiet days.`:''}`],
+    ['Geography and pages are period totals',
+     `The country, city, referrer and page exports each cover the whole window as one lump. They cannot be split by month, so the flagged months cannot be removed from them. City is inferred from IP address; the Auckland, Sydney, Dublin and Toronto rows near the top are the automated traffic, not readers in those cities. Schiphol-Rijk and Hilversum are network hubs, not campuses.`],
+    ['Not measured here',
+     `Outlinks are zero for the whole period, and site searches appear only in one month. Conversions and goals are not configured.`]
+  ];
+  document.getElementById('notes').innerHTML=notes.map(n=>`<dt>${n[0]}</dt><dd>${n[1]}</dd>`).join('');
+})();
+
+// ---------- controls ----------
+function redraw(){drawVisits();drawVisitsTable();drawDepth();}
+document.querySelectorAll('[data-range]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-range]').forEach(x=>x.setAttribute('aria-pressed',x===b)); range=b.dataset.range; redraw();}));
+document.querySelectorAll('[data-scale]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-scale]').forEach(x=>x.setAttribute('aria-pressed',x===b)); scale=b.dataset.scale; drawVisits();}));
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-pressed',x===b)); view=b.dataset.view;
+  document.getElementById('visitsBox').hidden=view!=='chart'; document.getElementById('visitsLegend').hidden=view!=='chart';
+  document.getElementById('visitsTable').hidden=view!=='table';}));
+redraw(); drawChannels();
+</script>
+</body>
+</html>
