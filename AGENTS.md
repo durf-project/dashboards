@@ -108,6 +108,10 @@ topbar with the shared site menu and the light/dark switch (localStorage key
 pages, don't add an own header, back bar or theme button, and change the menu
 only in the `SITES` list in `durf-nav.js`.
 
+- Earlier versions of a static dashboard can stay online for pages that cite or
+  embed them: `notebooks/<slug>/static-<name>.html` is published as
+  `<slug>-<name>.html` (theme 3: `static-poc.html`, the proof of concept the
+  position paper embeds, with its notes in `DECISIONS-poc.md`).
 - Pick the accent with `data-accent` on `<html>` (theme 2: `yellow`, theme 3: `blue`).
 - The Oat sidebar layout (`#app-shell`) is as tall as the viewport minus the
   topbar: `height: calc(100dvh - var(--topbar-h) - 1px)`.

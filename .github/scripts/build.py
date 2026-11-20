@@ -101,6 +101,12 @@ def _export_static(notebook_dir: Path, output_dir: Path) -> bool:
     output_file.parent.mkdir(parents=True, exist_ok=True)
     logger.info(f"Copying {source_file} to {output_file} as static")
     shutil.copyfile(source_file, output_file)
+    # Earlier versions kept online for pages that cite or embed them:
+    # notebooks/<slug>/static-<name>.html is published as <slug>-<name>.html.
+    for older in sorted(notebook_dir.glob("static-*.html")):
+        target = output_dir / f"{notebook_dir.name}-{older.stem.removeprefix('static-')}.html"
+        logger.info(f"Copying {older} to {target}")
+        shutil.copyfile(older, target)
     return True
 
 
